@@ -14,13 +14,16 @@ namespace GameProject
     public partial class Main : Form
     {
         private Player player;
+        private Enemy enemy;
+        private List<Bullet> bullets;
         private Timer gameTimer;
+        private Timer enemyShootTimer;
+        private Timer bulletMoveTimer;
         public Main()
         {
             InitializeComponent();
             InitializeGame();
         }
-
         private void InitializeGame()
         {
             this.DoubleBuffered = true;
@@ -31,6 +34,13 @@ namespace GameProject
             player.IsOnGround = false;
             this.Controls.Add(player);
             player.CreateHitBox();
+            enemy = new Enemy();
+            bullets = new List<Bullet>();
+            enemy.Location = new Point(200, 220);
+            enemy.SizeMode = PictureBoxSizeMode.CenterImage;
+            this.Controls.Add(enemy);
+            enemy.BringToFront();
+            Ground.BringToFront();
             SetupTimers();
         }
         private void SetupTimers()
@@ -39,12 +49,23 @@ namespace GameProject
             gameTimer.Interval = 20;
             gameTimer.Tick += GameLoop;
             gameTimer.Start();
+
+            enemyShootTimer = new Timer();
+            enemyShootTimer.Interval = 2000; 
+            enemyShootTimer.Tick += EnemyShoot;
+            enemyShootTimer.Start();
+
+            bulletMoveTimer = new Timer();
+            bulletMoveTimer.Interval = 20;
+            bulletMoveTimer.Tick += MoveBullets;
+            bulletMoveTimer.Start();
         }
         private void GameLoop(object sender, EventArgs e)
         {
             player.PlayerMove();
             player.ApplyGravity();
             player.UpdateAnimation();
+            enemy.UpdateIdleAnimation(player.Location);
             CheckCollisions();
         }
         private void CheckCollisions()
@@ -57,13 +78,39 @@ namespace GameProject
                     if (player.HitBox.Bounds.IntersectsWith(x.Bounds))
                     {
                         player.IsOnGround = true;
-                        player.Top = x.Top - player.Height + 1;
+                        player.Top = x.Top - player.Height + 7;
                         label1.Text = "Touched Ground";
                     }
                     else
                     {
+                        player.IsOnGround = false;
                         label1.Text = "Not Touch";
                     }
+                }
+            }
+        }
+        private void EnemyShoot(object sender, EventArgs e)
+        {
+            Bullet newBullet = enemy.Shoot(player.Location);
+            bullets.Add(newBullet);
+            this.Controls.Add(newBullet);
+        }
+        private void MoveBullets(object sender, EventArgs e)
+        {
+            for (int i = bullets.Count - 1; i >= 0; i--)
+            {
+                bullets[i].BringToFront();
+                bullets[i].Shoot();
+                if (bullets[i].Left < 0 || bullets[i].Right > this.ClientSize.Width)
+                {
+                    this.Controls.Remove(bullets[i]);
+                    bullets.RemoveAt(i);
+                }
+                else if (player.HitBox.Bounds.IntersectsWith(bullets[i].Bounds))
+                {
+                    player.TakeDamage(10);
+                    this.Controls.Remove(bullets[i]);
+                    bullets.RemoveAt(i);
                 }
             }
         }

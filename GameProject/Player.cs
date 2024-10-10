@@ -52,9 +52,9 @@ namespace GameProject
         public void CreateHitBox()
         {
             HitBox = new PictureBox();
-            HitBox.BackColor = Color.FromArgb(100, Color.Red);
-            HitBox.Size = new Size(50,70); 
-            HitBox.Visible = true;
+            HitBox.BackColor = Color.Transparent;
+            HitBox.Size = new Size(50,70);
+            HitBox.Visible = false;
             HitBox.BorderStyle = BorderStyle.FixedSingle;
             this.Parent.Controls.Add(HitBox);
             UpdateHitboxPosition();
@@ -88,7 +88,8 @@ namespace GameProject
             IsOnGround = false;
             IsJumping = false;
             IsFlipped = false;
-            this.Size = new Size(150, 45);
+            this.Size = new Size(150, 60);
+            this.BackColor = Color.Transparent;
         }
         private int slowCounter = 0;
 
@@ -123,7 +124,6 @@ namespace GameProject
             }
             this.Image = Image.FromFile(IsFlipped ? attackLeft[attackFrame++] : attackRight[attackFrame++]);
         }
-
         private void UpdateIdleAnimation()
         {
             if (idleFrame > 6) idleFrame = 0;
@@ -151,6 +151,11 @@ namespace GameProject
             }
             UpdateHitboxPosition();
         }
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+        }
+
         public void PlayerMove()
         {
             
