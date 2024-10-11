@@ -1,0 +1,10 @@
+C:\Users\khang\source\repos\GameProject\GameProject\bin\Debug\GameProject.exe.config
+C:\Users\khang\source\repos\GameProject\GameProject\bin\Debug\GameProject.exe
+C:\Users\khang\source\repos\GameProject\GameProject\bin\Debug\GameProject.pdb
+C:\Users\khang\source\repos\GameProject\GameProject\obj\Debug\GameProject.csproj.AssemblyReference.cache
+C:\Users\khang\source\repos\GameProject\GameProject\obj\Debug\GameProject.Main.resources
+C:\Users\khang\source\repos\GameProject\GameProject\obj\Debug\GameProject.Properties.Resources.resources
+C:\Users\khang\source\repos\GameProject\GameProject\obj\Debug\GameProject.csproj.GenerateResource.cache
+C:\Users\khang\source\repos\GameProject\GameProject\obj\Debug\GameProject.csproj.CoreCompileInputs.cache
+C:\Users\khang\source\repos\GameProject\GameProject\obj\Debug\GameProject.exe
+C:\Users\khang\source\repos\GameProject\GameProject\obj\Debug\GameProject.pdb
