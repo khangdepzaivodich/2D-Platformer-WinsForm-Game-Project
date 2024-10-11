@@ -53,20 +53,50 @@ namespace GameProject
             enemyShootTimer = new Timer();
             enemyShootTimer.Interval = 2000; 
             enemyShootTimer.Tick += EnemyShoot;
-            enemyShootTimer.Start();
 
             bulletMoveTimer = new Timer();
             bulletMoveTimer.Interval = 20;
             bulletMoveTimer.Tick += MoveBullets;
             bulletMoveTimer.Start();
+
+
         }
         private void GameLoop(object sender, EventArgs e)
         {
             player.PlayerMove();
             player.ApplyGravity();
             player.UpdateAnimation();
-            enemy.UpdateIdleAnimation(player.Location);
+            UpdateEnemyBehavior();
             CheckCollisions();
+        }
+        private void UpdateEnemyBehavior()
+        {
+            if (!enemy.isActivate)
+            {
+                if (enemy.IsPlayerInSight(player.Location))
+                {
+                    enemyShootTimer.Start();
+                    enemy.isActivate = true;    
+                }
+            }
+            if (enemy.isActivate)
+            {
+                if (enemy.IsPlayerInSight(player.Location))
+                {
+                    enemyShootTimer.Start();
+                    enemy.isActivate = true;
+                    enemy.isRunning = false;
+                }
+                else
+                {
+                    enemyShootTimer.Stop();
+                    enemy.isRunning = true;
+                    enemy.ChasePlayer(player.Location);
+                }
+            }
+            label2.Text = enemy.IsPlayerInSight(player.Location).ToString();
+            label3.Text = player.Location.ToString();
+            enemy.UpdateEnemyAnimation(player.Location);
         }
         private void CheckCollisions()
         {
