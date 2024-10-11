@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,6 +25,8 @@ namespace GameProject
         public int JumpSpeed { get; set; }
         public int Health { get; private set; } = 100;
         public int AttackDamage { get; private set; } = 20;
+        public List<PictureBox> HeartBoxes { get; set; }
+
         public bool IsAttacking = false;
         private Timer attackCooldownTimer;
 
@@ -38,16 +40,31 @@ namespace GameProject
         private List<string> jumpingLeft;
         private List<string> deathLeft;
         private List<string> deathRight;
+        private List<string> takeHitLeft;
+        private List<string> takeHitRight;
 
+        
         private int idleFrame;
         private int runningFrame;
         private int attackFrame;
         private int deathFrame;
+        private int takeHitFrame;
+        private Main mainForm;
+
+        private bool isDead = false;
+        private int deathFrameIndex = 0;
+        private Timer deathAnimationTimer;
+
         public PictureBox HitBox;
-        public Player()
+        public Player(Main main)
         {
             LoadAnimation();
             InitializeProperties();
+            mainForm = main;
+
+            deathAnimationTimer = new Timer();
+            deathAnimationTimer.Interval = 200;
+            deathAnimationTimer.Tick += UpdateDeathAnimation;
         }
         public void CreateHitBox()
         {
@@ -78,7 +95,8 @@ namespace GameProject
             jumpingRight = Directory.GetFiles("Jumping_Right", "*.png").ToList();
             deathLeft = Directory.GetFiles("PlayerDeath_Left", "*.png").ToList();
             deathRight = Directory.GetFiles("PlayerDeath_Right", "*.png").ToList();
-            
+            takeHitLeft = Directory.GetFiles("TakeHit_Left", "*.png").ToList();
+            takeHitRight = Directory.GetFiles("TakeHit_Right", "*.png").ToList();
         }
         private void InitializeProperties()
         {
@@ -96,7 +114,12 @@ namespace GameProject
         public void UpdateAnimation()
         {
             ++slowCounter;
-            if(slowCounter == 2)
+            if (isDead) return;
+            if (isTakingHit)
+            {
+                UpdateTakeHitAnimation();
+            }
+            if (slowCounter == 2)
             {
                 slowCounter = 0;
                 if (IsAttacking)
@@ -138,9 +161,10 @@ namespace GameProject
         private int JumpVelocity;
         private bool IsFalling = false;
         private int MaxJumpHeight = 100;
-
+        private bool isTakingHit = false;
         public void Jump()
         {
+            if (isDead) return;
             if (IsOnGround)
             {
                 IsJumping = true;
@@ -151,14 +175,9 @@ namespace GameProject
             }
             UpdateHitboxPosition();
         }
-        public void TakeDamage(int damage)
-        {
-            Health -= damage;
-        }
-
         public void PlayerMove()
         {
-            
+            if (isDead) return;
             if (IsLeft && this.Left > 0 && !IsAttacking)
             {
                 this.Left -= Speed;
@@ -200,6 +219,59 @@ namespace GameProject
             }
             UpdateHitboxPosition();
         }
-        
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+            takeHitFrame = 0;
+            isTakingHit = true;
+            mainForm.RemoveHeart();
+            
+            if (Health <= 0 && !isDead)
+            {
+                Die();
+            }
+        }
+        private void Die()
+        {
+            isDead = true;
+            deathAnimationTimer.Start();
+        }
+        private void UpdateDeathAnimation(object sender, EventArgs e)
+        {
+            if (isDead)
+            {
+                List<string> currentDeathFrames = IsFlipped ? deathLeft : deathRight;
+
+                if (deathFrameIndex < currentDeathFrames.Count)
+                {
+                    this.Image = Image.FromFile(currentDeathFrames[deathFrameIndex++]);
+                }
+                else
+                {
+                    deathAnimationTimer.Stop();
+                }
+            }
+        }
+        private void UpdateTakeHitAnimation()
+        {
+            if (isDead) return;
+            if (takeHitFrame < takeHitLeft.Count || takeHitFrame < takeHitRight.Count)
+            {
+                if (IsFlipped)
+                {
+                    this.Image = Image.FromFile(takeHitLeft[takeHitFrame]);
+                }
+                else
+                {
+                    this.Image = Image.FromFile(takeHitRight[takeHitFrame]);
+                }
+                takeHitFrame++;
+            }
+            if (takeHitFrame >= takeHitLeft.Count || takeHitFrame >= takeHitRight.Count)
+            {
+                takeHitFrame = 0;
+                isTakingHit = false;
+            }
+        }
     }
 }
