@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -19,6 +20,9 @@ namespace GameProject
         private Timer gameTimer;
         private Timer enemyShootTimer;
         private Timer bulletMoveTimer;
+        private List<PictureBox> heartBoxes; 
+        private Image[] heartImages;
+        private Timer heartAnimationTimer;
         public Main()
         {
             InitializeComponent();
@@ -28,7 +32,7 @@ namespace GameProject
         {
             this.DoubleBuffered = true;
             this.KeyPreview = true;
-            player = new Player();
+            player = new Player(this);
             player.SizeMode = PictureBoxSizeMode.CenterImage;
             player.Location = new Point(100, 240);
             player.IsOnGround = false;
@@ -41,7 +45,9 @@ namespace GameProject
             this.Controls.Add(enemy);
             enemy.BringToFront();
             Ground.BringToFront();
+            CreateHeartBoxes();
             SetupTimers();
+            
         }
         private void SetupTimers()
         {
@@ -138,7 +144,7 @@ namespace GameProject
                 }
                 else if (player.HitBox.Bounds.IntersectsWith(bullets[i].Bounds))
                 {
-                    player.TakeDamage(10);
+                    player.TakeDamage(20);
                     this.Controls.Remove(bullets[i]);
                     bullets.RemoveAt(i);
                 }
@@ -178,6 +184,52 @@ namespace GameProject
         private void MouseIsDown(object sender, MouseEventArgs e)
         {
             player.IsAttacking = true;
+        }
+        private void CreateHeartBoxes()
+        {
+            heartImages = Directory.GetFiles("HearTile", "*.png").Select(img => Image.FromFile(img)).ToArray();
+            heartBoxes = new List<PictureBox>();
+
+            for (int i = 0; i < 5; i++)
+            {
+                PictureBox heartBox = new PictureBox();
+                heartBox.Image = heartImages[0];
+                heartBox.Size = new Size(16, 16);
+                heartBox.Location = new Point(i * 20, 0);
+                heartBox.SizeMode = PictureBoxSizeMode.Normal;
+
+                heartBoxes.Add(heartBox);
+                this.Controls.Add(heartBox);
+            }
+
+            heartAnimationTimer = new Timer();
+            heartAnimationTimer.Interval = 100;
+            heartAnimationTimer.Tick += HeartAnimationTick;
+            heartAnimationTimer.Start(); 
+        }
+
+        private void HeartAnimationTick(object sender, EventArgs e)
+        {
+            foreach (var heartBox in heartBoxes)
+            {
+                var currentImageIndex = Array.IndexOf(heartImages, heartBox.Image);
+                currentImageIndex++;
+                if (currentImageIndex >= heartImages.Length)
+                {
+                    currentImageIndex = 0; 
+                }
+
+                heartBox.Image = heartImages[currentImageIndex];
+            }
+        }
+        public void RemoveHeart()
+        {
+            if (heartBoxes.Count > 0)
+            {
+                var heartToRemove = heartBoxes[heartBoxes.Count - 1]; 
+                heartBoxes.RemoveAt(heartBoxes.Count - 1); 
+                this.Controls.Remove(heartToRemove); 
+            }
         }
     }
 }
