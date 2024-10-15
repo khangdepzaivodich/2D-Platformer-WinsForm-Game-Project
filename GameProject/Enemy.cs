@@ -212,7 +212,7 @@ namespace GameProject
             idleFrame = 0;
             runningFrame = 0;
             deathAnimationFrame = 0;
-            
+            currentDirection = (this.Left > 0) ? Direction.Right : Direction.Left;
             deathAnimationTimer.Start();
             this.Enabled = false;
         }
