@@ -64,7 +64,7 @@ namespace GameProject
         }
         private void InitializeProperties()
         {
-            this.Size = new Size(100, 100);
+            this.Size = new Size(50, 100);
             this.BackColor = Color.Transparent;
             this.BorderStyle = BorderStyle.FixedSingle;
 
@@ -198,7 +198,14 @@ namespace GameProject
         {
             if (IsDead) return;
             health -= damage;
-
+            if (playerPosition.X > this.Left)
+            {
+                currentDirection = Direction.Right;
+            }
+            else
+            {
+                currentDirection = Direction.Left;
+            }
             if (health <= 0)
             {
                 IsDead = true;
@@ -212,12 +219,13 @@ namespace GameProject
             idleFrame = 0;
             runningFrame = 0;
             deathAnimationFrame = 0;
-            currentDirection = (this.Left > 0) ? Direction.Right : Direction.Left;
+            
             deathAnimationTimer.Start();
             this.Enabled = false;
         }
         private void UpdateDeathAnimation(object sender, EventArgs e)
         {
+            
             if (deathAnimationFrame < (currentDirection == Direction.Right ? deathRight.Count : deathLeft.Count))
             {
                 this.Image = Image.FromFile(currentDirection == Direction.Right ? deathRight[deathAnimationFrame] : deathLeft[deathAnimationFrame]);
@@ -230,5 +238,6 @@ namespace GameProject
                 this.Enabled = false;
             }
         }
+
     }
 }
