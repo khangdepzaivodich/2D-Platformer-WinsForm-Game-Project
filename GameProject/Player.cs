@@ -273,5 +273,6 @@ namespace GameProject
                 isTakingHit = false;
             }
         }
+        
     }
 }
