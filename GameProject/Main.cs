@@ -112,7 +112,7 @@ namespace GameProject
             {
                 if (x is Enemy enemy1)
                 {
-                    if (player.HitBox.Bounds.IntersectsWith(enemy1.Bounds))
+                    if (player.Bounds.IntersectsWith(enemy1.Bounds))
                     {
                         if (player.IsAttacking)
                         {
