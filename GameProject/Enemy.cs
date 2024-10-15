@@ -30,6 +30,9 @@ namespace GameProject
         private const int ChaseSpeed = 8;
         public bool isActivate = false;
         public bool isRunning = false;
+        public bool IsOnGround = false;
+        public int Gravity = 10;
+        public int health = 10;
         public Enemy()
         {
             LoadAnimations();
@@ -46,8 +49,9 @@ namespace GameProject
         }
         private void InitializeProperties()
         {
-            this.Size = new Size(60, 70);
+            this.Size = new Size(60, 65);
             this.BackColor = Color.Transparent;
+            this.BorderStyle = BorderStyle.FixedSingle;
             ShootAnimationTimer = new Timer();
             ShootAnimationTimer.Interval = 20;
             ShootAnimationTimer.Tick += UpdateShootAnimation;
@@ -66,6 +70,25 @@ namespace GameProject
                     this.Image = Image.FromFile(isRight ? idleLeft[idleFrame++] : idleRight[idleFrame++]);
                 }
                 enemyIdleAnimationDelayCounter = 0;
+            }
+        }
+        public void TakeDamge(int damge)
+        {
+            if(health > 0)
+            {
+                health -= damge;
+            }
+        }
+        public void ApplyGravity()
+        {
+            if (!IsOnGround)
+            {
+                this.Top += Gravity;
+                if (this.Top + this.Height >= this.Parent.ClientSize.Height)
+                {
+                    IsOnGround = true;
+                    this.Top = this.Parent.ClientSize.Height - this.Height;
+                }
             }
         }
         private void UpdateShootAnimation(object sender, EventArgs e)

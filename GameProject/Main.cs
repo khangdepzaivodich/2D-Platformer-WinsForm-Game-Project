@@ -65,6 +65,7 @@ namespace GameProject
         {
             player.PlayerMove();
             player.ApplyGravity();
+            enemy.ApplyGravity();
             player.UpdateAnimation();
             UpdateEnemyBehavior();
             CheckCollisions();
@@ -117,6 +118,19 @@ namespace GameProject
                         label1.Text = "Not Touch";
                     }
                 }
+                if (x is PictureBox && (string)x.Tag == "Ground")
+                {
+
+                    if (enemy.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        enemy.IsOnGround = true;
+                        enemy.Top = x.Top - enemy.Height + 2;
+                    }
+                    else
+                    {
+                        enemy.IsOnGround = false;
+                    }
+                }
             }
         }
         private void EnemyShoot(object sender, EventArgs e)
@@ -136,6 +150,14 @@ namespace GameProject
                     this.Controls.Remove(bullets[i]);
                     bullets.RemoveAt(i);
                 }
+                else if (player.Bounds.IntersectsWith(bullets[i].Bounds) && player.IsAttacking && ((bullets[i].IsMovingRight && player.IsFlipped) || (!bullets[i].IsMovingRight && !player.IsFlipped))){
+                    ScreenShake();
+                    DeflectParticle deflectParticle = new DeflectParticle(new Point(bullets[i].Left, bullets[i].Top));
+                    this.Controls.Add(deflectParticle);
+                    deflectParticle.BringToFront();
+                    bullets[i].IsMovingRight = !bullets[i].IsMovingRight;
+                    bullets[i].Speed += 25;
+                }
                 else if (player.HitBox.Bounds.IntersectsWith(bullets[i].Bounds))
                 {
                     player.TakeDamage(10);
@@ -144,6 +166,38 @@ namespace GameProject
                 }
             }
         }
+        private void ScreenShake()
+        {
+            int shakeAmount = 5;
+            int shakeDuration = 100;
+            int shakeInterval = 20; 
+
+            Timer shakeTimer = new Timer();
+            shakeTimer.Interval = shakeInterval;
+
+            int elapsed = 0;
+            Random rnd = new Random();
+            Point originalLocation = this.Location;
+
+            shakeTimer.Tick += (s, e) =>
+            {
+                elapsed += shakeInterval;
+                if (elapsed >= shakeDuration)
+                {
+                    this.Location = originalLocation; 
+                    shakeTimer.Stop();
+                }
+                else
+                {
+                    int offsetX = rnd.Next(-shakeAmount, shakeAmount);
+                    int offsetY = rnd.Next(-shakeAmount, shakeAmount);
+                    this.Location = new Point(originalLocation.X + offsetX, originalLocation.Y + offsetY);
+                }
+            };
+
+            shakeTimer.Start();
+        }
+
 
         private void KeyIsDown(object sender, KeyEventArgs e)
         {

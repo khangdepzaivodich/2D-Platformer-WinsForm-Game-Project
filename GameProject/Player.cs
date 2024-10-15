@@ -78,7 +78,6 @@ namespace GameProject
             jumpingRight = Directory.GetFiles("Jumping_Right", "*.png").ToList();
             deathLeft = Directory.GetFiles("PlayerDeath_Left", "*.png").ToList();
             deathRight = Directory.GetFiles("PlayerDeath_Right", "*.png").ToList();
-            
         }
         private void InitializeProperties()
         {
@@ -200,6 +199,5 @@ namespace GameProject
             }
             UpdateHitboxPosition();
         }
-        
     }
 }

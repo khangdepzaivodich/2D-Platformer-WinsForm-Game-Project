@@ -49,6 +49,9 @@
     <Compile Include="Bullet.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DeflectParticle.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Enemy.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -74,6 +77,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -87,6 +91,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\DeflectFrame\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\DeflectFrame\9.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
