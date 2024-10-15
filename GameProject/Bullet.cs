@@ -1,10 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameProject
@@ -17,6 +15,8 @@ namespace GameProject
         private int currentFrame = 0;
         private Timer bulletAnimator;
         private int BulletAnimationDelayCounter;
+        public bool IsAlive { get; private set; } = true;
+
         public Bullet(bool shootRight)
         {
             InitializeBullet(shootRight);
@@ -39,18 +39,21 @@ namespace GameProject
         }
         public void Shoot()
         {
-            if (IsMovingRight)
+            if (IsAlive)
             {
-                this.Left += Speed;
-            }
-            else
-            {
-                this.Left -= Speed;
+                if (IsMovingRight)
+                {
+                    this.Left += Speed;
+                }
+                else
+                {
+                    this.Left -= Speed;
+                }
             }
         }
         private void AnimateBullet(object sender, EventArgs e)
         {
-            if(BulletAnimationDelayCounter == 0)
+            if (BulletAnimationDelayCounter == 0)
             {
                 currentFrame++;
                 if (currentFrame >= bulletFrames.Count)
@@ -61,8 +64,6 @@ namespace GameProject
                 this.Image = Image.FromFile(bulletFrames[currentFrame]);
                 BulletAnimationDelayCounter = 0;
             }
-            
         }
-        
     }
 }
