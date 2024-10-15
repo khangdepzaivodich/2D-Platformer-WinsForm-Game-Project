@@ -118,7 +118,11 @@ namespace GameProject
                         {
                             enemy.TakeDamage(10, this.Location);
                         }
-                        
+                    }
+                    if (player.HitBox.Bounds.IntersectsWith(enemy1.Bounds))
+                    {
+                        player.TakeDamage(20);
+                        PushBackPlayer(enemy1);
                     }
                 }
 
@@ -306,6 +310,20 @@ namespace GameProject
                 this.Controls.Remove(heartToRemove); 
             }
         }
+        private void PushBackPlayer(Enemy enemy)
+        {
+            int pushBackDistance = 50;
+            if (player.Left < enemy.Left)
+            {
+                player.Left -= pushBackDistance;
+            }
+            else
+            {
+                player.Left += pushBackDistance;
+            }
+            player.Top += 10;
+        }
+
         private void Main_Load(object sender, EventArgs e)
         {
 
