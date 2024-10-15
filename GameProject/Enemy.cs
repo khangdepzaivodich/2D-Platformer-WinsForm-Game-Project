@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -17,17 +17,27 @@ namespace GameProject
         private List<string> shootRight;
         private List<string> runningRight;
         private List<string> runningLeft;
-            
+        private List<string> deathLeft;
+        private List<string> deathRight;
+        private List<string> hurtLeft;
+        private List<string> hurtRight;
+        private List<Bullet> bullets;
+
         private int idleFrame;
         private int shootFrame;
         private int runningFrame;
         private bool isShootRight;
         private bool isShooting = false;
         private Timer ShootAnimationTimer;
+        private Direction currentDirection;
+        private Timer deathAnimationTimer;
+        private int deathAnimationFrame;
+
 
         private const int DetectionDistance = 600;
         private const int AttackHeightTolerance = 70; 
         private const int ChaseSpeed = 8;
+        public bool IsDead { get; private set; } = false;
         public bool isActivate = false;
         public bool isRunning = false;
         public bool IsOnGround = false;
@@ -37,6 +47,7 @@ namespace GameProject
         {
             LoadAnimations();
             InitializeProperties();
+            bullets = new List<Bullet>();
         }
         private void LoadAnimations()
         {
@@ -46,17 +57,25 @@ namespace GameProject
             shootRight = Directory.GetFiles("EnemyShot_Right", "*.png").ToList();
             runningRight = Directory.GetFiles("EnemyRunning_Right", "*.png").ToList();
             runningLeft = Directory.GetFiles("EnemyRunning_Left", "*.png").ToList();
+            deathLeft = Directory.GetFiles("EnemyDeath_Left", "*.png").ToList();
+            deathRight = Directory.GetFiles("EnemyDeath_Right", "*.png").ToList();
+            hurtLeft = Directory.GetFiles("EnemyHurt_Left", "*.png").ToList();
+            hurtRight = Directory.GetFiles("EnemyHurt_Right", "*.png").ToList();
         }
         private void InitializeProperties()
         {
-            this.Size = new Size(60, 65);
+            this.Size = new Size(100, 100);
             this.BackColor = Color.Transparent;
             this.BorderStyle = BorderStyle.FixedSingle;
+
             ShootAnimationTimer = new Timer();
             ShootAnimationTimer.Interval = 20;
             ShootAnimationTimer.Tick += UpdateShootAnimation;
-        }
 
+            deathAnimationTimer = new Timer();
+            deathAnimationTimer.Interval = 150;
+            deathAnimationTimer.Tick += UpdateDeathAnimation;
+        }
         private int enemyIdleAnimationDelayCounter = 0;
         public void UpdateIdleAnimation(Point playerPosition)
         {
@@ -70,13 +89,6 @@ namespace GameProject
                     this.Image = Image.FromFile(isRight ? idleLeft[idleFrame++] : idleRight[idleFrame++]);
                 }
                 enemyIdleAnimationDelayCounter = 0;
-            }
-        }
-        public void TakeDamge(int damge)
-        {
-            if(health > 0)
-            {
-                health -= damge;
             }
         }
         public void ApplyGravity()
@@ -107,6 +119,7 @@ namespace GameProject
         }
         public Bullet Shoot(Point playerPosition)
         {
+            if (IsDead) return null;
             isShootRight = playerPosition.X > this.Left;
             shootFrame = 0;
             ShootAnimationTimer.Start();
@@ -116,6 +129,7 @@ namespace GameProject
                 Speed = 40,
                 IsMovingRight = isShootRight
             };
+
         }
         public bool IsPlayerInSight(Point playerPosition)
         {
@@ -129,18 +143,26 @@ namespace GameProject
             {
                 return;
             }
+
             if (playerPosition.X < this.Left)
             {
                 this.Left -= ChaseSpeed;
+                currentDirection = Direction.Left;
             }
             else
             {
                 this.Left += ChaseSpeed;
+                currentDirection = Direction.Right;
             }
         }
         private int slowCounter = 0;
         public void UpdateEnemyAnimation(Point playerPosition)
         {
+            if (deathAnimationTimer.Enabled)
+            {
+                return;
+            }
+
             ++slowCounter;
             if (slowCounter == 1)
             {
@@ -165,6 +187,47 @@ namespace GameProject
             else
             {
                 runningFrame = 0;
+            }
+        }
+        public enum Direction
+        {
+            Left,
+            Right
+        }
+        public void TakeDamage(int damage, Point playerPosition)
+        {
+            if (IsDead) return;
+            health -= damage;
+
+            if (health <= 0)
+            {
+                IsDead = true;
+                Die();
+            }
+        }
+        public void Die()
+        {
+            isShooting = false;
+            isRunning = false;
+            idleFrame = 0;
+            runningFrame = 0;
+            deathAnimationFrame = 0;
+            
+            deathAnimationTimer.Start();
+            this.Enabled = false;
+        }
+        private void UpdateDeathAnimation(object sender, EventArgs e)
+        {
+            if (deathAnimationFrame < (currentDirection == Direction.Right ? deathRight.Count : deathLeft.Count))
+            {
+                this.Image = Image.FromFile(currentDirection == Direction.Right ? deathRight[deathAnimationFrame] : deathLeft[deathAnimationFrame]);
+                deathAnimationFrame++;
+            }
+            else
+            {
+                deathAnimationTimer.Stop();
+                this.Visible = false;
+                this.Enabled = false;
             }
         }
     }
