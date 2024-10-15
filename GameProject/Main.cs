@@ -23,6 +23,7 @@ namespace GameProject
         private List<PictureBox> heartBoxes; 
         private Image[] heartImages;
         private Timer heartAnimationTimer;
+        
         public Main()
         {
             InitializeComponent();
@@ -109,6 +110,18 @@ namespace GameProject
         {
             foreach (Control x in this.Controls)
             {
+                if (x is Enemy enemy1)
+                {
+                    if (player.HitBox.Bounds.IntersectsWith(enemy1.Bounds))
+                    {
+                        if (player.IsAttacking)
+                        {
+                            enemy.TakeDamage(10, this.Location);
+                        }
+                        
+                    }
+                }
+
                 if (x is PictureBox && (string)x.Tag == "Ground")
                 {
                     
@@ -124,9 +137,10 @@ namespace GameProject
                         label1.Text = "Not Touch";
                     }
                 }
+
+                
                 if (x is PictureBox && (string)x.Tag == "Ground")
                 {
-
                     if (enemy.Bounds.IntersectsWith(x.Bounds))
                     {
                         enemy.IsOnGround = true;
@@ -139,12 +153,18 @@ namespace GameProject
                 }
             }
         }
+
+
         private void EnemyShoot(object sender, EventArgs e)
         {
-            Bullet newBullet = enemy.Shoot(player.Location);
-            bullets.Add(newBullet);
-            this.Controls.Add(newBullet);
+            if (!enemy.IsDead)
+            {
+                Bullet newBullet = enemy.Shoot(player.Location);
+                bullets.Add(newBullet);
+                this.Controls.Add(newBullet);
+            }
         }
+
         private void MoveBullets(object sender, EventArgs e)
         {
             for (int i = bullets.Count - 1; i >= 0; i--)
@@ -251,6 +271,7 @@ namespace GameProject
                 heartBox.Size = new Size(16, 16);
                 heartBox.Location = new Point(i * 20, 0);
                 heartBox.SizeMode = PictureBoxSizeMode.Normal;
+                heartBox.BackColor = Color.Transparent;
 
                 heartBoxes.Add(heartBox);
                 this.Controls.Add(heartBox);
@@ -284,6 +305,10 @@ namespace GameProject
                 heartBoxes.RemoveAt(heartBoxes.Count - 1); 
                 this.Controls.Remove(heartToRemove); 
             }
+        }
+        private void Main_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
