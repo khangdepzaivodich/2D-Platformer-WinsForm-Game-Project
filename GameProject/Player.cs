@@ -23,7 +23,7 @@ namespace GameProject
         public int Speed { get; set; }
         public int Gravity { get; set; }
         public int JumpSpeed { get; set; }
-        public int Health { get; private set; } = 100;
+        public int Health { get; private set; } = 1000000;
         public int AttackDamage { get; private set; } = 20;
         public List<PictureBox> HeartBoxes { get; set; }
 
@@ -43,7 +43,7 @@ namespace GameProject
         private List<string> takeHitLeft;
         private List<string> takeHitRight;
 
-        
+
         private int idleFrame;
         private int runningFrame;
         private int attackFrame;
@@ -70,7 +70,7 @@ namespace GameProject
         {
             HitBox = new PictureBox();
             HitBox.BackColor = Color.Transparent;
-            HitBox.Size = new Size(50,70);
+            HitBox.Size = new Size(50, 70);
             HitBox.Visible = false;
             HitBox.BorderStyle = BorderStyle.FixedSingle;
             this.Parent.Controls.Add(HitBox);
@@ -140,7 +140,7 @@ namespace GameProject
 
         private void UpdateAttackingAnimation()
         {
-            if(attackFrame >= attackLeft.Count)
+            if (attackFrame >= attackLeft.Count)
             {
                 attackFrame = 0;
                 IsAttacking = false;
@@ -175,26 +175,7 @@ namespace GameProject
             }
             UpdateHitboxPosition();
         }
-        public void PlayerMove()
-        {
-            if (isDead) return;
-            if (IsLeft && this.Left > 0 && !IsAttacking)
-            {
-                this.Left -= Speed;
-                IsFlipped = true;
-                IsRunning = true;
-            }
-            else if (IsRight && this.Right < this.Parent.ClientSize.Width && !IsAttacking)
-            {
-                this.Left += Speed;
-                IsFlipped = false;
-                IsRunning = true;
-            }
-            else
-            {
-                IsRunning = false;
-            }
-        }
+
         public void ApplyGravity()
         {
             if (IsJumping && !IsFalling)
@@ -206,7 +187,7 @@ namespace GameProject
                     IsFalling = true;
                 }
             }
-            if(IsFalling || !IsOnGround)
+            if (IsFalling || !IsOnGround)
             {
                 this.Top += Gravity;
 
@@ -225,7 +206,7 @@ namespace GameProject
             takeHitFrame = 0;
             isTakingHit = true;
             mainForm.RemoveHeart();
-            
+
             if (Health <= 0 && !isDead)
             {
                 Die();
@@ -273,6 +254,46 @@ namespace GameProject
                 isTakingHit = false;
             }
         }
-        
+        public void PlayerMove()
+        {
+            if (isDead) return;
+            Point previousPosition = this.Location;
+
+            if (IsLeft && this.Left > 0 && !IsAttacking)
+            {
+                this.Left -= Speed;
+                IsFlipped = true;
+                IsRunning = true;
+            }
+            else if (IsRight && this.Right < this.Parent.ClientSize.Width && !IsAttacking)
+            {
+                this.Left += Speed;
+                IsFlipped = false;
+                IsRunning = true;
+            }
+            else
+            {
+                IsRunning = false;
+            }
+
+            if (CheckEnemyCollision())
+            {
+                this.Location = previousPosition;
+            }
+        }
+        private bool CheckEnemyCollision()
+        {
+            foreach (Control control in this.Parent.Controls)
+            {
+                if (control is Enemy enemy && !enemy.IsDead)
+                {
+                    if (this.HitBox.Bounds.IntersectsWith(enemy.Bounds))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }
