@@ -15,15 +15,15 @@ namespace GameProject
     public partial class Main : Form
     {
         private Player player;
-        private Enemy enemy;
+        private Enemy enemy, enemy2;
         private List<Bullet> bullets;
         private Timer gameTimer;
         private Timer enemyShootTimer;
         private Timer bulletMoveTimer;
-        private List<PictureBox> heartBoxes; 
+        private List<PictureBox> heartBoxes;
         private Image[] heartImages;
         private Timer heartAnimationTimer;
-        
+
         public Main()
         {
             InitializeComponent();
@@ -33,22 +33,36 @@ namespace GameProject
         {
             this.DoubleBuffered = true;
             this.KeyPreview = true;
+
+
             player = new Player(this);
             player.SizeMode = PictureBoxSizeMode.CenterImage;
-            player.Location = new Point(100, 240);
+            player.Location = new Point(800, 240);
             player.IsOnGround = false;
             this.Controls.Add(player);
             player.CreateHitBox();
-            enemy = new Enemy();
+
+
+            enemy = new RangedEnemy();
             bullets = new List<Bullet>();
             enemy.Location = new Point(200, 220);
             enemy.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy);
+
+            enemy2 = new MeleeEnemy();
+            enemy2.Location = new Point(500, 150);
+            enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
+            this.Controls.Add(enemy2);
+
             enemy.BringToFront();
+            enemy2.BringToFront();
             Ground.BringToFront();
+
+
+
             CreateHeartBoxes();
             SetupTimers();
-            
+
         }
         private void SetupTimers()
         {
@@ -58,7 +72,7 @@ namespace GameProject
             gameTimer.Start();
 
             enemyShootTimer = new Timer();
-            enemyShootTimer.Interval = 2000; 
+            enemyShootTimer.Interval = 2000;
             enemyShootTimer.Tick += EnemyShoot;
 
             bulletMoveTimer = new Timer();
@@ -84,9 +98,10 @@ namespace GameProject
                 if (enemy.IsPlayerInSight(player.Location))
                 {
                     enemyShootTimer.Start();
-                    enemy.isActivate = true;    
+                    enemy.isActivate = true;
                 }
             }
+
             if (enemy.isActivate)
             {
                 if (enemy.IsPlayerInSight(player.Location))
@@ -102,6 +117,32 @@ namespace GameProject
                     enemy.ChasePlayer(player.Location);
                 }
             }
+
+
+            if (!enemy2.isActivate)
+            {
+                if (enemy2.IsPlayerInSight(player.Location))
+                {
+                    enemy.isActivate = true;
+                }
+            }
+
+            if (enemy2.isActivate)
+            {
+                if (enemy2.IsPlayerInSight(player.Location))
+                {
+                    enemy2.isActivate = true;
+                    enemy2.isRunning = false;
+                }
+                else
+                {
+                    enemy2.isRunning = true;
+                    enemy2.ChasePlayer(player.Location);
+                }
+            }
+
+
+            enemy2.UpdateEnemyAnimation(player.Location);
             label2.Text = enemy.IsPlayerInSight(player.Location).ToString();
             label3.Text = player.Location.ToString();
             enemy.UpdateEnemyAnimation(player.Location);
@@ -112,23 +153,24 @@ namespace GameProject
             {
                 if (x is Enemy enemy1)
                 {
+                    if (enemy1.IsDead)
+                        continue;
                     if (player.Bounds.IntersectsWith(enemy1.Bounds))
                     {
                         if (player.IsAttacking)
                         {
-                            enemy.TakeDamage(10, this.Location);
+                            enemy1.TakeDamage(10, this.Location);
                         }
-                    }
-                    if (player.HitBox.Bounds.IntersectsWith(enemy1.Bounds))
-                    {
-                        player.TakeDamage(20);
-                        PushBackPlayer(enemy1);
+                        else if (!enemy1.isAttacking)
+                        {
+                            enemy1.Attack(player.Location);
+                            player.TakeDamage(20);
+                        }
                     }
                 }
 
                 if (x is PictureBox && (string)x.Tag == "Ground")
                 {
-                    
                     if (player.HitBox.Bounds.IntersectsWith(x.Bounds))
                     {
                         player.IsOnGround = true;
@@ -142,7 +184,6 @@ namespace GameProject
                     }
                 }
 
-                
                 if (x is PictureBox && (string)x.Tag == "Ground")
                 {
                     if (enemy.Bounds.IntersectsWith(x.Bounds))
@@ -157,8 +198,6 @@ namespace GameProject
                 }
             }
         }
-
-
         private void EnemyShoot(object sender, EventArgs e)
         {
             if (!enemy.IsDead)
@@ -168,7 +207,6 @@ namespace GameProject
                 this.Controls.Add(newBullet);
             }
         }
-
         private void MoveBullets(object sender, EventArgs e)
         {
             for (int i = bullets.Count - 1; i >= 0; i--)
@@ -227,8 +265,6 @@ namespace GameProject
 
             shakeTimer.Start();
         }
-
-
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.A)
@@ -246,7 +282,6 @@ namespace GameProject
                 player.Jump();
             }
         }
-
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.A)
@@ -258,7 +293,6 @@ namespace GameProject
                 player.IsRight = false;
             }
         }
-
         private void MouseIsDown(object sender, MouseEventArgs e)
         {
             player.IsAttacking = true;
@@ -280,13 +314,11 @@ namespace GameProject
                 heartBoxes.Add(heartBox);
                 this.Controls.Add(heartBox);
             }
-
             heartAnimationTimer = new Timer();
             heartAnimationTimer.Interval = 100;
             heartAnimationTimer.Tick += HeartAnimationTick;
             heartAnimationTimer.Start(); 
         }
-
         private void HeartAnimationTick(object sender, EventArgs e)
         {
             foreach (var heartBox in heartBoxes)
