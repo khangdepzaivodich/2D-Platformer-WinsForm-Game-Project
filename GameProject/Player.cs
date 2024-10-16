@@ -23,7 +23,7 @@ namespace GameProject
         public int Speed { get; set; }
         public int Gravity { get; set; }
         public int JumpSpeed { get; set; }
-        public int Health { get; private set; } = 1000000;
+        public int Health { get; private set; } = 100;
         public int AttackDamage { get; private set; } = 20;
         public List<PictureBox> HeartBoxes { get; set; }
 
