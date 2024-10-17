@@ -23,7 +23,8 @@ namespace GameProject
         private List<PictureBox> heartBoxes;
         private Image[] heartImages;
         private Timer heartAnimationTimer;
-
+        private List<string> shootLeft;
+        private List<string> shootRight;
         public Main()
         {
             InitializeComponent();
@@ -33,7 +34,8 @@ namespace GameProject
         {
             this.DoubleBuffered = true;
             this.KeyPreview = true;
-
+            shootLeft = Directory.GetFiles("EnemyShot_Left", "*.png").ToList();
+            shootRight = Directory.GetFiles("EnemyShot_Right", "*.png").ToList();
 
             player = new Player(this);
             player.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -45,12 +47,12 @@ namespace GameProject
 
             enemy = new RangedEnemy();
             bullets = new List<Bullet>();
-            enemy.Location = new Point(200, 220);
+            enemy.Location = new Point(100, 220);
             enemy.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy);
 
             enemy2 = new MeleeEnemy();
-            enemy2.Location = new Point(500, 100);
+            enemy2.Location = new Point(50, 100);
             enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy2);
             enemy2.CreateHitBox();
@@ -185,7 +187,7 @@ namespace GameProject
             //        meleeEnemy.UpdateEnemyAnimation(player.HitBox.Location);
             //    }
             //}
-            if (!enemy.isActivate)
+            /*if (!enemy.isActivate)
             {
                 if (enemy.IsPlayerInSight(player.HitBox.Location))
                 {
@@ -231,6 +233,83 @@ namespace GameProject
                     enemy2.isActivate = true;
                     enemy2.isRunning = false;
 
+                }
+            }
+
+
+            enemy2.UpdateEnemyAnimation(player.HitBox.Location);
+            label2.Text = enemy.IsPlayerInSight(player.HitBox.Location).ToString();
+            label3.Text = player.Location.ToString();
+            enemy.UpdateEnemyAnimation(player.HitBox.Location);*/
+            if (player.isDead)
+            {
+                enemy.isActivate = false;
+                enemyShootTimer.Stop();
+                enemy2.isActivate = false;
+                enemy.Patrol();
+                enemy2.Patrol();
+                return;
+            }
+            if (!enemy.isActivate)
+            {
+                enemy.Patrol();
+                if (enemy.IsPlayerInSight(player.HitBox.Location))
+                {
+                    enemyShootTimer.Start();
+                    enemy.isActivate = true;
+                }
+            }
+
+            if (enemy.isActivate && !enemy.IsDead)
+            {
+                bool isRight = enemy.Left > player.Left;
+                if (enemy.IsPlayerInSight(player.HitBox.Location))
+                {
+                    if (enemy.isFirst)
+                    {
+                        enemy.isFirst = false;
+                        enemy.Image = Image.FromFile(isRight ? shootLeft[0] : shootRight[0]);
+                    }
+                    enemyShootTimer.Start();
+                    enemy.isActivate = true;
+                    enemy.isRunning = false;
+                }
+                else
+                {
+                    enemy.isFirst = true;
+                    enemyShootTimer.Stop();
+                    enemy.isRunning = true;
+                    enemy.ChasePlayer(player.HitBox.Location);
+                }
+            }
+
+            if (!enemy2.isActivate && !enemy2.isAttacking && !player.isDead)
+            {
+                enemy2.Patrol();
+                if (enemy2.IsPlayerInSight(player.HitBox.Location))
+                {
+                    enemy2.isActivate = true;
+                }
+            }
+
+            if (enemy2.isActivate && !enemy2.IsDead)
+            {
+                if (enemy2.Bounds.IntersectsWith(player.HitBox.Bounds))
+                {
+                    if (!player.isDead && !enemy2.isAttacking)
+                    {
+                        enemy2.isRunning = false;
+                        enemy2.Attack(player.Location);
+                        enemy2.isAttacking = true;
+                        player.TakeDamage(20);
+                    }
+                }
+                else
+                {
+                    enemy2.isActivate = true;
+                    enemy2.isRunning = true;
+                    enemy2.ChasePlayer(player.HitBox.Location);
+                    enemy2.isAttacking = false;
                 }
             }
 
@@ -433,6 +512,11 @@ namespace GameProject
 
                 heartBox.Image = heartImages[currentImageIndex];
             }
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
         }
 
         public void RemoveHeart()
