@@ -52,7 +52,7 @@ namespace GameProject
         private int takeHitFrame;
         private Main mainForm;
 
-        private bool isDead = false;
+        public bool isDead = false;
         private int deathFrameIndex = 0;
         private Timer deathAnimationTimer;
 
