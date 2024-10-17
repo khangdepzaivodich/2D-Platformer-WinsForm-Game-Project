@@ -22,8 +22,13 @@ namespace GameProject
         protected List<string> runningMeleeRight;
         protected List<string> deathMeleeLeft;
         protected List<string> deathMeleeRight;
+        protected List<string> walkingMeleeLeft;
+        protected List<string> walkingMeleeRight;
+        protected List<string> walkingRangedRight;
+        protected List<string> walkingRangedLeft;
         protected int idleFrame;
         protected int runningFrame;
+        protected int walkingFrame;
         protected Timer deathAnimationTimer;
         protected int deathAnimationFrame;
         protected Direction currentDirection;
@@ -42,6 +47,10 @@ namespace GameProject
         protected int speed = 2;
         public bool isRunning { get; set; } = false;
         public bool isAttacking { get; set; } = false;
+
+        public bool isColliding { get; set; } = false;
+
+        public bool isFirst = true;
         public Enemy()
         {
             InitializeProperties();
@@ -94,6 +103,8 @@ namespace GameProject
         public abstract void UpdateEnemyAnimation(Point playerPosition);
         public abstract void UpdateDeathAnimation(object sender, EventArgs e);
         public abstract void UpdateEnemyRunningAnimation(bool isRight);
+
+        public abstract void Patrol();
         public virtual Bullet Shoot(Point playerPosition)
         {
             return null;
@@ -142,6 +153,13 @@ namespace GameProject
         private bool isShooting = false;
         private bool isShootRight;
 
+        private const int PatrolDistance = 100;
+        private bool isIdling = false;
+        private int idleDuration = 120;
+        private int idleCounter = 0;
+        private int totalMoved = 0;
+        private bool isMovingRight = true;
+
         public RangedEnemy()
         {
             this.Size = new Size(50, 70);
@@ -170,6 +188,8 @@ namespace GameProject
             runningRangedLeft = Directory.GetFiles("EnemyRunning_Left", "*.png").ToList();
             deathRangedLeft = Directory.GetFiles("EnemyDeath_Left", "*.png").ToList();
             deathRangedRight = Directory.GetFiles("EnemyDeath_Right", "*.png").ToList();
+            walkingRangedLeft = Directory.GetFiles("EnemyWalk_Left", "*.png").ToList();
+            walkingRangedRight = Directory.GetFiles("EnemyWalk_Right", "*.png").ToList();
         }
         public override void Attack(Point playerPosition)
         {
@@ -177,6 +197,45 @@ namespace GameProject
             isShootRight = playerPosition.X + 10 > this.Left;
             shootFrame = 0;
             shootAnimationTimer.Start();
+        }
+        public override void Patrol()
+        {
+            if (isShooting) return;
+            if (isIdling)
+            {
+                UpdateIdleAnimation();
+                return;
+            }
+            int patrolSpeed = 2;
+
+            if (isMovingRight)
+            {
+                this.Left += patrolSpeed;
+                totalMoved += patrolSpeed;
+
+                if (totalMoved >= PatrolDistance)
+                {
+                    isIdling = true;
+                    totalMoved = 0;
+                }
+            }
+            else
+            {
+                this.Left -= patrolSpeed;
+                totalMoved += patrolSpeed;
+
+                if (totalMoved >= PatrolDistance)
+                {
+                    isIdling = true;
+                    totalMoved = 0;
+                }
+            }
+
+            if (walkingFrame >= walkingRangedRight.Count)
+            {
+                walkingFrame = 0;
+            }
+            this.Image = Image.FromFile(isMovingRight ? walkingRangedRight[walkingFrame++] : walkingRangedLeft[walkingFrame++]);
         }
         public override Bullet Shoot(Point playerPosition)
         {
@@ -233,22 +292,35 @@ namespace GameProject
                 }
                 else
                 {
-                    UpdateIdleAnimation(playerPosition);
+                    UpdateIdleAnimation();
                 }
             }
         }
-        private void UpdateIdleAnimation(Point playerPosition)
+        private void UpdateIdleAnimation()
         {
-            ++enemyIdleAnimationDelayCounter;
-            if (enemyIdleAnimationDelayCounter == 3)
+            if (isIdling)
             {
-                bool isRight = this.Left > playerPosition.X;
-                if (!isShooting)
+                idleCounter++;
+                if (idleCounter >= idleDuration)
                 {
-                    if (idleFrame >= idleRangedLeft.Count) idleFrame = 0;
-                    this.Image = Image.FromFile(isRight ? idleRangedLeft[idleFrame++] : idleRangedRight[idleFrame++]);
+                    isIdling = false;
+                    idleCounter = 0;
+                    isMovingRight = !isMovingRight;
                 }
-                enemyIdleAnimationDelayCounter = 0;
+                else
+                {
+                    ++enemyIdleAnimationDelayCounter;
+                    if (enemyIdleAnimationDelayCounter == 3)
+                    {
+                        bool isRight = isMovingRight;
+                        if (!isShooting)
+                        {
+                            if (idleFrame >= (isRight ? idleRangedRight.Count : idleRangedLeft.Count)) idleFrame = 0;
+                            this.Image = Image.FromFile(isRight ? idleRangedRight[idleFrame++] : idleRangedLeft[idleFrame++]);
+                        }
+                        enemyIdleAnimationDelayCounter = 0;
+                    }
+                }
             }
         }
         private bool isFirst = true;
@@ -276,6 +348,13 @@ namespace GameProject
         private int attackFrame;
         private Timer attackAnimationTimer;
         private bool isAttackRight;
+        private const int AttackRanges = 20;
+        private const int PatrolDistance = 100;
+        private bool isIdling = false;
+        private int idleDuration = 120;
+        private int idleCounter = 0;
+        private int totalMoved = 0;
+        private bool isMovingRight = true;
         public MeleeEnemy()
         {
             this.Size = new Size(50, 150);
@@ -323,6 +402,8 @@ namespace GameProject
             deathMeleeRight = Directory.GetFiles("Enemy2Death_Right", "*.png").ToList();
             attackLeft = Directory.GetFiles("Enemy2Attack_Left", "*.png").ToList();
             attackRight = Directory.GetFiles("Enemy2Attack_Right", "*.png").ToList();
+            walkingMeleeLeft = Directory.GetFiles("Enemy2Walk_Left", "*.png").ToList();
+            walkingMeleeRight = Directory.GetFiles("Enemy2Walk_Right", "*.png").ToList();
         }
         public override void Attack(Point playerPosition)
         {
@@ -332,6 +413,47 @@ namespace GameProject
             attackFrame = 0;
             isAttacking = true;
             attackAnimationTimer.Start();
+        }
+
+        public override void Patrol()
+        {
+            //if (isActivate) return;
+            if (isColliding) return;
+            if (isIdling)
+            {
+                UpdateIdleAnimation();
+                return;
+            }
+            int patrolSpeed = 2;
+
+            if (isMovingRight)
+            {
+                this.Left += patrolSpeed;
+                totalMoved += patrolSpeed;
+
+                if (totalMoved >= PatrolDistance)
+                {
+                    isIdling = true;
+                    totalMoved = 0;
+                }
+            }
+            else
+            {
+                this.Left -= patrolSpeed;
+                totalMoved += patrolSpeed;
+
+                if (totalMoved >= PatrolDistance)
+                {
+                    isIdling = true;
+                    totalMoved = 0;
+                }
+            }
+
+            if (walkingFrame >= walkingMeleeRight.Count)
+            {
+                walkingFrame = 0;
+            }
+            this.Image = Image.FromFile(isMovingRight ? walkingMeleeRight[walkingFrame++] : walkingMeleeLeft[walkingFrame++]);
         }
         public override void UpdateEnemyRunningAnimation(bool isRight)
         {
@@ -391,23 +513,37 @@ namespace GameProject
                     }
                     else
                     {
-                        UpdateIdleAnimation(playerPosition);
+                        UpdateIdleAnimation();
                     }
                 }
             }
         }
-        private void UpdateIdleAnimation(Point playerPosition)
+        private void UpdateIdleAnimation()
         {
-            ++enemyIdleAnimationDelayCounter;
-            if (enemyIdleAnimationDelayCounter >= 3)
+            if (isColliding) return;
+            if (isIdling)
             {
-                bool isRight = this.Left > playerPosition.X;
-                if (!isAttacking)
+                idleCounter++;
+                if (idleCounter >= idleDuration)
                 {
-                    if (idleFrame >= idleMeleeLeft.Count) idleFrame = 0;
-                    this.Image = Image.FromFile(isRight ? idleMeleeLeft[idleFrame++] : idleMeleeRight[idleFrame++]);
+                    isIdling = false;
+                    idleCounter = 0;
+                    isMovingRight = !isMovingRight;
                 }
-                enemyIdleAnimationDelayCounter = 0;
+                else
+                {
+                    ++enemyIdleAnimationDelayCounter;
+                    if (enemyIdleAnimationDelayCounter == 3)
+                    {
+                        bool isRight = isMovingRight;
+                        if (!isAttacking)
+                        {
+                            if (idleFrame >= (isRight ? idleMeleeRight.Count : idleMeleeLeft.Count)) idleFrame = 0;
+                            this.Image = Image.FromFile(isRight ? idleMeleeRight[idleFrame++] : idleMeleeLeft[idleFrame++]);
+                        }
+                        enemyIdleAnimationDelayCounter = 0;
+                    }
+                }
             }
         }
         private bool isFirst = true;
