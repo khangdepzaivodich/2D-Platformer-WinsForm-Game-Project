@@ -41,7 +41,7 @@ namespace GameProject
             player.IsOnGround = false;
             this.Controls.Add(player);
             player.CreateHitBox();
-
+            player.HitBox.BorderStyle = BorderStyle.FixedSingle;
 
             enemy = new RangedEnemy();
             bullets = new List<Bullet>();
@@ -50,15 +50,13 @@ namespace GameProject
             this.Controls.Add(enemy);
 
             enemy2 = new MeleeEnemy();
-            enemy2.Location = new Point(500, 150);
+            enemy2.Location = new Point(500, 100);
             enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy2);
 
             enemy.BringToFront();
             enemy2.BringToFront();
             Ground.BringToFront();
-
-
 
             CreateHeartBoxes();
             SetupTimers();
@@ -84,9 +82,11 @@ namespace GameProject
         }
         private void GameLoop(object sender, EventArgs e)
         {
+            player.UpdateHitboxPosition();
             player.PlayerMove();
             player.ApplyGravity();
             enemy.ApplyGravity();
+            enemy2.ApplyGravity();
             player.UpdateAnimation();
             UpdateEnemyBehavior();
             CheckCollisions();
@@ -95,7 +95,7 @@ namespace GameProject
         {
             if (!enemy.isActivate)
             {
-                if (enemy.IsPlayerInSight(player.Location))
+                if (enemy.IsPlayerInSight(player.HitBox.Location))
                 {
                     enemyShootTimer.Start();
                     enemy.isActivate = true;
@@ -104,7 +104,7 @@ namespace GameProject
 
             if (enemy.isActivate)
             {
-                if (enemy.IsPlayerInSight(player.Location))
+                if (enemy.IsPlayerInSight(player.HitBox.Location))
                 {
                     enemyShootTimer.Start();
                     enemy.isActivate = true;
@@ -114,22 +114,22 @@ namespace GameProject
                 {
                     enemyShootTimer.Stop();
                     enemy.isRunning = true;
-                    enemy.ChasePlayer(player.Location);
+                    enemy.ChasePlayer(player.HitBox.Location);
                 }
             }
 
 
             if (!enemy2.isActivate)
             {
-                if (enemy2.IsPlayerInSight(player.Location))
+                if (enemy2.IsPlayerInSight(player.HitBox.Location))
                 {
-                    enemy.isActivate = true;
+                    enemy2.isActivate = true;
                 }
             }
 
             if (enemy2.isActivate)
             {
-                if (enemy2.IsPlayerInSight(player.Location))
+                if (enemy2.IsPlayerInSight(player.HitBox.Location))
                 {
                     enemy2.isActivate = true;
                     enemy2.isRunning = false;
@@ -137,15 +137,15 @@ namespace GameProject
                 else
                 {
                     enemy2.isRunning = true;
-                    enemy2.ChasePlayer(player.Location);
+                    enemy2.ChasePlayer(player.HitBox.Location);
                 }
             }
 
 
-            enemy2.UpdateEnemyAnimation(player.Location);
-            label2.Text = enemy.IsPlayerInSight(player.Location).ToString();
+            enemy2.UpdateEnemyAnimation(player.HitBox.Location);
+            label2.Text = enemy.IsPlayerInSight(player.HitBox.Location).ToString();
             label3.Text = player.Location.ToString();
-            enemy.UpdateEnemyAnimation(player.Location);
+            enemy.UpdateEnemyAnimation(player.HitBox.Location);
         }
         private void CheckCollisions()
         {
@@ -164,11 +164,9 @@ namespace GameProject
                         else if (!enemy1.isAttacking)
                         {
                             enemy1.Attack(player.Location);
-                            player.TakeDamage(20);
                         }
                     }
                 }
-
                 if (x is PictureBox && (string)x.Tag == "Ground")
                 {
                     if (player.HitBox.Bounds.IntersectsWith(x.Bounds))
@@ -195,6 +193,15 @@ namespace GameProject
                     {
                         enemy.IsOnGround = false;
                     }
+                    if (enemy2.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        enemy2.IsOnGround = true;
+                        enemy2.Top = x.Top - enemy2.Height + 12;
+                    }
+                    else
+                    {
+                        enemy2.IsOnGround = false;
+                    }
                 }
             }
         }
@@ -202,7 +209,7 @@ namespace GameProject
         {
             if (!enemy.IsDead)
             {
-                Bullet newBullet = enemy.Shoot(player.Location);
+                Bullet newBullet = enemy.Shoot(player.HitBox.Location);
                 bullets.Add(newBullet);
                 this.Controls.Add(newBullet);
             }
@@ -333,6 +340,7 @@ namespace GameProject
                 heartBox.Image = heartImages[currentImageIndex];
             }
         }
+
         public void RemoveHeart()
         {
             if (heartBoxes.Count > 0)
@@ -341,24 +349,6 @@ namespace GameProject
                 heartBoxes.RemoveAt(heartBoxes.Count - 1); 
                 this.Controls.Remove(heartToRemove); 
             }
-        }
-        private void PushBackPlayer(Enemy enemy)
-        {
-            int pushBackDistance = 50;
-            if (player.Left < enemy.Left)
-            {
-                player.Left -= pushBackDistance;
-            }
-            else
-            {
-                player.Left += pushBackDistance;
-            }
-            player.Top += 10;
-        }
-
-        private void Main_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

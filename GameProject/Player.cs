@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Tracing;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -70,14 +71,13 @@ namespace GameProject
         {
             HitBox = new PictureBox();
             HitBox.BackColor = Color.Transparent;
-            HitBox.Size = new Size(50, 70);
-            HitBox.Visible = false;
+            HitBox.Size = new Size(76, 70);
+            HitBox.Visible = true;
             HitBox.BorderStyle = BorderStyle.FixedSingle;
             this.Parent.Controls.Add(HitBox);
-            UpdateHitboxPosition();
         }
 
-        private void UpdateHitboxPosition()
+        public void UpdateHitboxPosition()
         {
             HitBox.Left = this.Left + (this.Width / 2) - (HitBox.Width / 2);
             HitBox.Top = this.Top + (this.Height / 2) - (HitBox.Height / 2);
@@ -135,7 +135,6 @@ namespace GameProject
                     UpdateRunningAnimation();
                 }
             }
-            UpdateHitboxPosition();
         }
 
         private void UpdateAttackingAnimation()
@@ -173,7 +172,6 @@ namespace GameProject
                 JumpVelocity = 4;
                 this.Image = Image.FromFile(IsFlipped ? jumpingLeft[0] : jumpingRight[0]);
             }
-            UpdateHitboxPosition();
         }
 
         public void ApplyGravity()
@@ -257,15 +255,26 @@ namespace GameProject
         public void PlayerMove()
         {
             if (isDead) return;
-            Point previousPosition = this.Location;
-
-            if (IsLeft && this.Left > 0 && !IsAttacking)
+            bool flag = true;
+            foreach (Control x in this.Parent.Controls)
             {
+                if ((x is MeleeEnemy || x is RangedEnemy) && this.HitBox.Bounds.IntersectsWith(x.Bounds))
+                {
+                    if((IsLeft && x.Left < this.HitBox.Left) || (IsRight && x.Left > this.HitBox.Left))
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+            }
+            
+            if (IsLeft && this.Left > 0 && !IsAttacking && flag)
+            { 
                 this.Left -= Speed;
                 IsFlipped = true;
                 IsRunning = true;
             }
-            else if (IsRight && this.Right < this.Parent.ClientSize.Width && !IsAttacking)
+            else if (IsRight && this.Right < this.Parent.ClientSize.Width && !IsAttacking && flag)
             {
                 this.Left += Speed;
                 IsFlipped = false;
@@ -275,25 +284,6 @@ namespace GameProject
             {
                 IsRunning = false;
             }
-
-            if (CheckEnemyCollision())
-            {
-                this.Location = previousPosition;
-            }
-        }
-        private bool CheckEnemyCollision()
-        {
-            foreach (Control control in this.Parent.Controls)
-            {
-                if (control is Enemy enemy && !enemy.IsDead)
-                {
-                    if (this.HitBox.Bounds.IntersectsWith(enemy.Bounds))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
     }
 }

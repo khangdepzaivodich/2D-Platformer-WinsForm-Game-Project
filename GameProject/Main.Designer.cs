@@ -40,7 +40,7 @@
             this.Ground.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Ground.Location = new System.Drawing.Point(0, 348);
             this.Ground.Name = "Ground";
-            this.Ground.Size = new System.Drawing.Size(807, 103);
+            this.Ground.Size = new System.Drawing.Size(1427, 103);
             this.Ground.TabIndex = 0;
             this.Ground.TabStop = false;
             this.Ground.Tag = "Ground";
@@ -76,7 +76,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1839, 450);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);

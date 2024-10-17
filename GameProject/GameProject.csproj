@@ -98,5 +98,8 @@
   <ItemGroup>
     <None Include="bin\Debug\DeflectFrame\9.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Enemy2Idle_Right\Idle %280%29.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

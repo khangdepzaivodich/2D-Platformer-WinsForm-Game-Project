@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -159,7 +160,7 @@ namespace GameProject
         public override void Attack(Point playerPosition)
         {
             if (IsDead) return;
-            isShootRight = playerPosition.X > this.Left;
+            isShootRight = playerPosition.X + 10 > this.Left;
             shootFrame = 0;
             shootAnimationTimer.Start();
         }
@@ -236,7 +237,7 @@ namespace GameProject
                 enemyIdleAnimationDelayCounter = 0;
             }
         }
-
+        private bool isFirst = true;
         public override void UpdateDeathAnimation(object sender, EventArgs e)
         {
             if (deathAnimationFrame < (currentDirection == Direction.Right ? deathRangedRight.Count : deathRangedLeft.Count))
@@ -249,6 +250,7 @@ namespace GameProject
                 deathAnimationTimer.Stop();
                 this.Visible = false;
                 this.Enabled = false;
+                this.Dispose();
             }
         }
     }
@@ -260,7 +262,7 @@ namespace GameProject
         private int attackFrame;
         private Timer attackAnimationTimer;
         private bool isAttackRight;
-        private const int AttackRange = 50;
+        private const int AttackRange = 20;
 
         public MeleeEnemy()
         {
@@ -293,12 +295,11 @@ namespace GameProject
             attackLeft = Directory.GetFiles("Enemy2Attack_Left", "*.png").ToList();
             attackRight = Directory.GetFiles("Enemy2Attack_Right", "*.png").ToList();
         }
-
         public override void Attack(Point playerPosition)
         {
             if (IsDead) return;
 
-            isAttackRight = playerPosition.X > this.Left;
+            isAttackRight = playerPosition.X + 10 > this.Left;
             attackFrame = 0;
             isAttacking = true;
             attackAnimationTimer.Start();
@@ -380,6 +381,7 @@ namespace GameProject
                 enemyIdleAnimationDelayCounter = 0;
             }
         }
+        private bool isFirst = true;
         public override void UpdateDeathAnimation(object sender, EventArgs e)
         {
             if (deathAnimationFrame < (currentDirection == Direction.Right ? deathMeleeRight.Count : deathMeleeLeft.Count))
@@ -392,6 +394,7 @@ namespace GameProject
                 deathAnimationTimer.Stop();
                 this.Visible = false;
                 this.Enabled = false;
+                this.Dispose();
             }
         }
     }
