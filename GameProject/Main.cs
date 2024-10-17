@@ -53,11 +53,12 @@ namespace GameProject
             enemy2.Location = new Point(500, 100);
             enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy2);
+            enemy2.CreateHitBox();
+            enemy2.hitBox.BorderStyle = BorderStyle.FixedSingle;
 
             enemy.BringToFront();
             enemy2.BringToFront();
             Ground.BringToFront();
-
             CreateHeartBoxes();
             SetupTimers();
 
@@ -83,6 +84,7 @@ namespace GameProject
         private void GameLoop(object sender, EventArgs e)
         {
             player.UpdateHitboxPosition();
+            enemy2.UpdateHitboxPosition();
             player.PlayerMove();
             player.ApplyGravity();
             enemy.ApplyGravity();
@@ -90,9 +92,99 @@ namespace GameProject
             player.UpdateAnimation();
             UpdateEnemyBehavior();
             CheckCollisions();
+            CheckTakeDeflectedBullet();
         }
+        private void CheckTakeDeflectedBullet()
+        {
+            for(int i = bullets.Count - 1; i >= 0; i--)
+            {
+                if (bullets[i].deflected)
+                {
+                    foreach(Control x in this.Controls)
+                    {
+                        if(x is MeleeEnemy || x is RangedEnemy)
+                        {
+                            if(x is MeleeEnemy meleeEnemy)
+                            {
+                                if (bullets[i].Bounds.IntersectsWith(meleeEnemy.hitBox.Bounds))
+                                {
+                                    meleeEnemy.TakeDamage(10, this.Location);
+                                    bullets[i].Dispose();
+                                    bullets.RemoveAt(i);
+                                }
+                            }
+                            else if(x is RangedEnemy rangedEnemy)
+                            {
+                                if (bullets[i].Bounds.IntersectsWith(rangedEnemy.Bounds))
+                                {
+                                    rangedEnemy.TakeDamage(10, this.Location);
+                                    bullets[i].Dispose();
+                                    bullets.RemoveAt(i);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void UpdateEnemyBehavior()
         {
+            //foreach(Control x in this.Controls)
+            //{
+            //    if(x is RangedEnemy rangedEnemy)
+            //    {
+            //        if (!rangedEnemy.isActivate)
+            //        {
+            //            if (rangedEnemy.IsPlayerInSight(player.HitBox.Location))
+            //            {
+            //                enemyShootTimer.Start();
+            //                rangedEnemy.isActivate = true;
+            //            }
+            //            if (rangedEnemy.isActivate)
+            //            {
+            //                if (rangedEnemy.IsPlayerInSight(player.HitBox.Location))
+            //                {
+            //                    enemyShootTimer.Start();
+            //                    rangedEnemy.isActivate = true;
+            //                    rangedEnemy.isRunning = false;
+            //                }
+            //                else
+            //                {
+            //                    enemyShootTimer.Stop();
+            //                    rangedEnemy.isRunning = true;
+            //                    rangedEnemy.ChasePlayer(player.HitBox.Location);    
+            //                }
+            //            }
+            //        }
+            //        rangedEnemy.UpdateEnemyAnimation(player.HitBox.Location);
+            //    }
+            //    else if(x is MeleeEnemy meleeEnemy)
+            //    {
+            //        if (!meleeEnemy.isActivate)
+            //        {
+            //            if (meleeEnemy.IsPlayerInSight(player.HitBox.Location))
+            //            {
+            //                meleeEnemy.isActivate = true;
+            //            }
+            //        }
+            //        if (meleeEnemy.isActivate)
+            //        {
+            //            if (Math.Abs(player.Left - meleeEnemy.Left) > meleeEnemy.AttackRange)
+            //            {
+            //                meleeEnemy.isRunning = true;
+            //                meleeEnemy.ChasePlayer(player.HitBox.Location);
+            //            }
+            //            else
+            //            {
+            //                meleeEnemy.isActivate = true;
+            //                meleeEnemy.isRunning = false;
+
+            //            }
+            //        }
+            //        meleeEnemy.UpdateEnemyAnimation(player.HitBox.Location);
+            //    }
+            //}
             if (!enemy.isActivate)
             {
                 if (enemy.IsPlayerInSight(player.HitBox.Location))
@@ -107,7 +199,7 @@ namespace GameProject
                 if (enemy.IsPlayerInSight(player.HitBox.Location))
                 {
                     enemyShootTimer.Start();
-                    enemy.isActivate = true;
+                    enemy.isActivate = true;    
                     enemy.isRunning = false;
                 }
                 else
@@ -129,15 +221,16 @@ namespace GameProject
 
             if (enemy2.isActivate)
             {
-                if (enemy2.IsPlayerInSight(player.HitBox.Location))
-                {
-                    enemy2.isActivate = true;
-                    enemy2.isRunning = false;
-                }
-                else
+                if(Math.Abs(player.Left - enemy2.Left) > enemy2.AttackRange)
                 {
                     enemy2.isRunning = true;
                     enemy2.ChasePlayer(player.HitBox.Location);
+                }
+                else
+                {
+                    enemy2.isActivate = true;
+                    enemy2.isRunning = false;
+
                 }
             }
 
@@ -156,7 +249,7 @@ namespace GameProject
                     if (enemy1.IsDead)
                         continue;
                     if (player.Bounds.IntersectsWith(enemy1.Bounds))
-                    {
+                    {   
                         if (player.IsAttacking)
                         {
                             enemy1.TakeDamage(10, this.Location);
@@ -232,6 +325,7 @@ namespace GameProject
                     deflectParticle.BringToFront();
                     bullets[i].IsMovingRight = !bullets[i].IsMovingRight;
                     bullets[i].Speed += 25;
+                    bullets[i].deflected = true;
                 }
                 else if (player.HitBox.Bounds.IntersectsWith(bullets[i].Bounds))
                 {

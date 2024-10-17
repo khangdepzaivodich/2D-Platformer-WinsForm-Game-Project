@@ -29,10 +29,11 @@ namespace GameProject
         protected Direction currentDirection;
         protected int enemyIdleAnimationDelayCounter = 0;
         protected int slowCounter = 0;
-        private const int DetectionDistance = 600;
-        private const int AttackHeightTolerance = 70;
-        private const int ChaseSpeed = 8;
-
+        protected const int DetectionDistance = 600;
+        protected const int AttackHeightTolerance = 70;
+        protected const int ChaseSpeed = 8;
+        public PictureBox hitBox;
+        public int AttackRange = 20;
         public bool IsDead { get; protected set; } = false;
         public bool IsOnGround { get; set; } = false;
         public bool isActivate { get; set; } = false;
@@ -40,7 +41,6 @@ namespace GameProject
         public int Gravity { get; protected set; } = 10;
         protected int speed = 2;
         public bool isRunning { get; set; } = false;
-
         public bool isAttacking { get; set; } = false;
         public Enemy()
         {
@@ -52,13 +52,13 @@ namespace GameProject
             deathAnimationTimer.Interval = 150;
             deathAnimationTimer.Tick += UpdateDeathAnimation;
         }
-        public bool IsPlayerInSight(Point playerPosition)
+        public virtual bool IsPlayerInSight(Point playerPosition)
         {
             bool withinHorizontalDistance = Math.Abs(playerPosition.X - this.Left) <= DetectionDistance;
             bool sameGround = Math.Abs(playerPosition.Y - this.Top) <= AttackHeightTolerance;
             return withinHorizontalDistance && sameGround;
         }
-        public void ChasePlayer(Point playerPosition)
+        public virtual void ChasePlayer(Point playerPosition)
         {
             if (IsPlayerInSight(playerPosition))
             {
@@ -75,6 +75,20 @@ namespace GameProject
                 this.Left += ChaseSpeed;
                 currentDirection = Direction.Right;
             }
+        }
+        public void CreateHitBox()
+        {
+            hitBox = new PictureBox();
+            hitBox.BackColor = Color.Transparent;
+            hitBox.Size = new Size(50, 70);
+            hitBox.Visible = true;
+            hitBox.BorderStyle = BorderStyle.FixedSingle;
+            this.Parent.Controls.Add(hitBox);
+        }
+        public void UpdateHitboxPosition()
+        {
+            hitBox.Left = this.Left + (this.Width / 2) - (hitBox.Width / 2);
+            hitBox.Top = this.Top + (this.Height / 2) - 10;
         }
         public abstract void Attack(Point playerPosition);
         public abstract void UpdateEnemyAnimation(Point playerPosition);
@@ -262,13 +276,10 @@ namespace GameProject
         private int attackFrame;
         private Timer attackAnimationTimer;
         private bool isAttackRight;
-        private const int AttackRange = 20;
-
         public MeleeEnemy()
         {
             this.Size = new Size(50, 150);
             this.BackColor = Color.Transparent;
-            this.BorderStyle = BorderStyle.FixedSingle;
 
             LoadAnimations();
             InitializeProperties();
@@ -283,7 +294,25 @@ namespace GameProject
             attackAnimationTimer.Interval = 60;
             attackAnimationTimer.Tick += (s, e) => UpdateAttackAnimation();
         }
-
+        public override bool IsPlayerInSight(Point playerPosition)
+        {
+            bool withinHorizontalDistance = Math.Abs(playerPosition.X - this.hitBox.Left) <= DetectionDistance;
+            bool sameGround = Math.Abs(playerPosition.Y - this.hitBox.Top) <= AttackHeightTolerance;
+            return withinHorizontalDistance && sameGround;
+        }
+        public override void ChasePlayer(Point playerPosition)
+        {
+            if (playerPosition.X < this.Left)
+            {
+                this.Left -= ChaseSpeed;
+                currentDirection = Direction.Left;
+            }
+            else
+            {
+                this.Left += ChaseSpeed;
+                currentDirection = Direction.Right;
+            }
+        }
         private void LoadAnimations()
         {
             idleMeleeLeft = Directory.GetFiles("Enemy2Idle_Left", "*.png").ToList();
@@ -394,6 +423,7 @@ namespace GameProject
                 deathAnimationTimer.Stop();
                 this.Visible = false;
                 this.Enabled = false;
+                this.hitBox.Dispose();
                 this.Dispose();
             }
         }

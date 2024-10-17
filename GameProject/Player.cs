@@ -71,7 +71,7 @@ namespace GameProject
         {
             HitBox = new PictureBox();
             HitBox.BackColor = Color.Transparent;
-            HitBox.Size = new Size(76, 70);
+            HitBox.Size = new Size(60, 70);
             HitBox.Visible = true;
             HitBox.BorderStyle = BorderStyle.FixedSingle;
             this.Parent.Controls.Add(HitBox);
@@ -258,12 +258,23 @@ namespace GameProject
             bool flag = true;
             foreach (Control x in this.Parent.Controls)
             {
-                if ((x is MeleeEnemy || x is RangedEnemy) && this.HitBox.Bounds.IntersectsWith(x.Bounds))
+                if (x is MeleeEnemy || x is RangedEnemy)
                 {
-                    if((IsLeft && x.Left < this.HitBox.Left) || (IsRight && x.Left > this.HitBox.Left))
+                    if(x is MeleeEnemy meleeEnemy)
                     {
-                        flag = false;
-                        break;
+                        if (this.HitBox.Bounds.IntersectsWith(meleeEnemy.hitBox.Bounds) && ((IsLeft && this.HitBox.Left > meleeEnemy.hitBox.Left) || (IsRight && this.HitBox.Left < meleeEnemy.hitBox.Left)))
+                        {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if(x is  RangedEnemy rangedEnemy)
+                    {
+                        if (this.HitBox.Bounds.IntersectsWith(rangedEnemy.Bounds) && ((IsLeft && this.HitBox.Left > rangedEnemy.Left) || (IsRight && this.HitBox.Left < rangedEnemy.Left)))
+                        {
+                            flag = false;
+                            break;
+                        }
                     }
                 }
             }

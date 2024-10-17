@@ -11,6 +11,7 @@ namespace GameProject
     {
         public int Speed { get; set; }
         public bool IsMovingRight { get; set; }
+        public bool deflected = false;
         private List<string> bulletFrames;
         private int currentFrame = 0;
         private Timer bulletAnimator;
