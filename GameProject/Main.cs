@@ -226,6 +226,7 @@ namespace GameProject
                         enemy2.Attack(player.Location);
                         enemy2.isAttacking = true;
                         player.TakeDamage(20);
+                        RemoveHeart();
                     }
                 }
                 else
