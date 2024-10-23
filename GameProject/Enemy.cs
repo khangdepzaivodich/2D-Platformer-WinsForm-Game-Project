@@ -227,13 +227,6 @@ namespace GameProject
         private int totalMoved = 0;
         private bool isMovingRight = false;
 
-        private const int PatrolDistance = 100;
-        private bool isIdling = false;
-        private int idleDuration = 120;
-        private int idleCounter = 0;
-        private int totalMoved = 0;
-        private bool isMovingRight = true;
-
         public RangedEnemy()
         {
             this.Size = new Size(50, 70);
