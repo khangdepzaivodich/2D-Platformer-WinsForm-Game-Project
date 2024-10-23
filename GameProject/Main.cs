@@ -234,6 +234,27 @@ namespace GameProject
                 }
             }
 
+            if (enemy2.isActivate && !enemy2.IsDead)
+            {
+                if (enemy2.Bounds.IntersectsWith(player.HitBox.Bounds))
+                {
+                    if (!player.isDead && !enemy2.isAttacking)
+                    {
+                        enemy2.isRunning = false;
+                        enemy2.Attack(player.Location);
+                        enemy2.isAttacking = true;
+                        player.TakeDamage(20);
+                    }
+                }
+                else
+                {
+                    enemy2.isActivate = true;
+                    enemy2.isRunning = true;
+                    enemy2.ChasePlayer(player.HitBox.Location);
+                    enemy2.isAttacking = false;
+                }
+            }
+
 
             enemy2.UpdateEnemyAnimation(player.HitBox.Location);
             label2.Text = enemy.IsPlayerInSight(player.HitBox.Location).ToString();
