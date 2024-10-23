@@ -66,6 +66,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scene2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scene2.Designer.cs">
+      <DependentUpon>Scene2.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -79,6 +85,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Scene2.resx">
+      <DependentUpon>Scene2.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -100,6 +109,99 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\Enemy2Idle_Right\Idle %280%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile069.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile061.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile042.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile008.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile009.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile012.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile013.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile005.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile007.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile038.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile028.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile031.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile050.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile051.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile056.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile057.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile043.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile055.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile039.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile048.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile020.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile022.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile023.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Locker4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Board2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Box1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Board3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

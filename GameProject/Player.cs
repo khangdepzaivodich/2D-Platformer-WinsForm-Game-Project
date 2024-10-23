@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +6,7 @@ using System.Diagnostics.Tracing;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,11 +21,11 @@ namespace GameProject
         public bool IsRunning { get; set; }
         public bool IsOnGround { get; set; }
         public bool IsJumping { get; set; }
-
+        public bool IsFalling = false;
         public int Speed { get; set; }
         public int Gravity { get; set; }
         public int JumpSpeed { get; set; }
-        public int Health { get; private set; } = 100;
+        public int Health { get; set; } = 100;
         public int AttackDamage { get; private set; } = 20;
         public List<PictureBox> HeartBoxes { get; set; }
 
@@ -43,7 +44,8 @@ namespace GameProject
         private List<string> deathRight;
         private List<string> takeHitLeft;
         private List<string> takeHitRight;
-
+        private List<string> bloodEffect;
+        private List<SoundPlayer> attackSounds;
 
         private int idleFrame;
         private int runningFrame;
@@ -51,21 +53,42 @@ namespace GameProject
         private int deathFrame;
         private int takeHitFrame;
         private Main mainForm;
+        private int bloodEffectFrame = 0;
 
-        private bool isDead = false;
+        public bool isDead = false;
+        private bool isBloodEffectRunning = false;
         private int deathFrameIndex = 0;
         private Timer deathAnimationTimer;
+        private Timer bloodEffectTimer;
+        private Timer runAnimationTimer;
 
         public PictureBox HitBox;
-        public Player(Main main)
+        private PictureBox bloodEffectBox;
+
+        public Player()
         {
             LoadAnimation();
             InitializeProperties();
-            mainForm = main;
+            LoadSoundEffects();
+            
 
             deathAnimationTimer = new Timer();
             deathAnimationTimer.Interval = 200;
             deathAnimationTimer.Tick += UpdateDeathAnimation;
+
+            
+
+            bloodEffectTimer = new Timer();
+            bloodEffectTimer.Interval = 1; //(ms)
+            bloodEffectTimer.Tick += UpdateBloodEffect;
+
+            bloodEffectBox = new PictureBox
+            {
+                Size = new Size(50, 50),
+                SizeMode = PictureBoxSizeMode.CenterImage,
+                BackColor = Color.Transparent
+            };
+            this.Controls.Add(bloodEffectBox);
         }
         public void CreateHitBox()
         {
@@ -97,6 +120,8 @@ namespace GameProject
             deathRight = Directory.GetFiles("PlayerDeath_Right", "*.png").ToList();
             takeHitLeft = Directory.GetFiles("TakeHit_Left", "*.png").ToList();
             takeHitRight = Directory.GetFiles("TakeHit_Right", "*.png").ToList();
+            bloodEffect = Directory.GetFiles("Blood", "*.png").ToList();
+
         }
         private void InitializeProperties()
         {
@@ -139,6 +164,10 @@ namespace GameProject
 
         private void UpdateAttackingAnimation()
         {
+            if (attackSounds.Count > 0)
+            {
+                attackSounds[0].Play();
+            }
             if (attackFrame >= attackLeft.Count)
             {
                 attackFrame = 0;
@@ -158,7 +187,7 @@ namespace GameProject
         }
 
         private int JumpVelocity;
-        private bool IsFalling = false;
+        
         private int MaxJumpHeight = 100;
         private bool isTakingHit = false;
         public void Jump()
@@ -188,23 +217,30 @@ namespace GameProject
             if (IsFalling || !IsOnGround)
             {
                 this.Top += Gravity;
-
-                if (this.Top + this.Height >= this.Parent.ClientSize.Height)
+                if (this.Parent != null)
                 {
-                    IsOnGround = true;
-                    IsJumping = false;
-                    this.Top = this.Parent.ClientSize.Height - this.Height;
+                    if (this.Top + this.Height >= this.Parent.ClientSize.Height)
+                    {
+                        IsOnGround = true;
+                        IsJumping = false;
+                        this.Top = this.Parent.ClientSize.Height - this.Height;
+                    }
                 }
             }
             UpdateHitboxPosition();
         }
         public void TakeDamage(int damage)
         {
+            if (isDead || isBloodEffectRunning) return;
             Health -= damage;
             takeHitFrame = 0;
             isTakingHit = true;
-            mainForm.RemoveHeart();
-
+            bloodEffectFrame = 0;
+            isBloodEffectRunning = true;
+            
+            
+            UpdateBloodEffect(this, EventArgs.Empty);
+            bloodEffectTimer.Start();
             if (Health <= 0 && !isDead)
             {
                 Die();
@@ -256,36 +292,49 @@ namespace GameProject
         {
             if (isDead) return;
             bool flag = true;
-            foreach (Control x in this.Parent.Controls)
+            if(this.Parent != null)
             {
-                if (x is MeleeEnemy || x is RangedEnemy)
+                foreach (Control x in this.Parent.Controls)
                 {
-                    if(x is MeleeEnemy meleeEnemy)
+                    if (x is MeleeEnemy || x is RangedEnemy)
                     {
-                        if (this.HitBox.Bounds.IntersectsWith(meleeEnemy.hitBox.Bounds) && ((IsLeft && this.HitBox.Left > meleeEnemy.hitBox.Left) || (IsRight && this.HitBox.Left < meleeEnemy.hitBox.Left)))
+                        if (x is MeleeEnemy meleeEnemy)
+                        {
+                            if (this.HitBox.Bounds.IntersectsWith(meleeEnemy.hitBox.Bounds) && ((IsLeft && this.HitBox.Left > meleeEnemy.hitBox.Left) || (IsRight && this.HitBox.Left < meleeEnemy.hitBox.Left)))
+                            {
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if (x is RangedEnemy rangedEnemy)
+                        {
+                            if (this.HitBox.Bounds.IntersectsWith(rangedEnemy.Bounds) && ((IsLeft && this.HitBox.Left > rangedEnemy.Left) || (IsRight && this.HitBox.Left < rangedEnemy.Left)))
+                            {
+                                flag = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (x is PictureBox && (string)x.Tag == "BlockedWall")
+                    {
+                        if (this.HitBox.Bounds.IntersectsWith(x.Bounds) && ((IsLeft && this.HitBox.Left > x.Left) || (IsRight && this.HitBox.Left < x.Left)))
                         {
                             flag = false;
                             break;
                         }
                     }
-                    if(x is  RangedEnemy rangedEnemy)
-                    {
-                        if (this.HitBox.Bounds.IntersectsWith(rangedEnemy.Bounds) && ((IsLeft && this.HitBox.Left > rangedEnemy.Left) || (IsRight && this.HitBox.Left < rangedEnemy.Left)))
-                        {
-                            flag = false;
-                            break;
-                        }
-                    }
+
                 }
             }
             
+
             if (IsLeft && this.Left > 0 && !IsAttacking && flag)
-            { 
+            {
                 this.Left -= Speed;
                 IsFlipped = true;
                 IsRunning = true;
             }
-            else if (IsRight && this.Right < this.Parent.ClientSize.Width && !IsAttacking && flag)
+            else if (IsRight && !IsAttacking && flag)
             {
                 this.Left += Speed;
                 IsFlipped = false;
@@ -296,5 +345,39 @@ namespace GameProject
                 IsRunning = false;
             }
         }
+        private void UpdateBloodEffect(object sender, EventArgs e)
+        {
+            if (bloodEffectFrame >= bloodEffect.Count)
+            {
+                bloodEffectFrame = 0;
+                bloodEffectTimer.Stop();
+                bloodEffectBox.Visible = false;
+                isTakingHit = false;
+                isBloodEffectRunning = false;
+            }
+            else
+            {
+                bloodEffectBox.Image = Image.FromFile(bloodEffect[bloodEffectFrame++]);
+                bloodEffectBox.Location = new Point((this.Width / 2) - (bloodEffectBox.Width / 2), (this.Height / 2) - (bloodEffectBox.Height / 2));
+                bloodEffectBox.BringToFront();
+                bloodEffectBox.Visible = true;
+            }
+        }
+        private void LoadSoundEffects()
+        {
+            attackSounds = new List<SoundPlayer>();
+            string[] soundFiles = Directory.GetFiles("AttackSound", "*.wav");
+            foreach (string soundFile in soundFiles)
+            {
+                if (File.Exists(soundFile))
+                {
+                    SoundPlayer playerSound = new SoundPlayer(soundFile);
+                    playerSound.Load();
+                    attackSounds.Add(playerSound);
+                }
+            }
+        }
+
     }
+
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace GameProject
 {
-    public partial class Main : Form
+    public partial class Scene2 : Form
     {
         private Player player;
         private Enemy enemy, enemy2;
@@ -26,30 +26,30 @@ namespace GameProject
         private Timer heartAnimationTimer;
         private List<string> shootLeft;
         private List<string> shootRight;
-        private List<PictureBox> backgrounds;
         private DateTime lastAttackTime;
         private const int attackCooldown = 1000;
-        private bool Scene2OP = false;
-        private int currentHealth;
-        private int heartRemoveCounter = 0;
-        public Main()
+        public int heartRemoveCT = 0;
+        
+        
+        public Scene2(int health, int heartRemoveCounter)
         {
             InitializeComponent();
             InitializeGame();
+            heartRemoveCT = heartRemoveCounter;
+            player.Health = health;
+            CreateHeartBoxes(heartRemoveCT);
         }
-        
         private void InitializeGame()
         {
-
             this.DoubleBuffered = true;
             this.KeyPreview = true;
-            
+
             shootLeft = Directory.GetFiles("EnemyShot_Left", "*.png").ToList();
             shootRight = Directory.GetFiles("EnemyShot_Right", "*.png").ToList();
 
             player = new Player();
             player.SizeMode = PictureBoxSizeMode.CenterImage;
-            player.Location = new Point(100, 490);
+            player.Location = new Point(0, 381);
             player.IsOnGround = false;
             player.BackColor = Color.Transparent;
             this.Controls.Add(player);
@@ -58,29 +58,33 @@ namespace GameProject
 
             enemy = new RangedEnemy();
             bullets = new List<Bullet>();
-            enemy.Location = new Point(900, 490);
+            enemy.Location = new Point(1316, 325);
             enemy.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy);
 
             enemy2 = new MeleeEnemy();
-            enemy2.Location = new Point(700, 490);
+            enemy2.Location = new Point(608, 325);
             enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy2);
             enemy2.CreateHitBox();
             enemy2.hitBox.BorderStyle = BorderStyle.FixedSingle;
 
+
+            player.BringToFront();
             enemy.BringToFront();
             enemy2.BringToFront();
-            
-            
+
             foreach (Control x in this.Controls)
             {
                 if (x is PictureBox && (string)x.Tag == "Ground")
                 {
                     x.BringToFront();
                 }
+                if (x is PictureBox && (string)x.Tag == "BlockedWall")
+                {
+                    x.BringToFront();
+                }
             }
-            CreateHeartBoxes();
             SetupTimers();
 
         }
@@ -114,16 +118,6 @@ namespace GameProject
             UpdateEnemyBehavior();
             CheckCollisions();
             CheckTakeDeflectedBullet();
-
-            if (player.Location.X > this.Width && !Scene2OP)
-            {
-                this.Hide();
-                Scene2OP = true;
-                currentHealth = player.Health;
-                Scene2 scene2 = new Scene2(currentHealth, heartRemoveCounter);
-                scene2.Show();
-                scene2.Focus();
-            }
         }
         private void CheckTakeDeflectedBullet()
         {
@@ -236,8 +230,6 @@ namespace GameProject
 
 
             enemy2.UpdateEnemyAnimation(player.HitBox.Location);
-            label2.Text = enemy.IsPlayerInSight(player.HitBox.Location).ToString();
-            label3.Text = player.Location.ToString();
             enemy.UpdateEnemyAnimation(player.HitBox.Location);
         }
         private void CheckCollisions()
@@ -265,14 +257,13 @@ namespace GameProject
                 {
                     if (y is PictureBox && (string)y.Tag == "Ground")
                     {
-                        if (player.HitBox.Bounds.IntersectsWith(y.Bounds) && player.Height > y.Height)
+                        if (player.HitBox.Bounds.IntersectsWith(y.Bounds) && player.Bottom >= y.Bottom - 50)
                         {
                             flag = true;
                             player.IsFalling = false;
                             player.IsJumping = false;
                             player.IsOnGround = true;
                             player.Top = y.Top - player.Height + 7;
-                            label1.Text = "Touched Ground";
                             break;
                         }
                     }
@@ -411,12 +402,12 @@ namespace GameProject
                 lastAttackTime = DateTime.Now;
             }
         }
-        private void CreateHeartBoxes()
+        private void CreateHeartBoxes(int n)
         {
             heartImages = Directory.GetFiles("HearTile", "*.png").Select(img => Image.FromFile(img)).ToArray();
             heartBoxes = new List<PictureBox>();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 5 - n; i++)
             {
                 PictureBox heartBox = new PictureBox();
                 heartBox.Image = heartImages[0];
@@ -424,7 +415,7 @@ namespace GameProject
                 heartBox.Location = new Point(i * 35, 0);
                 heartBox.SizeMode = PictureBoxSizeMode.CenterImage;
                 heartBox.BackColor = Color.FromArgb(255, 24, 36, 52);
-               
+
                 heartBoxes.Add(heartBox);
                 this.Controls.Add(heartBox);
                 heartBox.BringToFront();
@@ -434,7 +425,6 @@ namespace GameProject
             heartAnimationTimer.Tick += HeartAnimationTick;
             heartAnimationTimer.Start();
         }
-
         private void HeartAnimationTick(object sender, EventArgs e)
         {
             foreach (var heartBox in heartBoxes)
@@ -454,7 +444,6 @@ namespace GameProject
         {
 
         }
-        
 
         public void RemoveHeart()
         {
@@ -463,7 +452,6 @@ namespace GameProject
                 var heartToRemove = heartBoxes[heartBoxes.Count - 1];
                 heartBoxes.RemoveAt(heartBoxes.Count - 1);
                 this.Controls.Remove(heartToRemove);
-                heartRemoveCounter++;
             }
         }
     }
