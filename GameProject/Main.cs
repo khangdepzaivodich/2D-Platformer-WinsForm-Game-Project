@@ -26,12 +26,14 @@ namespace GameProject
         private Timer heartAnimationTimer;
         private List<string> shootLeft;
         private List<string> shootRight;
+
         private List<PictureBox> backgrounds;
         private DateTime lastAttackTime;
-        private const int attackCooldown = 1000;
+        private const int attackCooldown = 700;
         private bool Scene2OP = false;
         private int currentHealth;
         private int heartRemoveCounter = 0;
+
         public Main()
         {
             InitializeComponent();
@@ -43,11 +45,13 @@ namespace GameProject
 
             this.DoubleBuffered = true;
             this.KeyPreview = true;
+
             
             shootLeft = Directory.GetFiles("EnemyShot_Left", "*.png").ToList();
             shootRight = Directory.GetFiles("EnemyShot_Right", "*.png").ToList();
 
             player = new Player();
+
             player.SizeMode = PictureBoxSizeMode.CenterImage;
             player.Location = new Point(100, 490);
             player.IsOnGround = false;
@@ -209,28 +213,6 @@ namespace GameProject
                 if (enemy2.IsPlayerInSight(player.HitBox.Location))
                 {
                     enemy2.isActivate = true;
-                }
-            }
-
-            if (enemy2.isActivate && !enemy2.IsDead)
-            {
-                if (enemy2.Bounds.IntersectsWith(player.HitBox.Bounds))
-                {
-                    if (!player.isDead && !enemy2.isAttacking)
-                    {
-                        enemy2.isRunning = false;
-                        enemy2.Attack(player.Location);
-                        enemy2.isAttacking = true;
-                        player.TakeDamage(20);
-                        RemoveHeart();
-                    }
-                }
-                else
-                {
-                    enemy2.isActivate = true;
-                    enemy2.isRunning = true;
-                    enemy2.ChasePlayer(player.HitBox.Location);
-                    enemy2.isAttacking = false;
                 }
             }
 
@@ -475,7 +457,6 @@ namespace GameProject
         {
 
         }
-        
 
         public void RemoveHeart()
         {

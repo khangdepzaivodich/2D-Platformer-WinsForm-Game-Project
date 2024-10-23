@@ -26,6 +26,7 @@ namespace GameProject
         protected List<string> walkingMeleeRight;
         protected List<string> walkingRangedRight;
         protected List<string> walkingRangedLeft;
+
         private List<string> bloodEffect;
         protected int idleFrame;
         protected int runningFrame;
@@ -227,13 +228,6 @@ namespace GameProject
         private int totalMoved = 0;
         private bool isMovingRight = false;
 
-        private const int PatrolDistance = 100;
-        private bool isIdling = false;
-        private int idleDuration = 120;
-        private int idleCounter = 0;
-        private int totalMoved = 0;
-        private bool isMovingRight = true;
-
         public RangedEnemy()
         {
             this.Size = new Size(50, 70);
@@ -306,6 +300,7 @@ namespace GameProject
                     totalMoved = 0;
                 }
             }
+
 
             if (runningFrame >= runningRangedRight.Count)
             {
@@ -399,7 +394,7 @@ namespace GameProject
                 }
             }
         }
-        private bool isFirst = true;
+        
         public override void UpdateDeathAnimation(object sender, EventArgs e)
         {
             if (deathAnimationFrame < (currentDirection == Direction.Right ? deathRangedRight.Count : deathRangedLeft.Count))
@@ -431,7 +426,6 @@ namespace GameProject
         private int idleCounter = 0;
         private int totalMoved = 0;
         private bool isMovingRight = true;
-        
         public MeleeEnemy()
         {
             this.Size = new Size(50, 150);
@@ -623,7 +617,7 @@ namespace GameProject
                 }
             }
         }
-        private bool isFirst = true;
+        
         public override void UpdateDeathAnimation(object sender, EventArgs e)
         {
             if (deathAnimationFrame < (currentDirection == Direction.Right ? deathMeleeRight.Count : deathMeleeLeft.Count))

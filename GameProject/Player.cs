@@ -56,6 +56,7 @@ namespace GameProject
         private int bloodEffectFrame = 0;
 
         public bool isDead = false;
+
         private bool isBloodEffectRunning = false;
         private int deathFrameIndex = 0;
         private Timer deathAnimationTimer;
