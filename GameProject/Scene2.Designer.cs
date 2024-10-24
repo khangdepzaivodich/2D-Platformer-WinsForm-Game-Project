@@ -189,8 +189,9 @@
             // pictureBox23
             // 
             this.pictureBox23.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox23.BackgroundImage = global::GameProject.Properties.Resources.tile020;
-            this.pictureBox23.Location = new System.Drawing.Point(1087, 325);
+            this.pictureBox23.BackgroundImage = global::GameProject.Properties.Resources.pixel_art_set_four_black_260nw_2465293165__2__removebg_preview;
+            this.pictureBox23.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox23.Location = new System.Drawing.Point(1087, 258);
             this.pictureBox23.Name = "pictureBox23";
             this.pictureBox23.Size = new System.Drawing.Size(36, 60);
             this.pictureBox23.TabIndex = 11;
@@ -337,6 +338,7 @@
             this.Controls.Add(this.pictureBox14);
             this.Controls.Add(this.pictureBox13);
             this.Name = "Scene2";
+            this.Load += new System.EventHandler(this.Scene2_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseIsDown);

@@ -72,6 +72,12 @@
     <Compile Include="Scene2.Designer.cs">
       <DependentUpon>Scene2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Scene3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scene3.Designer.cs">
+      <DependentUpon>Scene3.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -87,6 +93,9 @@
     </Compile>
     <EmbeddedResource Include="Scene2.resx">
       <DependentUpon>Scene2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Scene3.resx">
+      <DependentUpon>Scene3.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -202,6 +211,45 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile071.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile049.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile0391.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile047.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile033.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile032.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile0431.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pixel-art-set-four-black-260nw-2465293165__2_-removebg-preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pixel-art-set-four-black-260nw-2465293165__4_-removebg-preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pixel-art-set-four-black-260nw-2465293165__1_-removebg-preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile021.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

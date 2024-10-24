@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace GameProject
 {
-    public partial class Scene2 : Form
+    public partial class Scene3 : Form
     {
         private Player player;
         private Enemy enemy, enemy2;
@@ -29,12 +29,9 @@ namespace GameProject
         private DateTime lastAttackTime;
         private const int attackCooldown = 1000;
         public int heartRemoveCT = 0;
-        private bool Scene3OP = false;
-        private int currentHealth;
-        private int heartRemoveCounter = 0;
         private bool slowTime = false;
-        
-        public Scene2(int health, int heartRemoveCounter)
+
+        public Scene3(int health, int heartRemoveCounter)
         {
             InitializeComponent();
             InitializeGame();
@@ -52,7 +49,7 @@ namespace GameProject
 
             player = new Player();
             player.SizeMode = PictureBoxSizeMode.CenterImage;
-            player.Location = new Point(0, 381);
+            player.Location = new Point(1374, 31);
             player.IsOnGround = false;
             player.BackColor = Color.Transparent;
             this.Controls.Add(player);
@@ -61,12 +58,12 @@ namespace GameProject
 
             enemy = new RangedEnemy();
             bullets = new List<Bullet>();
-            enemy.Location = new Point(1316, 325);
+            enemy.Location = new Point(159, 364);
             enemy.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy);
 
             enemy2 = new MeleeEnemy();
-            enemy2.Location = new Point(608, 325);
+            enemy2.Location = new Point(928, 461);
             enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy2);
             enemy2.CreateHitBox();
@@ -135,15 +132,8 @@ namespace GameProject
             UpdateEnemyBehavior();
             CheckCollisions();
             CheckTakeDeflectedBullet();
-            if (player.Location.Y > this.Height && !Scene3OP)
-            {
-                this.Hide();
-                Scene3OP = true;
-                currentHealth = player.Health;
-                Scene3 scene3 = new Scene3(currentHealth, heartRemoveCounter);
-                scene3.Show();
-                scene3.Focus();
-            }
+
+           
         }
         private void CheckTakeDeflectedBullet()
         {
@@ -497,7 +487,7 @@ namespace GameProject
             {
                 player.Jump();
             }
-            if(e.KeyCode == Keys.E)
+            if (e.KeyCode == Keys.E)
             {
                 slowTime = true;
             }
@@ -586,7 +576,6 @@ namespace GameProject
                 var heartToRemove = heartBoxes[heartBoxes.Count - 1];
                 heartBoxes.RemoveAt(heartBoxes.Count - 1);
                 this.Controls.Remove(heartToRemove);
-                heartRemoveCounter++;
             }
         }
     }

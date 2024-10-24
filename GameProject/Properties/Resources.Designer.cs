@@ -93,6 +93,16 @@ namespace GameProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _3 {
+            get {
+                object obj = ResourceManager.GetObject("3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _9 {
             get {
                 object obj = ResourceManager.GetObject("9", resourceCulture);
@@ -163,6 +173,46 @@ namespace GameProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pixel_art_set_four_black_260nw_2465293165__1__removebg_preview {
+            get {
+                object obj = ResourceManager.GetObject("pixel-art-set-four-black-260nw-2465293165__1_-removebg-preview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pixel_art_set_four_black_260nw_2465293165__2__removebg_preview {
+            get {
+                object obj = ResourceManager.GetObject("pixel-art-set-four-black-260nw-2465293165__2_-removebg-preview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pixel_art_set_four_black_260nw_2465293165__4__removebg_preview {
+            get {
+                object obj = ResourceManager.GetObject("pixel-art-set-four-black-260nw-2465293165__4_-removebg-preview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Suriken {
+            get {
+                object obj = ResourceManager.GetObject("Suriken", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap tile004 {
             get {
                 object obj = ResourceManager.GetObject("tile004", resourceCulture);
@@ -176,6 +226,16 @@ namespace GameProject.Properties {
         internal static System.Drawing.Bitmap tile005 {
             get {
                 object obj = ResourceManager.GetObject("tile005", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tile006 {
+            get {
+                object obj = ResourceManager.GetObject("tile006", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -243,6 +303,16 @@ namespace GameProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap tile021 {
+            get {
+                object obj = ResourceManager.GetObject("tile021", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap tile022 {
             get {
                 object obj = ResourceManager.GetObject("tile022", resourceCulture);
@@ -283,6 +353,26 @@ namespace GameProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap tile032 {
+            get {
+                object obj = ResourceManager.GetObject("tile032", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tile033 {
+            get {
+                object obj = ResourceManager.GetObject("tile033", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap tile038 {
             get {
                 object obj = ResourceManager.GetObject("tile038", resourceCulture);
@@ -296,6 +386,16 @@ namespace GameProject.Properties {
         internal static System.Drawing.Bitmap tile039 {
             get {
                 object obj = ResourceManager.GetObject("tile039", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tile0391 {
+            get {
+                object obj = ResourceManager.GetObject("tile0391", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -323,9 +423,39 @@ namespace GameProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap tile0431 {
+            get {
+                object obj = ResourceManager.GetObject("tile0431", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tile047 {
+            get {
+                object obj = ResourceManager.GetObject("tile047", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap tile048 {
             get {
                 object obj = ResourceManager.GetObject("tile048", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tile049 {
+            get {
+                object obj = ResourceManager.GetObject("tile049", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -396,6 +526,16 @@ namespace GameProject.Properties {
         internal static System.Drawing.Bitmap tile069 {
             get {
                 object obj = ResourceManager.GetObject("tile069", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tile071 {
+            get {
+                object obj = ResourceManager.GetObject("tile071", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -30,3 +30,14 @@ C:\Users\khang\Source\Repos\2D-Platformer-WinsForm-Game-Project\GameProject\obj\
 C:\Users\khang\Source\Repos\2D-Platformer-WinsForm-Game-Project\GameProject\obj\Debug\GameProject.csproj.CoreCompileInputs.cache
 C:\Users\khang\Source\Repos\2D-Platformer-WinsForm-Game-Project\GameProject\obj\Debug\GameProject.exe
 C:\Users\khang\Source\Repos\2D-Platformer-WinsForm-Game-Project\GameProject\obj\Debug\GameProject.pdb
+D:\Codes\ProjectLTWINS\Test4\GameProject\bin\Debug\GameProject.exe.config
+D:\Codes\ProjectLTWINS\Test4\GameProject\bin\Debug\GameProject.exe
+D:\Codes\ProjectLTWINS\Test4\GameProject\bin\Debug\GameProject.pdb
+D:\Codes\ProjectLTWINS\Test4\GameProject\obj\Debug\GameProject.csproj.AssemblyReference.cache
+D:\Codes\ProjectLTWINS\Test4\GameProject\obj\Debug\GameProject.Main.resources
+D:\Codes\ProjectLTWINS\Test4\GameProject\obj\Debug\GameProject.Properties.Resources.resources
+D:\Codes\ProjectLTWINS\Test4\GameProject\obj\Debug\GameProject.Scene2.resources
+D:\Codes\ProjectLTWINS\Test4\GameProject\obj\Debug\GameProject.csproj.GenerateResource.cache
+D:\Codes\ProjectLTWINS\Test4\GameProject\obj\Debug\GameProject.csproj.CoreCompileInputs.cache
+D:\Codes\ProjectLTWINS\Test4\GameProject\obj\Debug\GameProject.exe
+D:\Codes\ProjectLTWINS\Test4\GameProject\obj\Debug\GameProject.pdb
