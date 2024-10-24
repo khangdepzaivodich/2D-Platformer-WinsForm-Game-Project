@@ -22,10 +22,11 @@ namespace GameProject
         public bool IsOnGround { get; set; }
         public bool IsJumping { get; set; }
         public bool IsFalling = false;
+        public bool startFalling = true;
         public int Speed { get; set; }
         public int Gravity { get; set; }
         public int JumpSpeed { get; set; }
-        public int Health { get; set; } = 100;
+        public int Health { get; set; } = 100000;
         public int AttackDamage { get; private set; } = 20;
     
         public List<PictureBox> HeartBoxes { get; set; }
@@ -46,6 +47,8 @@ namespace GameProject
         private List<string> takeHitLeft;
         private List<string> takeHitRight;
         private List<string> bloodEffect;
+        private List<string> fallRight;
+        private List<string> fallLeft;
         private List<SoundPlayer> attackSounds;
 
         private int idleFrame;
@@ -124,7 +127,8 @@ namespace GameProject
             takeHitLeft = Directory.GetFiles("TakeHit_Left", "*.png").ToList();
             takeHitRight = Directory.GetFiles("TakeHit_Right", "*.png").ToList();
             bloodEffect = Directory.GetFiles("Blood", "*.png").ToList();
-
+            fallLeft = Directory.GetFiles("Fall_Left","*.png").ToList();
+            fallRight = Directory.GetFiles("Fall_Right", "*.png").ToList();
         }
         private void InitializeProperties()
         {
@@ -203,6 +207,13 @@ namespace GameProject
                 IsFalling = false;
                 JumpVelocity = 4;
                 this.Image = Image.FromFile(IsFlipped ? jumpingLeft[0] : jumpingRight[0]);
+            }
+        }
+        public void StartToFall()
+        {
+            if (startFalling) 
+            { 
+                this.Image = Image.FromFile(IsFlipped ? fallLeft[0] : fallRight[0]);
             }
         }
 

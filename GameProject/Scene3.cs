@@ -73,7 +73,7 @@ namespace GameProject
             player.BringToFront();
             enemy.BringToFront();
             enemy2.BringToFront();
-
+            
             foreach (Control x in this.Controls)
             {
                 if (x is PictureBox && (string)x.Tag == "Ground")
@@ -132,8 +132,8 @@ namespace GameProject
             UpdateEnemyBehavior();
             CheckCollisions();
             CheckTakeDeflectedBullet();
+            player.StartToFall();
 
-           
         }
         private void CheckTakeDeflectedBullet()
         {
@@ -399,6 +399,18 @@ namespace GameProject
                         enemy2.IsOnGround = false;
                     }
                 }
+                
+            }
+            foreach(Control z in this.Controls)
+            {
+                if (z is PictureBox && (string)z.Tag =="Ground")
+                {
+                    if (player.HitBox.Bounds.IntersectsWith(z.Bounds))
+                    {
+                        player.startFalling = false;
+                        break;
+                    }
+                }
             }
         }
         private void EnemyShoot(object sender, EventArgs e)
@@ -531,7 +543,7 @@ namespace GameProject
             heartImages = Directory.GetFiles("HearTile", "*.png").Select(img => Image.FromFile(img)).ToArray();
             heartBoxes = new List<PictureBox>();
 
-            for (int i = 0; i < 5 - n; i++)
+            for (int i = 0; i < n; i++)
             {
                 PictureBox heartBox = new PictureBox();
                 heartBox.Image = heartImages[0];
@@ -576,6 +588,7 @@ namespace GameProject
                 var heartToRemove = heartBoxes[heartBoxes.Count - 1];
                 heartBoxes.RemoveAt(heartBoxes.Count - 1);
                 this.Controls.Remove(heartToRemove);
+                Main.HeartState.Hearts--;
             }
         }
     }

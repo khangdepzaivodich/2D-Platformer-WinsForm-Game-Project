@@ -138,7 +138,7 @@ namespace GameProject
                 this.Hide();
                 Scene2OP = true;
                 currentHealth = player.Health;
-                Scene2 scene2 = new Scene2(currentHealth, heartRemoveCounter);
+                Scene2 scene2 = new Scene2(currentHealth, HeartState.Hearts);
                 scene2.Show();
                 scene2.Focus();
             }
@@ -578,6 +578,10 @@ namespace GameProject
         {
 
         }
+        public static class HeartState
+        {
+            public static int Hearts { get; set; } = 5;
+        }
 
         public void RemoveHeart()
         {
@@ -586,7 +590,7 @@ namespace GameProject
                 var heartToRemove = heartBoxes[heartBoxes.Count - 1];
                 heartBoxes.RemoveAt(heartBoxes.Count - 1);
                 this.Controls.Remove(heartToRemove);
-                heartRemoveCounter++;
+                HeartState.Hearts--;
             }
         }
     }

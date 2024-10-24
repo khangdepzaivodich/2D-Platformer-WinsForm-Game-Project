@@ -31,7 +31,7 @@ namespace GameProject
         public int heartRemoveCT = 0;
         private bool Scene3OP = false;
         private int currentHealth;
-        private int heartRemoveCounter = 0;
+        private int heartRemoveCounter2 = 0;
         private bool slowTime = false;
         
         public Scene2(int health, int heartRemoveCounter)
@@ -135,12 +135,13 @@ namespace GameProject
             UpdateEnemyBehavior();
             CheckCollisions();
             CheckTakeDeflectedBullet();
+
             if (player.Location.Y > this.Height && !Scene3OP)
             {
                 this.Hide();
                 Scene3OP = true;
                 currentHealth = player.Health;
-                Scene3 scene3 = new Scene3(currentHealth, heartRemoveCounter);
+                Scene3 scene3 = new Scene3(currentHealth, Main.HeartState.Hearts);
                 scene3.Show();
                 scene3.Focus();
             }
@@ -541,7 +542,7 @@ namespace GameProject
             heartImages = Directory.GetFiles("HearTile", "*.png").Select(img => Image.FromFile(img)).ToArray();
             heartBoxes = new List<PictureBox>();
 
-            for (int i = 0; i < 5 - n; i++)
+            for (int i = 0; i < n; i++)
             {
                 PictureBox heartBox = new PictureBox();
                 heartBox.Image = heartImages[0];
@@ -586,7 +587,7 @@ namespace GameProject
                 var heartToRemove = heartBoxes[heartBoxes.Count - 1];
                 heartBoxes.RemoveAt(heartBoxes.Count - 1);
                 this.Controls.Remove(heartToRemove);
-                heartRemoveCounter++;
+                Main.HeartState.Hearts--;
             }
         }
     }
