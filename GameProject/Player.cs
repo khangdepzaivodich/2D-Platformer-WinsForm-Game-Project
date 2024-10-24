@@ -25,7 +25,7 @@ namespace GameProject
         public bool startFalling = true;
         public int Speed { get; set; }
         public int Gravity { get; set; }
-        public int JumpSpeed { get; set; }
+        public int JumpSpeed { get; set; }      
         public int Health { get; set; } = 100000;
         public int AttackDamage { get; private set; } = 20;
     

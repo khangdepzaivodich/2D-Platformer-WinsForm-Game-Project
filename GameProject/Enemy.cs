@@ -429,7 +429,7 @@ namespace GameProject
     {
         private List<string> attackLeft;
         private List<string> attackRight;
-        private int attackFrame;
+        public int attackFrame;
         private Timer attackAnimationTimer;
         private bool isAttackRight;
         private const int AttackRanges = 20;
@@ -439,12 +439,14 @@ namespace GameProject
         private int idleCounter = 0;
         private int totalMoved = 0;
         private bool isMovingRight = true;
+        public int attackFrameSize;
         public MeleeEnemy()
         {
             this.Size = new Size(50, 150);
             this.BackColor = Color.Transparent;
 
             LoadAnimations();
+            attackFrameSize = attackLeft.Count;
             InitializeProperties();
             this.Image = Image.FromFile(idleMeleeLeft[0]);
         }
@@ -562,22 +564,29 @@ namespace GameProject
             }
             
         }
+        private int meleeAttackDelayCounter = 0;
         private void UpdateAttackAnimation()
         {
-            if (isAttacking)
+            ++meleeAttackDelayCounter;
+            if(meleeAttackDelayCounter >= (int) (2 / slowDownFactor))
             {
-                if (attackFrame < (isAttackRight ? attackRight.Count : attackLeft.Count))
+                meleeAttackDelayCounter = 0;
+                if (isAttacking)
                 {
-                    this.Image = Image.FromFile(isAttackRight ? attackRight[attackFrame] : attackLeft[attackFrame]);
-                    attackFrame++;
-                }
-                else
-                {
-                    attackAnimationTimer.Stop();
-                    isAttacking = false;
-                    attackFrame = 0; 
+                    if (attackFrame < (isAttackRight ? attackRight.Count : attackLeft.Count))
+                    {
+                        this.Image = Image.FromFile(isAttackRight ? attackRight[attackFrame] : attackLeft[attackFrame]);
+                        attackFrame++;
+                    }
+                    else
+                    {
+                        attackAnimationTimer.Stop();
+                        isAttacking = false;
+                        attackFrame = 0;
+                    }
                 }
             }
+            
         }
         public override void UpdateEnemyAnimation(Point playerPosition)
         {
