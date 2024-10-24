@@ -96,8 +96,8 @@ namespace GameProject
             HitBox = new PictureBox();
             HitBox.BackColor = Color.Transparent;
             HitBox.Size = new Size(60, 70);
-            HitBox.Visible = true;
-            HitBox.BorderStyle = BorderStyle.FixedSingle;
+            //HitBox.Visible = true;
+            //HitBox.BorderStyle = BorderStyle.FixedSingle;
             this.Parent.Controls.Add(HitBox);
         }
 
@@ -232,7 +232,7 @@ namespace GameProject
         }
         public void TakeDamage(int damage)
         {
-            if (isDead || isBloodEffectRunning) return;
+            if (isDead) return;
             Health -= damage;
             takeHitFrame = 0;
             isTakingHit = true;

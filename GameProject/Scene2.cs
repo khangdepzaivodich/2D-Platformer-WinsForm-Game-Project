@@ -54,7 +54,7 @@ namespace GameProject
             player.BackColor = Color.Transparent;
             this.Controls.Add(player);
             player.CreateHitBox();
-            player.HitBox.BorderStyle = BorderStyle.FixedSingle;
+            //player.HitBox.BorderStyle = BorderStyle.FixedSingle;
 
             enemy = new RangedEnemy();
             bullets = new List<Bullet>();
@@ -67,7 +67,7 @@ namespace GameProject
             enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy2);
             enemy2.CreateHitBox();
-            enemy2.hitBox.BorderStyle = BorderStyle.FixedSingle;
+            //enemy2.hitBox.BorderStyle = BorderStyle.FixedSingle;
 
 
             player.BringToFront();
@@ -440,10 +440,6 @@ namespace GameProject
             }
         }
 
-        private void Main_Load(object sender, EventArgs e)
-        {
-
-        }
 
         public void RemoveHeart()
         {

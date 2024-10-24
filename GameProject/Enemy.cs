@@ -41,7 +41,7 @@ namespace GameProject
         protected int enemyIdleAnimationDelayCounter = 0;
         protected int slowCounter = 0;
         protected const int DetectionDistance = 600;
-        protected const int AttackHeightTolerance = 70;
+        protected const int AttackHeightTolerance = 80;
         protected const int ChaseSpeed = 8;
         public PictureBox hitBox;
         public int AttackRange = 20;
@@ -135,8 +135,8 @@ namespace GameProject
             hitBox = new PictureBox();
             hitBox.BackColor = Color.Transparent;
             hitBox.Size = new Size(50, 70);
-            hitBox.Visible = true;
-            hitBox.BorderStyle = BorderStyle.FixedSingle;
+            //hitBox.Visible = true;
+            //hitBox.BorderStyle = BorderStyle.FixedSingle;
             this.Parent.Controls.Add(hitBox);
         }
         public void UpdateHitboxPosition()
@@ -232,7 +232,7 @@ namespace GameProject
         {
             this.Size = new Size(50, 70);
             this.BackColor = Color.Transparent;
-            this.BorderStyle = BorderStyle.FixedSingle;
+            //this.BorderStyle = BorderStyle.FixedSingle;
 
             LoadAnimations();
             InitializeProperties();
