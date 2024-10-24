@@ -220,15 +220,15 @@ namespace GameProject
             if (IsFalling || !IsOnGround)
             {
                 this.Top += (int)(Gravity * slowDownFactor);
-                if (this.Parent != null)
-                {
-                    if (this.Top + this.Height >= this.Parent.ClientSize.Height)
-                    {
-                        IsOnGround = true;
-                        IsJumping = false;
-                        this.Top = this.Parent.ClientSize.Height - this.Height;
-                    }
-                }
+                //if (this.Parent != null)
+                //{
+                //    if (this.Top + this.Height >= this.Parent.ClientSize.Height)
+                //    {
+                //        IsOnGround = true;
+                //        IsJumping = false;
+                //        this.Top = this.Parent.ClientSize.Height - this.Height;
+                //    }
+                //}
             }
             UpdateHitboxPosition();
         }
