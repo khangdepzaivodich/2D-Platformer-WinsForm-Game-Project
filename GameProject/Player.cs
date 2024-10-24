@@ -27,6 +27,7 @@ namespace GameProject
         public int JumpSpeed { get; set; }
         public int Health { get; set; } = 100;
         public int AttackDamage { get; private set; } = 20;
+    
         public List<PictureBox> HeartBoxes { get; set; }
 
         public bool IsAttacking = false;
@@ -56,6 +57,7 @@ namespace GameProject
         private int bloodEffectFrame = 0;
 
         public bool isDead = false;
+        public double slowDownFactor = 1;
 
         private bool isBloodEffectRunning = false;
         private int deathFrameIndex = 0;
@@ -145,7 +147,7 @@ namespace GameProject
             {
                 UpdateTakeHitAnimation();
             }
-            if (slowCounter == 2)
+            if (slowCounter >= (int)(2 / slowDownFactor))
             {
                 slowCounter = 0;
                 if (IsAttacking)
@@ -187,7 +189,7 @@ namespace GameProject
             this.Image = Image.FromFile(IsFlipped ? runningLeft[runningFrame++] : runningRight[runningFrame++]);
         }
 
-        private int JumpVelocity;
+        private double JumpVelocity;
         
         private int MaxJumpHeight = 100;
         private bool isTakingHit = false;
@@ -208,8 +210,8 @@ namespace GameProject
         {
             if (IsJumping && !IsFalling)
             {
-                this.Top -= JumpSpeed;
-                JumpVelocity--;
+                this.Top -= (int)(JumpSpeed * slowDownFactor);
+                JumpVelocity -= slowDownFactor;
                 if (JumpVelocity <= 0 || this.Top <= MaxJumpHeight)
                 {
                     IsFalling = true;
@@ -217,7 +219,7 @@ namespace GameProject
             }
             if (IsFalling || !IsOnGround)
             {
-                this.Top += Gravity;
+                this.Top += (int)(Gravity * slowDownFactor);
                 if (this.Parent != null)
                 {
                     if (this.Top + this.Height >= this.Parent.ClientSize.Height)
@@ -331,13 +333,13 @@ namespace GameProject
 
             if (IsLeft && this.Left > 0 && !IsAttacking && flag)
             {
-                this.Left -= Speed;
+                this.Left -= (int)(Speed * slowDownFactor);
                 IsFlipped = true;
                 IsRunning = true;
             }
             else if (IsRight && !IsAttacking && flag)
             {
-                this.Left += Speed;
+                this.Left += (int)(Speed * slowDownFactor);
                 IsFlipped = false;
                 IsRunning = true;
             }

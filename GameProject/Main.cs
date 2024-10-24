@@ -33,7 +33,7 @@ namespace GameProject
         private bool Scene2OP = false;
         private int currentHealth;
         private int heartRemoveCounter = 0;
-
+        private bool slowTime = false;
         public Main()
         {
             InitializeComponent();
@@ -108,6 +108,20 @@ namespace GameProject
         }
         private void GameLoop(object sender, EventArgs e)
         {
+            if (slowTime)
+            {
+                foreach(Control x in Controls)
+                {
+                    if(x is RangedEnemy rangedEnemy)
+                    {
+                        rangedEnemy.slowDownFactor = 0.2;
+                    }
+                    else if(x is MeleeEnemy meleeEnemy)
+                    {
+                        meleeEnemy.slowDownFactor = 0.2;
+                    }
+                }
+            }
             player.UpdateHitboxPosition();
             enemy2.UpdateHitboxPosition();
             player.PlayerMove();
@@ -167,82 +181,169 @@ namespace GameProject
         {
             if (player.isDead)
             {
-                enemy.isActivate = false;
-                enemyShootTimer.Stop();
-                enemy2.isActivate = false;
-                enemy.Patrol();
-                enemy2.Patrol();
+                foreach(Control x in this.Controls)
+                {
+                    if(x is Enemy gameEnemy)
+                    {
+                        gameEnemy.isActivate = false;
+                        enemyShootTimer.Stop();
+                        gameEnemy.Patrol();
+                    }
+                }
+                //enemy.isActivate = false;
+                //enemyShootTimer.Stop();
+                //enemy2.isActivate = false;
+                //enemy.Patrol();
+                //enemy2.Patrol();
                 return;
             }
-            if (!enemy.isActivate)
+            
+            foreach(Control x in this.Controls)
             {
-                enemy.Patrol();
-                if (enemy.IsPlayerInSight(player.HitBox.Location))
+                if(x is Enemy gameEnemy)
                 {
-                    enemyShootTimer.Start();
-                    enemy.isActivate = true;
-                }
-            }
-
-            if (enemy.isActivate && !enemy.IsDead)
-            {
-                bool isRight = enemy.Left > player.Left;
-                if (enemy.IsPlayerInSight(player.HitBox.Location))
-                {
-                    if (enemy.isFirst)
+                    if(x is RangedEnemy rangedEnemey)
                     {
-                        enemy.isFirst = false;
-                        enemy.Image = Image.FromFile(isRight ? shootLeft[0] : shootRight[0]);
+                        if (!rangedEnemey.isActivate)
+                        {
+                            rangedEnemey.Patrol();
+                            if (rangedEnemey.IsPlayerInSight(player.HitBox.Location))
+                            {
+                                enemyShootTimer.Start();
+                                rangedEnemey.isActivate = true;
+                            }
+                        }
+
+                        if (rangedEnemey.isActivate && !rangedEnemey.IsDead)
+                        {
+                            bool isRight = rangedEnemey.Left > player.Left;
+                            if (rangedEnemey.IsPlayerInSight(player.HitBox.Location))
+                            {
+                                if (rangedEnemey.isFirst)
+                                {
+                                    rangedEnemey.isFirst = false;
+                                    rangedEnemey.Image = Image.FromFile(isRight ? shootLeft[0] : shootRight[0]);
+                                }
+                                enemyShootTimer.Start();
+                                rangedEnemey.isActivate = true;
+                                rangedEnemey.isRunning = false;
+                            }
+                            else
+                            {
+                                rangedEnemey.isFirst = true;
+                                enemyShootTimer.Stop();
+                                rangedEnemey.isRunning = true;
+                                rangedEnemey.ChasePlayer(player.HitBox.Location);
+                            }
+                        }
                     }
-                    enemyShootTimer.Start();
-                    enemy.isActivate = true;
-                    enemy.isRunning = false;
-                }
-                else
-                {
-                    enemy.isFirst = true;
-                    enemyShootTimer.Stop();
-                    enemy.isRunning = true;
-                    enemy.ChasePlayer(player.HitBox.Location);
-                }
-            }
-
-            if (!enemy2.isActivate && !enemy2.isAttacking && !player.isDead)
-            {
-                enemy2.Patrol();
-                if (enemy2.IsPlayerInSight(player.HitBox.Location))
-                {
-                    enemy2.isActivate = true;
-                }
-            }
-
-            if (enemy2.isActivate && !enemy2.IsDead)
-            {
-                if (enemy2.Bounds.IntersectsWith(player.HitBox.Bounds))
-                {
-                    if (!player.isDead && !enemy2.isAttacking)
+                    else if(x is MeleeEnemy meleeEnemy)
                     {
-                        enemy2.isRunning = false;
-                        enemy2.Attack(player.Location);
-                        enemy2.isAttacking = true;
-                        player.TakeDamage(20);
-                        RemoveHeart();
+                        if (!meleeEnemy.isActivate && !meleeEnemy.isAttacking && !player.isDead)
+                        {
+                            meleeEnemy.Patrol();
+                            if (meleeEnemy.IsPlayerInSight(player.HitBox.Location))
+                            {
+                                meleeEnemy.isActivate = true;
+                            }
+                        }
+
+                        if (meleeEnemy.isActivate && !meleeEnemy.IsDead)
+                        {
+                            if (meleeEnemy.Bounds.IntersectsWith(player.HitBox.Bounds))
+                            {
+                                if (!player.isDead && !meleeEnemy.isAttacking)
+                                {
+                                    meleeEnemy.isRunning = false;
+                                    meleeEnemy.Attack(player.Location);
+                                    meleeEnemy.isAttacking = true;
+                                    player.TakeDamage(20);
+                                    RemoveHeart();
+                                }
+                            }
+                            else
+                            {
+                                meleeEnemy.isActivate = true;
+                                meleeEnemy.isRunning = true;
+                                meleeEnemy.ChasePlayer(player.HitBox.Location);
+                                meleeEnemy.isAttacking = false;
+                            }
+                        }
                     }
-                }
-                else
-                {
-                    enemy2.isActivate = true;
-                    enemy2.isRunning = true;
-                    enemy2.ChasePlayer(player.HitBox.Location);
-                    enemy2.isAttacking = false;
+                    gameEnemy.UpdateEnemyAnimation(player.HitBox.Location);
                 }
             }
 
+            // ----------------------------------------------------------------------------- //
 
-            enemy2.UpdateEnemyAnimation(player.HitBox.Location);
-            label2.Text = enemy.IsPlayerInSight(player.HitBox.Location).ToString();
-            label3.Text = player.Location.ToString();
-            enemy.UpdateEnemyAnimation(player.HitBox.Location);
+
+            //if (!enemy.isActivate)
+            //{
+            //    enemy.Patrol();
+            //    if (enemy.IsPlayerInSight(player.HitBox.Location))
+            //    {
+            //        enemyShootTimer.Start();
+            //        enemy.isActivate = true;
+            //    }
+            //}
+
+            //if (enemy.isActivate && !enemy.IsDead)
+            //{
+            //    bool isRight = enemy.Left > player.Left;
+            //    if (enemy.IsPlayerInSight(player.HitBox.Location))
+            //    {
+            //        if (enemy.isFirst)
+            //        {
+            //            enemy.isFirst = false;
+            //            enemy.Image = Image.FromFile(isRight ? shootLeft[0] : shootRight[0]);
+            //        }
+            //        enemyShootTimer.Start();
+            //        enemy.isActivate = true;
+            //        enemy.isRunning = false;
+            //    }
+            //    else
+            //    {
+            //        enemy.isFirst = true;
+            //        enemyShootTimer.Stop();
+            //        enemy.isRunning = true;
+            //        enemy.ChasePlayer(player.HitBox.Location);
+            //    }
+            //}
+
+            //if (!enemy2.isActivate && !enemy2.isAttacking && !player.isDead)
+            //{
+            //    enemy2.Patrol();
+            //    if (enemy2.IsPlayerInSight(player.HitBox.Location))
+            //    {
+            //        enemy2.isActivate = true;
+            //    }
+            //}
+
+            //if (enemy2.isActivate && !enemy2.IsDead)
+            //{
+            //    if (enemy2.Bounds.IntersectsWith(player.HitBox.Bounds))
+            //    {
+            //        if (!player.isDead && !enemy2.isAttacking)
+            //        {
+            //            enemy2.isRunning = false;
+            //            enemy2.Attack(player.Location);
+            //            enemy2.isAttacking = true;
+            //            player.TakeDamage(20);
+            //            RemoveHeart();
+            //        }
+            //    }
+            //    else
+            //    {
+            //        enemy2.isActivate = true;
+            //        enemy2.isRunning = true;
+            //        enemy2.ChasePlayer(player.HitBox.Location);
+            //        enemy2.isAttacking = false;
+            //    }
+            //}
+
+
+            //enemy2.UpdateEnemyAnimation(player.HitBox.Location);
+            //enemy.UpdateEnemyAnimation(player.HitBox.Location);
         }
         private void CheckCollisions()
         {
@@ -395,6 +496,10 @@ namespace GameProject
             {
                 player.Jump();
             }
+            if(e.KeyCode == Keys.E)
+            {
+                slowTime = true;
+            }
         }
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
@@ -405,6 +510,21 @@ namespace GameProject
             if (e.KeyCode == Keys.D)
             {
                 player.IsRight = false;
+            }
+            if(e.KeyCode == Keys.E)
+            {
+                slowTime = false;
+                foreach(Control x in Controls)
+                {
+                    if(x is Player p)
+                    {
+                        p.slowDownFactor = 1;
+                    }
+                    else if(x is Enemy gameEnemy)
+                    {
+                        gameEnemy.slowDownFactor = 1;
+                    }
+                }
             }
         }
         private void MouseIsDown(object sender, MouseEventArgs e)

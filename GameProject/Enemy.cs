@@ -52,6 +52,7 @@ namespace GameProject
         public int Gravity { get; protected set; } = 10;
         protected int speed = 2;
         public bool isRunning { get; set; } = false;
+        public double slowDownFactor = 1;
         public bool isAttacking { get; set; } = false;
 
         public bool isColliding { get; set; } = false;
@@ -107,7 +108,7 @@ namespace GameProject
                     }
                     if (!flag)
                     {
-                        this.Left -= ChaseSpeed;
+                        this.Left -= (int)(ChaseSpeed * slowDownFactor);
                         currentDirection = Direction.Left;
                     }
                 }
@@ -268,6 +269,8 @@ namespace GameProject
             shootFrame = 0;
             shootAnimationTimer.Start();
         }
+
+        private int walkDelayCounter = 0;
         public override void Patrol()
         {
             if (isShooting) return;
@@ -280,8 +283,8 @@ namespace GameProject
 
             if (isMovingRight)
             {
-                this.Left += patrolSpeed;
-                totalMoved += patrolSpeed;
+                this.Left += (int) (patrolSpeed * slowDownFactor);
+                totalMoved += (int)(patrolSpeed * slowDownFactor);
 
                 if (totalMoved >= PatrolDistance)
                 {
@@ -291,8 +294,8 @@ namespace GameProject
             }
             else
             {
-                this.Left -= patrolSpeed;
-                totalMoved += patrolSpeed;
+                this.Left -= (int)(patrolSpeed * slowDownFactor);
+                totalMoved += (int)(patrolSpeed * slowDownFactor);
 
                 if (totalMoved >= PatrolDistance)
                 {
@@ -300,13 +303,16 @@ namespace GameProject
                     totalMoved = 0;
                 }
             }
-
-
-            if (runningFrame >= runningRangedRight.Count)
+            ++walkDelayCounter;
+            if(walkDelayCounter >= (int) 2 / slowDownFactor)
             {
-                runningFrame = 0;
+                walkDelayCounter = 0;
+                if (runningFrame >= runningRangedRight.Count)
+                {
+                    runningFrame = 0;
+                }
+                this.Image = Image.FromFile(isMovingRight ? runningRangedRight[runningFrame++] : runningRangedLeft[runningFrame++]);
             }
-            this.Image = Image.FromFile(isMovingRight ? runningRangedRight[runningFrame++] : runningRangedLeft[runningFrame++]);
         }
         public override Bullet Shoot(Point playerPosition)
         {
@@ -321,16 +327,23 @@ namespace GameProject
                 IsMovingRight = isShootRight
             };
         }
+        private int runningDelayCounter = 0;
         public override void UpdateEnemyRunningAnimation(bool isRight)
         {
-            if (runningFrame < runningRangedRight.Count)
+            ++runningDelayCounter;
+            if(runningDelayCounter >= (int) 2 / slowDownFactor)
             {
-                this.Image = Image.FromFile(isRight ? runningRangedLeft[runningFrame++] : runningRangedRight[runningFrame++]);
+                runningDelayCounter = 0;
+                if (runningFrame < runningRangedRight.Count)
+                {
+                    this.Image = Image.FromFile(isRight ? runningRangedLeft[runningFrame++] : runningRangedRight[runningFrame++]);
+                }
+                else
+                {
+                    runningFrame = 0;
+                }
             }
-            else
-            {
-                runningFrame = 0;
-            }
+            
         }
         private void UpdateShootAnimation(object sender, EventArgs e)
         {
@@ -353,7 +366,7 @@ namespace GameProject
                 return;
             }
             ++slowCounter;
-            if (slowCounter == 1)
+            if (slowCounter >= 1)
             {
                 slowCounter = 0;
                 bool isRight = this.Left > playerPosition.X;
@@ -381,7 +394,7 @@ namespace GameProject
                 else
                 {
                     ++enemyIdleAnimationDelayCounter;
-                    if (enemyIdleAnimationDelayCounter == 3)
+                    if (enemyIdleAnimationDelayCounter >= (int) (5 / slowDownFactor))
                     {
                         bool isRight = isMovingRight;
                         if (!isShooting)
@@ -454,12 +467,12 @@ namespace GameProject
         {
             if (playerPosition.X < this.Left)
             {
-                this.Left -= ChaseSpeed;
+                this.Left -= (int)(ChaseSpeed * slowDownFactor);
                 currentDirection = Direction.Left;
             }
             else
             {
-                this.Left += ChaseSpeed;
+                this.Left += (int)(ChaseSpeed * slowDownFactor);
                 currentDirection = Direction.Right;
             }
         }
@@ -485,7 +498,7 @@ namespace GameProject
             isAttacking = true;
             attackAnimationTimer.Start();
         }
-
+        private int meleeWalkingDelayCounter = 0;
         public override void Patrol()
         {
             //if (isActivate) return;
@@ -499,8 +512,8 @@ namespace GameProject
 
             if (isMovingRight)
             {
-                this.Left += patrolSpeed;
-                totalMoved += patrolSpeed;
+                this.Left += (int)(patrolSpeed * slowDownFactor);
+                totalMoved += (int)(patrolSpeed * slowDownFactor);
 
                 if (totalMoved >= PatrolDistance)
                 {
@@ -510,8 +523,8 @@ namespace GameProject
             }
             else
             {
-                this.Left -= patrolSpeed;
-                totalMoved += patrolSpeed;
+                this.Left -= (int)(patrolSpeed * slowDownFactor);
+                totalMoved += (int)(patrolSpeed * slowDownFactor);
 
                 if (totalMoved >= PatrolDistance)
                 {
@@ -519,23 +532,35 @@ namespace GameProject
                     totalMoved = 0;
                 }
             }
-
-            if (walkingFrame >= walkingMeleeRight.Count)
+            ++meleeWalkingDelayCounter;
+            if(meleeWalkingDelayCounter >= (int)(2 / slowDownFactor))
             {
-                walkingFrame = 0;
+                meleeWalkingDelayCounter = 0;
+                if (walkingFrame >= walkingMeleeRight.Count)
+                {
+                    walkingFrame = 0;
+                }
+                this.Image = Image.FromFile(isMovingRight ? walkingMeleeRight[walkingFrame++] : walkingMeleeLeft[walkingFrame++]);
             }
-            this.Image = Image.FromFile(isMovingRight ? walkingMeleeRight[walkingFrame++] : walkingMeleeLeft[walkingFrame++]);
+            
         }
+        private int meleeRunningDelayCounter = 0;
         public override void UpdateEnemyRunningAnimation(bool isRight)
         {
-            if (runningFrame < runningMeleeLeft.Count)
+            ++meleeRunningDelayCounter;
+            if(meleeRunningDelayCounter >= (int)(2 / slowDownFactor))
             {
-                this.Image = Image.FromFile(isRight ? runningMeleeLeft[runningFrame++] : runningMeleeRight[runningFrame++]);
+                meleeRunningDelayCounter = 0;
+                if (runningFrame < runningMeleeLeft.Count)
+                {
+                    this.Image = Image.FromFile(isRight ? runningMeleeLeft[runningFrame++] : runningMeleeRight[runningFrame++]);
+                }
+                else
+                {
+                    runningFrame = 0;
+                }
             }
-            else
-            {
-                runningFrame = 0;
-            }
+            
         }
         private void UpdateAttackAnimation()
         {
@@ -604,7 +629,7 @@ namespace GameProject
                 else
                 {
                     ++enemyIdleAnimationDelayCounter;
-                    if (enemyIdleAnimationDelayCounter == 3)
+                    if (enemyIdleAnimationDelayCounter >= (int)(5 / slowDownFactor))
                     {
                         bool isRight = isMovingRight;
                         if (!isAttacking)
