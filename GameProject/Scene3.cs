@@ -31,7 +31,7 @@ namespace GameProject
         private const int attackCooldown = 1000;
         public int heartRemoveCT = 0;
         private bool slowTime = false;
-
+        private float fadeAmount = 0f;
         public Scene3(int health, int heartRemoveCounter)
         {
             InitializeComponent();
@@ -111,6 +111,7 @@ namespace GameProject
         {
             if (slowTime)
             {
+                fadeAmount = Math.Min(fadeAmount + 0.1f, 0.85f);
                 foreach (Control x in Controls)
                 {
                     if (x is RangedEnemy rangedEnemy)
@@ -127,7 +128,11 @@ namespace GameProject
                     }
                 }
             }
-
+            else
+            {
+                fadeAmount = Math.Max(fadeAmount - 0.1f, 0f);
+            }
+            this.Invalidate();
 
             player.UpdateHitboxPosition();
             player.PlayerMove();
@@ -151,6 +156,15 @@ namespace GameProject
             CheckTakeDeflectedBullet();
             UpdatePlayerHealthWithMeleeEnemyAttack();
             player.StartToFall();
+        }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            using (var semiTransparentBrush = new SolidBrush(Color.FromArgb((int)(fadeAmount * 255), Color.Black)))
+            {
+                e.Graphics.FillRectangle(semiTransparentBrush, this.ClientRectangle);
+            }
         }
         private bool flag;
         private void UpdatePlayerHealthWithMeleeEnemyAttack()

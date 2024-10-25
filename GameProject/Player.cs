@@ -71,12 +71,13 @@ namespace GameProject
         public PictureBox HitBox;
         private PictureBox bloodEffectBox;
 
+
         public Player()
         {
             LoadAnimation();
             InitializeProperties();
             LoadSoundEffects();
-            
+
 
             deathAnimationTimer = new Timer();
             deathAnimationTimer.Interval = 200;
@@ -96,6 +97,8 @@ namespace GameProject
             };
             this.Controls.Add(bloodEffectBox);
         }
+
+
         public void CreateHitBox()
         {
             HitBox = new PictureBox();

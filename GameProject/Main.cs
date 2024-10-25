@@ -34,6 +34,7 @@ namespace GameProject
         private int currentHealth;
         private int heartRemoveCounter = 0;
         private bool slowTime = false;
+        private float fadeAmount = 0f;
         public Main()
         {
             InitializeComponent();
@@ -110,7 +111,8 @@ namespace GameProject
         {
             if (slowTime)
             {
-                foreach(Control x in Controls)
+                fadeAmount = Math.Min(fadeAmount + 0.1f, 0.85f);
+                foreach (Control x in Controls)
                 {
                     if(x is RangedEnemy rangedEnemy)
                     {
@@ -126,8 +128,11 @@ namespace GameProject
                     }
                 }
             }
-
-
+            else
+            {
+                fadeAmount = Math.Max(fadeAmount - 0.1f, 0f);
+            }
+            this.Invalidate();
             player.UpdateHitboxPosition();
             player.PlayerMove();
             player.ApplyGravity();
@@ -160,6 +165,15 @@ namespace GameProject
                 Scene2 scene2 = new Scene2(currentHealth, HeartState.Hearts);
                 scene2.Show();
                 scene2.Focus();
+            }
+        }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            using (var semiTransparentBrush = new SolidBrush(Color.FromArgb((int)(fadeAmount * 255), Color.Black)))
+            {
+                e.Graphics.FillRectangle(semiTransparentBrush, this.ClientRectangle);
             }
         }
         private bool flag;
