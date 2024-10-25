@@ -87,7 +87,7 @@ namespace GameProject
                 }
             }
             SetupTimers();
-
+            SkillBar.BringToFront();
         }
         private void SetupTimers()
         {
@@ -109,9 +109,10 @@ namespace GameProject
         }
         private void GameLoop(object sender, EventArgs e)
         {
-            if (slowTime)
+            if (slowTime && SkillBar.Value > 0)
             {
                 fadeAmount = Math.Min(fadeAmount + 0.1f, 0.85f);
+                SkillBar.Value = Math.Max(0, SkillBar.Value - 2);
                 foreach (Control x in Controls)
                 {
                     if (x is RangedEnemy rangedEnemy)
@@ -131,6 +132,8 @@ namespace GameProject
             else
             {
                 fadeAmount = Math.Max(fadeAmount - 0.1f, 0f);
+                slowTime = false;
+                SkillBar.Value = Math.Min(100, SkillBar.Value + 1);
             }
             this.Invalidate();
 
@@ -533,6 +536,7 @@ namespace GameProject
 
             shakeTimer.Start();
         }
+        private bool isSlowActive = false;
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A)
@@ -549,9 +553,10 @@ namespace GameProject
             {
                 player.Jump();
             }
-            if (e.KeyCode == Keys.E)
+            if (e.KeyCode == Keys.E && SkillBar.Value > 0 && !isSlowActive)
             {
                 slowTime = true;
+                isSlowActive = true;
             }
         }
         private void KeyIsUp(object sender, KeyEventArgs e)
@@ -567,6 +572,7 @@ namespace GameProject
             if (e.KeyCode == Keys.E)
             {
                 slowTime = false;
+                isSlowActive = false;
                 foreach (Control x in Controls)
                 {
                     if (x is Player p)
@@ -577,7 +583,7 @@ namespace GameProject
                     {
                         gameEnemy.slowDownFactor = 1;
                     }
-                    else if(x is Bullet bullet)
+                    else if (x is Bullet bullet)
                     {
                         bullet.slowDownFactor = 1;
                     }

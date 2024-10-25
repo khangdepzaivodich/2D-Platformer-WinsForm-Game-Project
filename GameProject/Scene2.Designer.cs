@@ -51,6 +51,7 @@
             this.pictureBox32 = new System.Windows.Forms.PictureBox();
             this.pictureBox33 = new System.Windows.Forms.PictureBox();
             this.pictureBox34 = new System.Windows.Forms.PictureBox();
+            this.SkillBar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
@@ -310,10 +311,19 @@
             this.pictureBox34.TabIndex = 22;
             this.pictureBox34.TabStop = false;
             // 
+            // SkillBar
+            // 
+            this.SkillBar.Location = new System.Drawing.Point(523, 12);
+            this.SkillBar.Name = "SkillBar";
+            this.SkillBar.Size = new System.Drawing.Size(215, 31);
+            this.SkillBar.TabIndex = 23;
+            this.SkillBar.Value = 100;
+            // 
             // Scene2
             // 
             this.BackgroundImage = global::GameProject.Properties.Resources.tile031;
             this.ClientSize = new System.Drawing.Size(1466, 577);
+            this.Controls.Add(this.SkillBar);
             this.Controls.Add(this.pictureBox34);
             this.Controls.Add(this.pictureBox33);
             this.Controls.Add(this.pictureBox32);
@@ -406,5 +416,6 @@
         private System.Windows.Forms.PictureBox pictureBox32;
         private System.Windows.Forms.PictureBox pictureBox33;
         private System.Windows.Forms.PictureBox pictureBox34;
+        private System.Windows.Forms.ProgressBar SkillBar;
     }
 }
