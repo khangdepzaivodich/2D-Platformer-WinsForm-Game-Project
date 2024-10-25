@@ -418,10 +418,6 @@ namespace GameProject
                         {
                             enemy1.TakeDamage(10, this.Location);
                         }
-                        else if (!enemy1.isAttacking)
-                        {
-                            enemy1.Attack(player.Location);
-                        }
                     }
                 }
                 bool flag = false;
@@ -554,6 +550,10 @@ namespace GameProject
             if (e.KeyCode == Keys.Space)
             {
                 player.Jump();
+            }
+            if (e.KeyCode == Keys.Q)
+            {
+                player.Dash();
             }
             if (e.KeyCode == Keys.E && SkillBar.Value > 0 && !isSlowActive)
             {

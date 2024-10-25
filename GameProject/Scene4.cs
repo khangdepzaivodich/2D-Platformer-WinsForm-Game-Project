@@ -38,6 +38,15 @@ namespace GameProject
         private int heartRemoveCounter2 = 0;
         private bool slowTime = false;
         private float fadeAmount = 0f;
+
+        private Timer firstAndSecondLaserTimer;
+        private Timer thirdAndFifthLaserTimer;
+        private Timer fourthLaserTimer;
+        private bool firstLaserOn = false;
+        private bool secondLaserOn = false;
+        private bool thirdLaserOn = false;
+        private bool fourthLaserOn = false;
+        private bool fifthLaserOn = false;
         public Scene4(int health, int heartRemoveCounter)
         {
             InitializeComponent();
@@ -92,6 +101,10 @@ namespace GameProject
                 {
                     x.BringToFront();
                 }
+                if((string)x.Tag == "Laser" || (string)x.Tag == "Tube")
+                {
+                    x.BringToFront();
+                }
             }
             SetupTimers();
             SkillBar.BringToFront();
@@ -112,7 +125,49 @@ namespace GameProject
             bulletMoveTimer.Tick += MoveBullets;
             bulletMoveTimer.Start();
 
+            firstAndSecondLaserTimer = new Timer();
+            thirdAndFifthLaserTimer = new Timer();
+            fourthLaserTimer = new Timer();
+            firstAndSecondLaserTimer.Interval = 200; 
+            thirdAndFifthLaserTimer.Interval = 400;
+            fourthLaserTimer.Interval = 200;
+            firstAndSecondLaserTimer.Tick += FirstAndSecondLaser_Tick;
+            thirdAndFifthLaserTimer.Tick += ThirdAndFifthLaser_Tick;
+            fourthLaserTimer.Tick += FourthLaser_Tick;
+            firstAndSecondLaserTimer.Start();
+            thirdAndFifthLaserTimer.Start();
 
+        }
+        private void FirstAndSecondLaser_Tick(object sender, EventArgs e)
+        {
+            firstLaserOn = !firstLaserOn;
+            secondLaserOn = firstLaserOn;
+
+            UpdateLaserStates();
+        }
+        private void ThirdAndFifthLaser_Tick(object sender, EventArgs e)
+        {
+            thirdLaserOn = !thirdLaserOn;
+            fifthLaserOn = thirdLaserOn;
+
+            UpdateLaserStates();
+            if (!thirdLaserOn && !fifthLaserOn)
+            {
+                fourthLaserTimer.Start();
+            }
+        }
+        private void FourthLaser_Tick(object sender, EventArgs e)
+        {
+            fourthLaserOn = !fourthLaserOn;
+            UpdateLaserStates();
+        }
+        private void UpdateLaserStates()
+        {
+            Laser1.Visible = firstLaserOn;
+            Laser2.Visible = secondLaserOn;
+            Laser3.Visible = thirdLaserOn;
+            Laser4.Visible = fourthLaserOn;
+            Laser5.Visible = fifthLaserOn;
         }
         private bool checkSound = true;
         private void GameLoop(object sender, EventArgs e)
@@ -121,6 +176,9 @@ namespace GameProject
             {
                 checkSound = false;
                 skillsounds[3].Play();
+                firstAndSecondLaserTimer.Interval = 100;
+                thirdAndFifthLaserTimer.Interval = 200;
+                fourthLaserTimer.Interval = 100;
             }
             if (slowTime && SkillBar.Value > 0)
             {
@@ -402,13 +460,27 @@ namespace GameProject
             //}
 
 
-            //enemy2.UpdateEnemyAnimation(player.HitBox.Location);
+            //enemy2.UpdateEnemyAnimation(player.HitBox.Location);d
             //enemy.UpdateEnemyAnimation(player.HitBox.Location);
         }
         private void CheckCollisions()
         {
             foreach (Control x in this.Controls)
             {
+                if((string)x.Tag == "Laser" && player.HitBox.Bounds.IntersectsWith(x.Bounds) && x.Visible)
+                {
+                    player.TakeDamage(20);
+                    RemoveHeart();
+                    if (!player.IsFlipped)
+                    {
+                        player.Left -= 50;
+                    }
+                    else
+                    {
+                        player.Left += 50;
+                    }
+                    
+                }
                 if (x is Enemy enemy1)
                 {
                     if (enemy1.IsDead)
@@ -418,10 +490,6 @@ namespace GameProject
                         if (player.IsAttacking)
                         {
                             enemy1.TakeDamage(10, this.Location);
-                        }
-                        else if (!enemy1.isAttacking)
-                        {
-                            enemy1.Attack(player.Location);
                         }
                     }
                 }
@@ -556,12 +624,19 @@ namespace GameProject
             {
                 player.Jump();
             }
+            if (e.KeyCode == Keys.Q)
+            {
+                player.Dash();
+            }
             if (e.KeyCode == Keys.E && SkillBar.Value > 0 && !isSlowActive)
             {
                 checkSound = true;
                 slowTime = true;
                 isSlowActive = true;
                 skillsounds[2].Play();
+                firstAndSecondLaserTimer.Interval = 1000;
+                thirdAndFifthLaserTimer.Interval = 2000;
+                fourthLaserTimer.Interval = 1000;
             }
         }
         private void KeyIsUp(object sender, KeyEventArgs e)
@@ -582,6 +657,9 @@ namespace GameProject
                 }
                 slowTime = false;
                 isSlowActive = false;
+                firstAndSecondLaserTimer.Interval = 200;
+                thirdAndFifthLaserTimer.Interval = 400;
+                fourthLaserTimer.Interval = 200;
                 foreach (Control x in Controls)
                 {
                     if (x is Player p)
@@ -655,6 +733,7 @@ namespace GameProject
                 Main.HeartState.Hearts--;
             }
         }
+
         private void LoadSoundEffect()
         {
             skillsounds = new List<SoundPlayer>();

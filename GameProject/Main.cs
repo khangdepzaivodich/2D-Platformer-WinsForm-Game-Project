@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -40,8 +41,9 @@ namespace GameProject
         private int heartRemoveCounter = 0;
         private bool slowTime = false;
         private float fadeAmount = 0f;
-        
-        
+
+        private WaveChannel32 volumeStream;
+
         public Main()
         {
             InitializeComponent();
@@ -572,6 +574,10 @@ namespace GameProject
                 isSlowActive = true;
                 soundsfx[2].Play();
             }
+            if(e.KeyCode == Keys.Q)
+            {
+                player.Dash();
+            }
         }
 
         private void KeyIsUp(object sender, KeyEventArgs e)
@@ -674,7 +680,7 @@ namespace GameProject
         {
             bgsound = new List<WaveStream>();
             string[] soundFiles = Directory.GetFiles("SkillsSounds", "*.wav");
-
+            volumeStream?.Dispose();
             foreach (string soundFile in soundFiles)
             {
                 if (File.Exists(soundFile))
@@ -683,6 +689,7 @@ namespace GameProject
                     bgsound.Add(waveStream);
                 }
             }
+            volumeStream = new WaveChannel32(bgsound[0]);
 
         }
         private void LoadSoundEffect()
@@ -705,7 +712,8 @@ namespace GameProject
             if (index >= 0 && index < bgsound.Count)
             {
                 WaveOutEvent waveOut = new WaveOutEvent();
-                waveOut.Init(bgsound[index]);
+                volumeStream = new WaveChannel32(bgsound[index]);
+                waveOut.Init(volumeStream);
                 waveOut.Play();
             }
         }

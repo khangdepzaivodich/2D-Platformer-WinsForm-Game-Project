@@ -24,6 +24,16 @@ namespace GameProject
         public bool IsJumping { get; set; }
         public bool IsFalling = false;
         public bool startFalling = true;
+        private bool isDashing = false;
+        private bool canDash = true;
+        private int dashDist = 10;
+        private int dashDuration = 100;
+        private int dashStep = 10;
+        private int dashDir = 1;
+        private int dashStepDist;
+        private int dashCooldown = 3000;
+        private Timer dashTimer;
+        private Timer dashCooldownTimer;
         public int Speed { get; set; }
         public int Gravity { get; set; }
         public int JumpSpeed { get; set; }      
@@ -79,6 +89,18 @@ namespace GameProject
             InitializeProperties();
             LoadSoundEffect();
 
+
+            dashStepDist = dashDist / dashStep;
+            dashTimer = new Timer();
+            dashTimer.Interval = dashDuration / dashStep;
+            dashTimer.Tick += PerformDash;
+
+
+            dashCooldownTimer = new Timer();
+            dashCooldownTimer.Interval = dashCooldown;
+            dashCooldownTimer.Tick += EndDashCooldown;
+
+
             deathAnimationTimer = new Timer();
             deathAnimationTimer.Interval = 200;
             deathAnimationTimer.Tick += UpdateDeathAnimation;
@@ -103,9 +125,9 @@ namespace GameProject
         {
             HitBox = new PictureBox();
             HitBox.BackColor = Color.Transparent;
-            HitBox.Size = new Size(60, 70);
-            //HitBox.Visible = true;
-            //HitBox.BorderStyle = BorderStyle.FixedSingle;
+            HitBox.Size = new Size(50, 70);
+            HitBox.Visible = true;
+            HitBox.BorderStyle = BorderStyle.FixedSingle;
             this.Parent.Controls.Add(HitBox);
         }
 
@@ -215,6 +237,37 @@ namespace GameProject
                 this.Image = Image.FromFile(IsFlipped ? jumpingLeft[0] : jumpingRight[0]);
                 soundsfx[1].Play();
             }
+        }
+        public void Dash()
+        {
+            if (isDead || isDashing || !canDash) return;
+            isDashing = true;
+            canDash = false;
+            dashDir = IsFlipped ? -1 : 1;  
+            dashTimer.Start();
+        }
+        private void PerformDash(object sender, EventArgs e)
+        {
+            if(dashStep <= 0)
+            {
+                EndDash();
+                return;
+            }
+            this.Left += dashDist * dashDir;
+            this.Image = Image.FromFile(IsFlipped ? runningLeft[3] : runningRight[3]);
+            --dashStep;
+        }
+        private void EndDash()
+        {
+            isDashing = false;
+            dashTimer.Stop();
+            dashStep = 10;
+            dashCooldownTimer.Start();
+        }
+        private void EndDashCooldown(object sender, EventArgs e)
+        {
+            canDash = true;
+            dashCooldownTimer.Stop(); 
         }
         public void StartToFall()
         {
