@@ -10,6 +10,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static GameProject.Main;
 
 namespace GameProject
 {
@@ -114,27 +115,63 @@ namespace GameProject
                 {
                     if (x is RangedEnemy rangedEnemy)
                     {
-                        rangedEnemy.slowDownFactor = 0.2;
+                        rangedEnemy.slowDownFactor = 0.5;
                     }
                     else if (x is MeleeEnemy meleeEnemy)
                     {
-                        meleeEnemy.slowDownFactor = 0.2;
+                        meleeEnemy.slowDownFactor = 0.5;
+                    }
+                    else if (x is Bullet bullet)
+                    {
+                        bullet.slowDownFactor = 0.5;
                     }
                 }
             }
+
+
             player.UpdateHitboxPosition();
-            enemy2.UpdateHitboxPosition();
             player.PlayerMove();
             player.ApplyGravity();
-            enemy.ApplyGravity();
-            enemy2.ApplyGravity();
             player.UpdateAnimation();
+
+            foreach (Control x in Controls)
+            {
+                if (x is Enemy gameEnemy)
+                {
+                    gameEnemy.ApplyGravity();
+                }
+                if (x is MeleeEnemy meleeEnemy)
+                {
+                    meleeEnemy.UpdateHitboxPosition();
+                }
+            }
+
             UpdateEnemyBehavior();
             CheckCollisions();
             CheckTakeDeflectedBullet();
+            UpdatePlayerHealthWithMeleeEnemyAttack();
             player.StartToFall();
-
         }
+        private bool flag;
+        private void UpdatePlayerHealthWithMeleeEnemyAttack()
+        {
+            foreach (Control x in Controls)
+            {
+                if (x is MeleeEnemy meleeEnemy)
+                {
+                    if (player.HitBox.Bounds.IntersectsWith(meleeEnemy.hitBox.Bounds))
+                    {
+                        if (meleeEnemy.attackFrame == meleeEnemy.attackFrameSize - 1 && flag)
+                        {
+                            player.TakeDamage(20);
+                            RemoveHeart();
+                            flag = false;
+                        }
+                    }
+                }
+            }
+        }
+
         private void CheckTakeDeflectedBullet()
         {
             for (int i = bullets.Count - 1; i >= 0; i--)
@@ -249,8 +286,7 @@ namespace GameProject
                                     meleeEnemy.isRunning = false;
                                     meleeEnemy.Attack(player.Location);
                                     meleeEnemy.isAttacking = true;
-                                    player.TakeDamage(20);
-                                    RemoveHeart();
+                                    flag = true;
                                 }
                             }
                             else
@@ -526,6 +562,10 @@ namespace GameProject
                     else if (x is Enemy gameEnemy)
                     {
                         gameEnemy.slowDownFactor = 1;
+                    }
+                    else if(x is Bullet bullet)
+                    {
+                        bullet.slowDownFactor = 1;
                     }
                 }
             }

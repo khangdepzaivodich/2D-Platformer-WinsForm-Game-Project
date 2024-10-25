@@ -120,6 +120,10 @@ namespace GameProject
                     {
                         meleeEnemy.slowDownFactor = 0.5;
                     }
+                    else if(x is Bullet bullet)
+                    {
+                        bullet.slowDownFactor = 0.5;
+                    }
                 }
             }
 
@@ -559,6 +563,10 @@ namespace GameProject
                     else if(x is Enemy gameEnemy)
                     {
                         gameEnemy.slowDownFactor = 1;
+                    }
+                    else if(x is Bullet bullet)
+                    {
+                        bullet.slowDownFactor = 1;
                     }
                 }
             }

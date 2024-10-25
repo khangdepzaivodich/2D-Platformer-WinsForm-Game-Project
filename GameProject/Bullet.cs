@@ -17,7 +17,7 @@ namespace GameProject
         private Timer bulletAnimator;
         private int BulletAnimationDelayCounter;
         public bool IsAlive { get; private set; } = true;
-
+        public double slowDownFactor = 1;
         public Bullet(bool shootRight)
         {
             InitializeBullet(shootRight);
@@ -44,11 +44,11 @@ namespace GameProject
             {
                 if (IsMovingRight)
                 {
-                    this.Left += Speed;
+                    this.Left += (int)(Speed * slowDownFactor);
                 }
                 else
                 {
-                    this.Left -= Speed;
+                    this.Left -= (int)(Speed * slowDownFactor);
                 }
             }
         }
