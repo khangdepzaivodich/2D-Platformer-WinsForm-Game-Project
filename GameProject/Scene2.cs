@@ -628,11 +628,6 @@ namespace GameProject
             }
         }
 
-        private void Scene2_Load(object sender, EventArgs e)
-        {
-
-        }
-
         public void RemoveHeart()
         {
             if (heartBoxes.Count > 0)

@@ -637,11 +637,6 @@ namespace GameProject
                 heartBox.Image = heartImages[currentImageIndex];
             }
         }
-
-        private void Main_Load(object sender, EventArgs e)
-        {
-
-        }
         public static class HeartState
         {
             public static int Hearts { get; set; } = 5;

@@ -348,7 +348,6 @@
             this.Controls.Add(this.pictureBox14);
             this.Controls.Add(this.pictureBox13);
             this.Name = "Scene2";
-            this.Load += new System.EventHandler(this.Scene2_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseIsDown);
