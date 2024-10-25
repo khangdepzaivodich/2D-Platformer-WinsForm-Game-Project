@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +28,7 @@ namespace GameProject
         private Timer heartAnimationTimer;
         private List<string> shootLeft;
         private List<string> shootRight;
+        private List<SoundPlayer> skillsounds;
         private DateTime lastAttackTime;
         private const int attackCooldown = 1000;
         public int heartRemoveCT = 0;
@@ -38,6 +41,7 @@ namespace GameProject
         {
             InitializeComponent();
             InitializeGame();
+            LoadSoundEffect();
             heartRemoveCT = heartRemoveCounter;
             player.Health = health;
             CreateHeartBoxes(heartRemoveCT);
@@ -109,8 +113,14 @@ namespace GameProject
 
 
         }
+        private bool checkSound = true;
         private void GameLoop(object sender, EventArgs e)
         {
+            if (checkSound && SkillBar.Value <= 0)
+            {
+                checkSound = false;
+                skillsounds[3].Play();
+            }
             if (slowTime && SkillBar.Value > 0)
             {
                 fadeAmount = Math.Min(fadeAmount + 0.1f, 0.85f);
@@ -547,8 +557,10 @@ namespace GameProject
             }
             if (e.KeyCode == Keys.E && SkillBar.Value > 0 && !isSlowActive)
             {
+                checkSound = true;
                 slowTime = true;
                 isSlowActive = true;
+                skillsounds[2].Play();
             }
         }
         private void KeyIsUp(object sender, KeyEventArgs e)
@@ -563,6 +575,10 @@ namespace GameProject
             }
             if (e.KeyCode == Keys.E)
             {
+                if (checkSound)
+                {
+                    skillsounds[3].Play();
+                }
                 slowTime = false;
                 isSlowActive = false;
                 foreach (Control x in Controls)
@@ -636,6 +652,20 @@ namespace GameProject
                 heartBoxes.RemoveAt(heartBoxes.Count - 1);
                 this.Controls.Remove(heartToRemove);
                 Main.HeartState.Hearts--;
+            }
+        }
+        private void LoadSoundEffect()
+        {
+            skillsounds = new List<SoundPlayer>();
+            string[] soundFiles = Directory.GetFiles("AttackSound", "*.wav");
+            foreach (string soundFile in soundFiles)
+            {
+                if (File.Exists(soundFile))
+                {
+                    SoundPlayer playerSound = new SoundPlayer(soundFile);
+                    playerSound.Load();
+                    skillsounds.Add(playerSound);
+                }
             }
         }
     }

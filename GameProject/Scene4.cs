@@ -12,11 +12,10 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static GameProject.Main;
 
 namespace GameProject
 {
-    public partial class Scene3 : Form
+    public partial class Scene4 : Form
     {
         private Player player;
         private Enemy enemy, enemy2;
@@ -34,16 +33,16 @@ namespace GameProject
         private DateTime lastAttackTime;
         private const int attackCooldown = 1000;
         public int heartRemoveCT = 0;
+        private bool Scene3OP = false;
+        private int currentHealth;
+        private int heartRemoveCounter2 = 0;
         private bool slowTime = false;
         private float fadeAmount = 0f;
-        private bool scene4OP = false;
-        private int currentHealth;
-        public Scene3(int health, int heartRemoveCounter)
+        public Scene4(int health, int heartRemoveCounter)
         {
             InitializeComponent();
             InitializeGame();
             LoadSoundEffect();
-            
             heartRemoveCT = heartRemoveCounter;
             player.Health = health;
             CreateHeartBoxes(heartRemoveCT);
@@ -58,7 +57,7 @@ namespace GameProject
 
             player = new Player();
             player.SizeMode = PictureBoxSizeMode.CenterImage;
-            player.Location = new Point(266, 35);
+            player.Location = new Point(0, 415);
             player.IsOnGround = false;
             player.BackColor = Color.Transparent;
             this.Controls.Add(player);
@@ -67,12 +66,12 @@ namespace GameProject
 
             enemy = new RangedEnemy();
             bullets = new List<Bullet>();
-            enemy.Location = new Point(1185, 329);
+            enemy.Location = new Point(800, 415);
             enemy.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy);
 
             enemy2 = new MeleeEnemy();
-            enemy2.Location = new Point(61, 457);
+            enemy2.Location = new Point(1200, 415);
             enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy2);
             enemy2.CreateHitBox();
@@ -82,7 +81,7 @@ namespace GameProject
             player.BringToFront();
             enemy.BringToFront();
             enemy2.BringToFront();
-            
+
             foreach (Control x in this.Controls)
             {
                 if (x is PictureBox && (string)x.Tag == "Ground")
@@ -152,35 +151,28 @@ namespace GameProject
             this.Invalidate();
 
             player.UpdateHitboxPosition();
+            enemy2.UpdateHitboxPosition();
             player.PlayerMove();
             player.ApplyGravity();
+            enemy.ApplyGravity();
+            enemy2.ApplyGravity();
             player.UpdateAnimation();
 
-            foreach (Control x in Controls)
-            {
-                if (x is Enemy gameEnemy)
-                {
-                    gameEnemy.ApplyGravity();
-                }
-                if (x is MeleeEnemy meleeEnemy)
-                {
-                    meleeEnemy.UpdateHitboxPosition();
-                }
-            }
-            if (player.Location.X > this.Width && !scene4OP)
-            {
-                this.Hide();
-                scene4OP = true;
-                currentHealth = player.Health;
-                Scene4 scene4 = new Scene4(currentHealth, HeartState.Hearts);
-                scene4.Show();
-                scene4.Focus();
-            }
+
             UpdateEnemyBehavior();
             CheckCollisions();
             CheckTakeDeflectedBullet();
             UpdatePlayerHealthWithMeleeEnemyAttack();
-            player.StartToFall();
+
+            if (player.Location.Y > this.Height && !Scene3OP)
+            {
+                this.Hide();
+                Scene3OP = true;
+                currentHealth = player.Health;
+                Scene3 scene3 = new Scene3(currentHealth, Main.HeartState.Hearts);
+                scene3.Show();
+                scene3.Focus();
+            }
         }
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -210,7 +202,6 @@ namespace GameProject
                 }
             }
         }
-
         private void CheckTakeDeflectedBullet()
         {
             for (int i = bullets.Count - 1; i >= 0; i--)
@@ -326,6 +317,8 @@ namespace GameProject
                                     meleeEnemy.Attack(player.Location);
                                     meleeEnemy.isAttacking = true;
                                     flag = true;
+                                    //player.TakeDamage(20);
+                                    //RemoveHeart();
                                 }
                             }
                             else
@@ -472,18 +465,6 @@ namespace GameProject
                     else
                     {
                         enemy2.IsOnGround = false;
-                    }
-                }
-                
-            }
-            foreach(Control z in this.Controls)
-            {
-                if (z is PictureBox && (string)z.Tag =="Ground")
-                {
-                    if (player.HitBox.Bounds.IntersectsWith(z.Bounds))
-                    {
-                        player.startFalling = false;
-                        break;
                     }
                 }
             }
@@ -674,7 +655,6 @@ namespace GameProject
                 Main.HeartState.Hearts--;
             }
         }
-
         private void LoadSoundEffect()
         {
             skillsounds = new List<SoundPlayer>();
@@ -689,7 +669,6 @@ namespace GameProject
                 }
             }
         }
-
-
+        
     }
 }

@@ -313,9 +313,9 @@
             // 
             // SkillBar
             // 
-            this.SkillBar.Location = new System.Drawing.Point(523, 12);
+            this.SkillBar.Location = new System.Drawing.Point(5, 45);
             this.SkillBar.Name = "SkillBar";
-            this.SkillBar.Size = new System.Drawing.Size(215, 31);
+            this.SkillBar.Size = new System.Drawing.Size(205, 25);
             this.SkillBar.TabIndex = 23;
             this.SkillBar.Value = 100;
             // 

@@ -139,12 +139,6 @@
   <data name="tile0391" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile0391.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tile071" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tile071.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="tile056" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tile056.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="tile021" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile021.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -157,23 +151,14 @@
   <data name="Board3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Board3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tile008" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tile008.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="pixel-art-set-four-black-260nw-2465293165__2_-removebg-preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pixel-art-set-four-black-260nw-2465293165__2_-removebg-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile061" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile061.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tile028" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tile028.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="tile051" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile051.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="tile009" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tile009.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile020" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile020.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,8 +166,17 @@
   <data name="1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\DeflectFrame\1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="tile005" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile005.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tile042" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile042.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tile004" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile004.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tile047" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile047.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile012" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile012.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -196,6 +190,9 @@
   <data name="pixel-art-set-four-black-260nw-2465293165__4_-removebg-preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pixel-art-set-four-black-260nw-2465293165__4_-removebg-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="tile006" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile006.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -208,8 +205,8 @@
   <data name="tile013" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile013.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tile047" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tile047.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tile071" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile071.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile069" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile069.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -220,8 +217,8 @@
   <data name="tile023" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile023.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tile042" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tile042.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tile056" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile056.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile043" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile043.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -229,17 +226,20 @@
   <data name="tile048" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile048.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pixel-art-set-four-black-260nw-2465293165__1_-removebg-preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pixel-art-set-four-black-260nw-2465293165__1_-removebg-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tile038" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile038.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\DeflectFrame\9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tile005" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tile005.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tile008" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile008.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pixel-art-set-four-black-260nw-2465293165__1_-removebg-preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pixel-art-set-four-black-260nw-2465293165__1_-removebg-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tile028" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile028.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile039" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile039.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -247,8 +247,8 @@
   <data name="tile0431" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile0431.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tile006" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tile006.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tile009" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile009.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -261,5 +261,8 @@
   </data>
   <data name="Suriken" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Suriken.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tile067" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile067.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -1,9 +1,11 @@
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Windows.Forms;
 
 namespace GameProject
@@ -26,7 +28,7 @@ namespace GameProject
         protected List<string> walkingMeleeRight;
         protected List<string> walkingRangedRight;
         protected List<string> walkingRangedLeft;
-
+        protected List<SoundPlayer> soundsfx;
         private List<string> bloodEffect;
         protected int idleFrame;
         protected int runningFrame;
@@ -61,6 +63,7 @@ namespace GameProject
         public Enemy()
         {
             InitializeProperties();
+            LoadSoundEffects();
         }
         protected virtual void InitializeProperties()
         {
@@ -139,6 +142,20 @@ namespace GameProject
             //hitBox.Visible = true;
             //hitBox.BorderStyle = BorderStyle.FixedSingle;
             this.Parent.Controls.Add(hitBox);
+        }
+        private void LoadSoundEffects()
+        {
+            soundsfx = new List<SoundPlayer>();
+            string[] soundFiles = Directory.GetFiles("AttackSound", "*.wav");
+            foreach (string soundFile in soundFiles)
+            {
+                if (File.Exists(soundFile))
+                {
+                    SoundPlayer playerSound = new SoundPlayer(soundFile);
+                    playerSound.Load();
+                    soundsfx.Add(playerSound);
+                }
+            }
         }
         public void UpdateHitboxPosition()
         {
@@ -265,6 +282,7 @@ namespace GameProject
         public override void Attack(Point playerPosition)
         {
             if (IsDead) return;
+            soundsfx[4].Play();
             isShootRight = playerPosition.X + 10 > this.Left;
             shootFrame = 0;
             shootAnimationTimer.Start();
@@ -345,15 +363,19 @@ namespace GameProject
             }
             
         }
+        private bool checkShoot = true;
         private void UpdateShootAnimation(object sender, EventArgs e)
         {
             isShooting = true;
-            if (shootFrame < shootRight.Count)
+            if (shootFrame < shootRight.Count && checkShoot)
             {
+                soundsfx[4].Play();
+                checkShoot = false;
                 this.Image = Image.FromFile(isShootRight ? shootRight[shootFrame++] : shootLeft[shootFrame++]);
             }
             else
             {
+                checkShoot = true;
                 shootFrame = 0;
                 shootAnimationTimer.Stop();
                 isShooting = false;
@@ -565,6 +587,7 @@ namespace GameProject
             
         }
         private int meleeAttackDelayCounter = 0;
+        private bool checkPunch = true;
         private void UpdateAttackAnimation()
         {
             ++meleeAttackDelayCounter;
@@ -575,11 +598,17 @@ namespace GameProject
                 {
                     if (attackFrame < (isAttackRight ? attackRight.Count : attackLeft.Count))
                     {
+                        if (checkPunch)
+                        {
+                            soundsfx[5].Play();
+                        }
+                        checkPunch = false;
                         this.Image = Image.FromFile(isAttackRight ? attackRight[attackFrame] : attackLeft[attackFrame]);
                         attackFrame++;
                     }
                     else
                     {
+                        checkPunch = true;
                         attackAnimationTimer.Stop();
                         isAttacking = false;
                         attackFrame = 0;

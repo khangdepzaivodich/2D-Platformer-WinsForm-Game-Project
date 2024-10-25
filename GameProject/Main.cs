@@ -1,10 +1,12 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -26,6 +28,9 @@ namespace GameProject
         private Timer heartAnimationTimer;
         private List<string> shootLeft;
         private List<string> shootRight;
+        private List<SoundPlayer> soundsfx;
+        private List<WaveStream> bgsound;
+        
 
         private List<PictureBox> backgrounds;
         private DateTime lastAttackTime;
@@ -35,10 +40,15 @@ namespace GameProject
         private int heartRemoveCounter = 0;
         private bool slowTime = false;
         private float fadeAmount = 0f;
+        
+        
         public Main()
         {
             InitializeComponent();
             InitializeGame();
+            LoadBg();
+            LoadSoundEffect();
+            PlaySoundEffect(0);
         }
         
         private void InitializeGame()
@@ -47,7 +57,6 @@ namespace GameProject
             this.DoubleBuffered = true;
             this.KeyPreview = true;
 
-            
             shootLeft = Directory.GetFiles("EnemyShot_Left", "*.png").ToList();
             shootRight = Directory.GetFiles("EnemyShot_Right", "*.png").ToList();
 
@@ -107,8 +116,14 @@ namespace GameProject
 
 
         }
+        private bool checkSound = true;
         private void GameLoop(object sender, EventArgs e)
         {
+            if (checkSound && SkillBar.Value <= 0)
+            {
+                checkSound = false;
+                soundsfx[3].Play();
+            }
             if (slowTime && SkillBar.Value > 0)
             {
                 fadeAmount = Math.Min(fadeAmount + 0.1f, 0.85f);
@@ -416,10 +431,6 @@ namespace GameProject
                         {
                             enemy1.TakeDamage(10, this.Location);
                         }
-                        else if (!enemy1.isAttacking)
-                        {
-                            enemy1.Attack(player.Location);
-                        }
                     }
                 }
                 bool flag = false;
@@ -556,10 +567,13 @@ namespace GameProject
             }
             if(e.KeyCode == Keys.E && SkillBar.Value > 0 && !isSlowActive)
             {
+                checkSound = true;
                 slowTime = true;
                 isSlowActive = true;
+                soundsfx[2].Play();
             }
         }
+
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A)
@@ -572,6 +586,10 @@ namespace GameProject
             }
             if(e.KeyCode == Keys.E)
             {
+                if (checkSound)
+                {
+                    soundsfx[3].Play();
+                }
                 slowTime = false;
                 isSlowActive = false;
                 foreach(Control x in Controls)
@@ -650,6 +668,45 @@ namespace GameProject
                 heartBoxes.RemoveAt(heartBoxes.Count - 1);
                 this.Controls.Remove(heartToRemove);
                 HeartState.Hearts--;
+            }
+        }
+        private void LoadBg()
+        {
+            bgsound = new List<WaveStream>();
+            string[] soundFiles = Directory.GetFiles("SkillsSounds", "*.wav");
+
+            foreach (string soundFile in soundFiles)
+            {
+                if (File.Exists(soundFile))
+                {
+                    WaveStream waveStream = new WaveFileReader(soundFile);
+                    bgsound.Add(waveStream);
+                }
+            }
+
+        }
+        private void LoadSoundEffect()
+        {
+            soundsfx = new List<SoundPlayer>();
+            string[] soundFiles = Directory.GetFiles("AttackSound", "*.wav");
+            foreach (string soundFile in soundFiles)
+            {
+                if (File.Exists(soundFile))
+                {
+                    SoundPlayer playerSound = new SoundPlayer(soundFile);
+                    playerSound.Load();
+                    soundsfx.Add(playerSound);
+                }
+            }
+        }
+
+        public void PlaySoundEffect(int index)
+        {
+            if (index >= 0 && index < bgsound.Count)
+            {
+                WaveOutEvent waveOut = new WaveOutEvent();
+                waveOut.Init(bgsound[index]);
+                waveOut.Play();
             }
         }
     }

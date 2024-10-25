@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -49,7 +50,7 @@ namespace GameProject
         private List<string> bloodEffect;
         private List<string> fallRight;
         private List<string> fallLeft;
-        private List<SoundPlayer> attackSounds;
+        private List<SoundPlayer> soundsfx;
 
         private int idleFrame;
         private int runningFrame;
@@ -76,8 +77,7 @@ namespace GameProject
         {
             LoadAnimation();
             InitializeProperties();
-            LoadSoundEffects();
-
+            LoadSoundEffect();
 
             deathAnimationTimer = new Timer();
             deathAnimationTimer.Interval = 200;
@@ -117,6 +117,7 @@ namespace GameProject
 
         private void LoadAnimation()
         {
+            
             idleRight = Directory.GetFiles("Idle_Right", "*png").ToList();
             idleLeft = Directory.GetFiles("Idle_Left", "*.png").ToList();
             runningRight = Directory.GetFiles("Running_Right", "*.png").ToList();
@@ -171,15 +172,17 @@ namespace GameProject
                 }
             }
         }
-
+        private bool flag = true;
         private void UpdateAttackingAnimation()
         {
-            if (attackSounds.Count > 0)
+            if(flag)
             {
-                attackSounds[0].Play();
+                soundsfx[0].Play();
+                flag = false;
             }
             if (attackFrame >= attackLeft.Count)
             {
+                flag = true;
                 attackFrame = 0;
                 IsAttacking = false;
             }
@@ -210,6 +213,7 @@ namespace GameProject
                 IsFalling = false;
                 JumpVelocity = 4;
                 this.Image = Image.FromFile(IsFlipped ? jumpingLeft[0] : jumpingRight[0]);
+                soundsfx[1].Play();
             }
         }
         public void StartToFall()
@@ -254,7 +258,7 @@ namespace GameProject
             isTakingHit = true;
             bloodEffectFrame = 0;
             isBloodEffectRunning = true;
-            
+            soundsfx[6].Play();
             
             UpdateBloodEffect(this, EventArgs.Empty);
             bloodEffectTimer.Start();
@@ -380,9 +384,9 @@ namespace GameProject
                 bloodEffectBox.Visible = true;
             }
         }
-        private void LoadSoundEffects()
+        private void LoadSoundEffect()
         {
-            attackSounds = new List<SoundPlayer>();
+            soundsfx = new List<SoundPlayer>();
             string[] soundFiles = Directory.GetFiles("AttackSound", "*.wav");
             foreach (string soundFile in soundFiles)
             {
@@ -390,11 +394,11 @@ namespace GameProject
                 {
                     SoundPlayer playerSound = new SoundPlayer(soundFile);
                     playerSound.Load();
-                    attackSounds.Add(playerSound);
+                    soundsfx.Add(playerSound);
                 }
             }
         }
-
+        
     }
 
 }
