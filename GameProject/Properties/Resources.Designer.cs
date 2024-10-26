@@ -153,9 +153,29 @@ namespace GameProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Icon_28 {
+            get {
+                object obj = ResourceManager.GetObject("Icon_28", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Idle__0_ {
             get {
                 object obj = ResourceManager.GetObject("Idle (0)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Interface_windows {
+            get {
+                object obj = ResourceManager.GetObject("Interface windows", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

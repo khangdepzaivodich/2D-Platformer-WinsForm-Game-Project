@@ -297,7 +297,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::GameProject.Properties.Resources.tile031;
-            this.ClientSize = new System.Drawing.Size(1924, 775);
+            this.ClientSize = new System.Drawing.Size(1805, 770);
             this.Controls.Add(this.Laser5);
             this.Controls.Add(this.pictureBox17);
             this.Controls.Add(this.pictureBox18);
@@ -319,7 +319,9 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
             this.Name = "Scene4";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Scene4";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);

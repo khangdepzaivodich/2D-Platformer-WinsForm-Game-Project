@@ -37,9 +37,10 @@ namespace GameProject
         public int Speed { get; set; }
         public int Gravity { get; set; }
         public int JumpSpeed { get; set; }      
-        public int Health { get; set; } = 100000;
+        public int Health { get; set; } = 100;
         public int AttackDamage { get; private set; } = 20;
-    
+        public bool isDead { get; set; } = false;
+
         public List<PictureBox> HeartBoxes { get; set; }
 
         public bool IsAttacking = false;
@@ -70,7 +71,6 @@ namespace GameProject
         private Main mainForm;
         private int bloodEffectFrame = 0;
 
-        public bool isDead = false;
         public double slowDownFactor = 1;
 
         private bool isBloodEffectRunning = false;
@@ -88,7 +88,6 @@ namespace GameProject
             LoadAnimation();
             InitializeProperties();
             LoadSoundEffect();
-
 
             dashStepDist = dashDist / dashStep;
             dashTimer = new Timer();
@@ -128,7 +127,10 @@ namespace GameProject
             HitBox.Size = new Size(50, 70);
             HitBox.Visible = true;
             HitBox.BorderStyle = BorderStyle.FixedSingle;
-            this.Parent.Controls.Add(HitBox);
+            if (this.Parent != null)
+            {
+                this.Parent.Controls.Add(HitBox);
+            }
         }
 
         public void UpdateHitboxPosition()
@@ -324,6 +326,13 @@ namespace GameProject
         {
             isDead = true;
             deathAnimationTimer.Start();
+        }
+        public void Respawn()
+        {
+            isDead = false;
+            Health = 100;
+            isTakingHit = false;
+            isBloodEffectRunning = false;
         }
         private void UpdateDeathAnimation(object sender, EventArgs e)
         {

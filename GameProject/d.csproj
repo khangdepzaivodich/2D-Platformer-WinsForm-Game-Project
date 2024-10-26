@@ -96,6 +96,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RetryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RetryForm.Designer.cs">
+      <DependentUpon>RetryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Scene2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +133,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RetryForm.resx">
+      <DependentUpon>RetryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Scene2.resx">
       <DependentUpon>Scene2.cs</DependentUpon>
     </EmbeddedResource>
@@ -299,6 +308,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Interface windows.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon_28.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

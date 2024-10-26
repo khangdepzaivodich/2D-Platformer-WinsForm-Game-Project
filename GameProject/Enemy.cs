@@ -47,11 +47,12 @@ namespace GameProject
         protected const int ChaseSpeed = 8;
         public PictureBox hitBox;
         public int AttackRange = 20;
-        public bool IsDead { get; protected set; } = false;
+        public bool IsDead { get; set; } = false;
         public bool IsOnGround { get; set; } = false;
         public bool isActivate { get; set; } = false;
         public int health { get; protected set; }
         public int Gravity { get; protected set; } = 10;
+        public int walkDelayCounter = 0;
         protected int speed = 2;
         public bool isRunning { get; set; } = false;
         public double slowDownFactor = 1;
@@ -60,6 +61,7 @@ namespace GameProject
         public bool isColliding { get; set; } = false;
 
         public bool isFirst = true;
+        public bool isMovingRight = false;
         public Enemy()
         {
             InitializeProperties();
@@ -141,7 +143,10 @@ namespace GameProject
             hitBox.Size = new Size(50, 70);
             //hitBox.Visible = true;
             //hitBox.BorderStyle = BorderStyle.FixedSingle;
-            this.Parent.Controls.Add(hitBox);
+            if (this.Parent != null)
+            {
+                this.Parent.Controls.Add(hitBox);
+            }
         }
         private void LoadSoundEffects()
         {
@@ -244,7 +249,7 @@ namespace GameProject
         private int idleDuration = 120;
         private int idleCounter = 0;
         private int totalMoved = 0;
-        private bool isMovingRight = false;
+        
 
         public RangedEnemy()
         {
@@ -288,7 +293,6 @@ namespace GameProject
             shootAnimationTimer.Start();
         }
 
-        private int walkDelayCounter = 0;
         public override void Patrol()
         {
             if (isShooting) return;
@@ -460,7 +464,6 @@ namespace GameProject
         private int idleDuration = 120;
         private int idleCounter = 0;
         private int totalMoved = 0;
-        private bool isMovingRight = true;
         public int attackFrameSize;
         public MeleeEnemy()
         {
