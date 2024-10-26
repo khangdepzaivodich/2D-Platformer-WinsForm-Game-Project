@@ -67,12 +67,12 @@ namespace GameProject
 
             enemy = new RangedEnemy();
             bullets = new List<Bullet>();
-            enemy.Location = new Point(1316, 325);
+            enemy.Location = new Point(1500, 325);
             enemy.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy);
 
             enemy2 = new MeleeEnemy();
-            enemy2.Location = new Point(608, 325);
+            enemy2.Location = new Point(800, 325);
             enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy2);
             enemy2.CreateHitBox();
@@ -153,7 +153,7 @@ namespace GameProject
             if (player.isDead && !retryFormCheck)
             {
                 retryFormCheck = true;
-                RetryForm retryForm = new RetryForm();
+                RetryForm retryForm = new RetryForm(this);
                 if (retryForm.ShowDialog() == DialogResult.Retry)
                 {
                     retryFormCheck = false;

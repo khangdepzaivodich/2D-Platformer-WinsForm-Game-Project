@@ -154,17 +154,23 @@
   <data name="tile050" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile050.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="tile006" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tile006.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Board3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Board3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tile006" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tile006.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Pointer1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Pointer1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pixel-art-set-four-black-260nw-2465293165__2_-removebg-preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pixel-art-set-four-black-260nw-2465293165__2_-removebg-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile061" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile061.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Logo1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile051" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile051.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,17 +187,26 @@
   <data name="tile042" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile042.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tile004" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile004.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile047" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile047.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Spike" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Spike.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tile012" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile012.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile031" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile031.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icon_28" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon_28.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile049" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile049.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,6 +229,9 @@
   <data name="tile013" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile013.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pixel-art-set-four-black-260nw-2465293165__1_-removebg-preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pixel-art-set-four-black-260nw-2465293165__1_-removebg-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tile071" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile071.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -235,8 +253,8 @@
   <data name="tile048" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile048.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pixel-art-set-four-black-260nw-2465293165__1_-removebg-preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pixel-art-set-four-black-260nw-2465293165__1_-removebg-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Interface windows88" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Interface windows88.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile038" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile038.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -262,11 +280,17 @@
   <data name="tile008" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile008.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Icon_35" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon_35.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayBtn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlayBtn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tile032" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tile032.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ExitBtn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ExitBtn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Mop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Mop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -274,7 +298,7 @@
   <data name="Suriken" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Suriken.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Icon_28" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon_28.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Spike-removebg-preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Spike-removebg-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

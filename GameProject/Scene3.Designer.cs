@@ -59,6 +59,11 @@
             this.pictureBox29 = new System.Windows.Forms.PictureBox();
             this.pictureBox30 = new System.Windows.Forms.PictureBox();
             this.pictureBox31 = new System.Windows.Forms.PictureBox();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.pictureBox32 = new System.Windows.Forms.PictureBox();
+            this.pictureBox33 = new System.Windows.Forms.PictureBox();
+            this.pictureBox34 = new System.Windows.Forms.PictureBox();
+            this.pictureBox35 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -89,6 +94,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox29)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox30)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox31)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox32)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox33)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox34)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -134,9 +144,9 @@
             // pictureBox5
             // 
             this.pictureBox5.BackgroundImage = global::GameProject.Properties.Resources.tile061;
-            this.pictureBox5.Location = new System.Drawing.Point(862, 416);
+            this.pictureBox5.Location = new System.Drawing.Point(908, 409);
             this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(944, 357);
+            this.pictureBox5.Size = new System.Drawing.Size(942, 372);
             this.pictureBox5.TabIndex = 4;
             this.pictureBox5.TabStop = false;
             this.pictureBox5.Tag = "BlockedWall";
@@ -144,9 +154,9 @@
             // pictureBox6
             // 
             this.pictureBox6.BackgroundImage = global::GameProject.Properties.Resources.tile042;
-            this.pictureBox6.Location = new System.Drawing.Point(862, 385);
+            this.pictureBox6.Location = new System.Drawing.Point(908, 378);
             this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(944, 33);
+            this.pictureBox6.Size = new System.Drawing.Size(942, 33);
             this.pictureBox6.TabIndex = 5;
             this.pictureBox6.TabStop = false;
             this.pictureBox6.Tag = "Ground";
@@ -164,9 +174,9 @@
             // pictureBox9
             // 
             this.pictureBox9.BackgroundImage = global::GameProject.Properties.Resources.tile048;
-            this.pictureBox9.Location = new System.Drawing.Point(832, 416);
+            this.pictureBox9.Location = new System.Drawing.Point(878, 409);
             this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(33, 357);
+            this.pictureBox9.Size = new System.Drawing.Size(31, 372);
             this.pictureBox9.TabIndex = 8;
             this.pictureBox9.TabStop = false;
             this.pictureBox9.Tag = "BlockedWall";
@@ -174,9 +184,9 @@
             // pictureBox10
             // 
             this.pictureBox10.BackgroundImage = global::GameProject.Properties.Resources.tile0391;
-            this.pictureBox10.Location = new System.Drawing.Point(832, 385);
+            this.pictureBox10.Location = new System.Drawing.Point(878, 378);
             this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(33, 33);
+            this.pictureBox10.Size = new System.Drawing.Size(31, 33);
             this.pictureBox10.TabIndex = 9;
             this.pictureBox10.TabStop = false;
             this.pictureBox10.Tag = "Ground";
@@ -184,7 +194,7 @@
             // pictureBox11
             // 
             this.pictureBox11.BackgroundImage = global::GameProject.Properties.Resources.tile047;
-            this.pictureBox11.Location = new System.Drawing.Point(701, 446);
+            this.pictureBox11.Location = new System.Drawing.Point(734, 446);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(33, 33);
             this.pictureBox11.TabIndex = 10;
@@ -216,7 +226,7 @@
             this.pictureBox14.BackgroundImage = global::GameProject.Properties.Resources.tile061;
             this.pictureBox14.Location = new System.Drawing.Point(1, 544);
             this.pictureBox14.Name = "pictureBox14";
-            this.pictureBox14.Size = new System.Drawing.Size(512, 229);
+            this.pictureBox14.Size = new System.Drawing.Size(512, 237);
             this.pictureBox14.TabIndex = 13;
             this.pictureBox14.TabStop = false;
             this.pictureBox14.Tag = "BlockedWall";
@@ -236,7 +246,7 @@
             this.pictureBox16.BackgroundImage = global::GameProject.Properties.Resources.tile049;
             this.pictureBox16.Location = new System.Drawing.Point(502, 544);
             this.pictureBox16.Name = "pictureBox16";
-            this.pictureBox16.Size = new System.Drawing.Size(33, 229);
+            this.pictureBox16.Size = new System.Drawing.Size(33, 237);
             this.pictureBox16.TabIndex = 15;
             this.pictureBox16.TabStop = false;
             this.pictureBox16.Tag = "BlockedWall";
@@ -401,10 +411,69 @@
             this.pictureBox31.TabStop = false;
             this.pictureBox31.Tag = "BlockedWall";
             // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Location = new System.Drawing.Point(-23, -46);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox8.TabIndex = 32;
+            this.pictureBox8.TabStop = false;
+            // 
+            // pictureBox32
+            // 
+            this.pictureBox32.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox32.BackgroundImage = global::GameProject.Properties.Resources.Spike_removebg_preview;
+            this.pictureBox32.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox32.Location = new System.Drawing.Point(535, 728);
+            this.pictureBox32.Name = "pictureBox32";
+            this.pictureBox32.Size = new System.Drawing.Size(117, 53);
+            this.pictureBox32.TabIndex = 33;
+            this.pictureBox32.TabStop = false;
+            this.pictureBox32.Tag = "TrapSpike";
+            // 
+            // pictureBox33
+            // 
+            this.pictureBox33.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox33.BackgroundImage = global::GameProject.Properties.Resources.Spike_removebg_preview;
+            this.pictureBox33.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox33.Location = new System.Drawing.Point(650, 728);
+            this.pictureBox33.Name = "pictureBox33";
+            this.pictureBox33.Size = new System.Drawing.Size(117, 53);
+            this.pictureBox33.TabIndex = 34;
+            this.pictureBox33.TabStop = false;
+            this.pictureBox33.Tag = "TrapSpike";
+            // 
+            // pictureBox34
+            // 
+            this.pictureBox34.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox34.BackgroundImage = global::GameProject.Properties.Resources.Spike_removebg_preview;
+            this.pictureBox34.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox34.Location = new System.Drawing.Point(761, 728);
+            this.pictureBox34.Name = "pictureBox34";
+            this.pictureBox34.Size = new System.Drawing.Size(117, 53);
+            this.pictureBox34.TabIndex = 35;
+            this.pictureBox34.TabStop = false;
+            this.pictureBox34.Tag = "TrapSpike";
+            // 
+            // pictureBox35
+            // 
+            this.pictureBox35.BackgroundImage = global::GameProject.Properties.Resources.tile033;
+            this.pictureBox35.Location = new System.Drawing.Point(705, 446);
+            this.pictureBox35.Name = "pictureBox35";
+            this.pictureBox35.Size = new System.Drawing.Size(33, 33);
+            this.pictureBox35.TabIndex = 36;
+            this.pictureBox35.TabStop = false;
+            this.pictureBox35.Tag = "Ground";
+            // 
             // Scene3
             // 
             this.BackgroundImage = global::GameProject.Properties.Resources.tile031;
-            this.ClientSize = new System.Drawing.Size(1805, 770);
+            this.ClientSize = new System.Drawing.Size(1807, 778);
+            this.Controls.Add(this.pictureBox35);
+            this.Controls.Add(this.pictureBox34);
+            this.Controls.Add(this.pictureBox33);
+            this.Controls.Add(this.pictureBox32);
+            this.Controls.Add(this.pictureBox8);
             this.Controls.Add(this.pictureBox31);
             this.Controls.Add(this.pictureBox30);
             this.Controls.Add(this.pictureBox29);
@@ -473,6 +542,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox29)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox30)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox31)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox32)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox33)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox34)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -510,5 +584,10 @@
         private System.Windows.Forms.PictureBox pictureBox29;
         private System.Windows.Forms.PictureBox pictureBox30;
         private System.Windows.Forms.PictureBox pictureBox31;
+        private System.Windows.Forms.PictureBox pictureBox8;
+        private System.Windows.Forms.PictureBox pictureBox32;
+        private System.Windows.Forms.PictureBox pictureBox33;
+        private System.Windows.Forms.PictureBox pictureBox34;
+        private System.Windows.Forms.PictureBox pictureBox35;
     }
 }

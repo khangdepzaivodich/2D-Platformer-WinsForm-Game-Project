@@ -91,6 +91,12 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Player.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     </Compile>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainMenu.resx">
+      <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -314,6 +323,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Icon_28.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlayBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExitBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pointer1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Interface windows88.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon_35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spike.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spike-removebg-preview.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

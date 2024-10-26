@@ -64,7 +64,7 @@ namespace GameProject
             player = new Player();
             player.SizeMode = PictureBoxSizeMode.CenterImage;
             player.Location = new Point(100, 490);
-            player.IsOnGround = false;
+            player.IsOnGround = true;
             player.BackColor = Color.Transparent;
             this.Controls.Add(player);
             player.CreateHitBox();
@@ -154,7 +154,7 @@ namespace GameProject
             if (player.isDead && !retryFormCheck)
             {
                 retryFormCheck = true;
-                RetryForm retryForm = new RetryForm();
+                RetryForm retryForm = new RetryForm(this);
                 if (retryForm.ShowDialog() == DialogResult.Retry)
                 {
                     retryFormCheck = false;
@@ -187,7 +187,7 @@ namespace GameProject
                     player = new Player();
                     player.SizeMode = PictureBoxSizeMode.CenterImage;
                     player.Location = new Point(100, 490);
-                    player.IsOnGround = false;
+                    player.IsOnGround = true;
                     player.BackColor = Color.Transparent;
                     player.CreateHitBox();
                     this.Controls.Add(player);

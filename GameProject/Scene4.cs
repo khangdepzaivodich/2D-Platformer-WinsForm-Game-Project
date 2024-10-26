@@ -231,7 +231,7 @@ namespace GameProject
             if (player.isDead && !retryFormCheck)
             {
                 retryFormCheck = true;
-                RetryForm retryForm = new RetryForm();
+                RetryForm retryForm = new RetryForm(this);
                 if (retryForm.ShowDialog() == DialogResult.Retry)
                 {
                     retryFormCheck = false;

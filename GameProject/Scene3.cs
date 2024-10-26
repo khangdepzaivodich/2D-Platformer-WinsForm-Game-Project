@@ -152,7 +152,7 @@ namespace GameProject
             if (player.isDead && !retryFormCheck)
             {
                 retryFormCheck = true;
-                RetryForm retryForm = new RetryForm();
+                RetryForm retryForm = new RetryForm(this);
                 if (retryForm.ShowDialog() == DialogResult.Retry)
                 {
                     retryFormCheck = false;
@@ -232,6 +232,23 @@ namespace GameProject
                         {
                             x.BringToFront();
                         }
+                    }
+                }
+            }
+            foreach (Control x in this.Controls)
+            {
+                if (x is PictureBox && (string)x.Tag == "TrapSpike")
+                {
+                    if (player.HitBox.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        player.IsOnGround = true;
+                        player.Die();
+                        foreach (var heartBox in heartBoxes)
+                        {
+                            this.Controls.Remove(heartBox);
+                            heartBox.Dispose();
+                        }
+                        heartBoxes.Clear();
                     }
                 }
             }
