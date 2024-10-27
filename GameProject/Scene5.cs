@@ -9,6 +9,7 @@ using System.Linq;
 using System.Media;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +17,10 @@ using System.Windows.Forms;
 
 namespace GameProject
 {
-    public partial class Main : Form
+    public partial class Scene5 : Form
     {
         private Player player;
-        private Enemy enemy, enemy2;
+        private Enemy enemy, enemy2, enemy3, enemy4, enemy5, enemy6;
         private List<Bullet> bullets;
         private Timer gameTimer;
         private Timer enemyShootTimer;
@@ -27,24 +28,34 @@ namespace GameProject
         private List<PictureBox> heartBoxes;
         private Image[] heartImages;
         private Timer heartAnimationTimer;
+        private Timer lavaTimer;
         private List<string> shootLeft;
         private List<string> shootRight;
         private List<SoundPlayer> soundsfx;
+        private List<WaveStream> bgsound;
+        List<Enemy> enemies;
+
         private DateTime lastAttackTime;
         private const int attackCooldown = 700;
-        private bool Scene2OP = false;
+        private bool winFormOP = false;
         private bool retryFormCheck = false;
         private int currentHealth;
         private bool slowTime = false;
         private float fadeAmount = 0f;
+        private int lavaHeight = 49;
+        private int increaseRate = 4;
 
-        public Main()
+        private WaveChannel32 volumeStream;
+
+        public Scene5(int health, int heartRemoveCounter)
         {
             InitializeComponent();
             InitializeGame();
+            LoadBg();
+            player.Health = health;
             LoadSoundEffect();
         }
-        
+
         private void InitializeGame()
         {
 
@@ -52,10 +63,9 @@ namespace GameProject
             this.KeyPreview = true;
             shootLeft = Directory.GetFiles("EnemyShot_Left", "*.png").ToList();
             shootRight = Directory.GetFiles("EnemyShot_Right", "*.png").ToList();
-
             player = new Player();
             player.SizeMode = PictureBoxSizeMode.CenterImage;
-            player.Location = new Point(100, 490);
+            player.Location = new Point(0, 649);
             player.IsOnGround = true;
             player.BackColor = Color.Transparent;
             this.Controls.Add(player);
@@ -63,19 +73,60 @@ namespace GameProject
 
             enemy = new RangedEnemy();
             bullets = new List<Bullet>();
-            enemy.Location = new Point(1200, 490);
+            enemy.Location = new Point(989, 637);
             enemy.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy);
 
             enemy2 = new MeleeEnemy();
-            enemy2.Location = new Point(900, 490);
+            enemy2.Location = new Point(800, 398);
+            enemy2.InitPos = new Point(800,398);
             enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
+            enemy2.isMovingRight = true;
             this.Controls.Add(enemy2);
             enemy2.CreateHitBox();
 
+            enemy3 = new MeleeEnemy();
+            enemy3.Location = new Point(460, 413);
+            enemy3.InitPos = new Point(460, 413);
+            enemy3.SizeMode = PictureBoxSizeMode.CenterImage;
+            enemy3.isMovingRight = false;
+            this.Controls.Add(enemy3);
+            enemy3.CreateHitBox();
+
+            enemy4 = new MeleeEnemy();
+            enemy4.Location = new Point(543, 173);
+            enemy4.InitPos = new Point(543, 173);
+            enemy4.SizeMode = PictureBoxSizeMode.CenterImage;
+            enemy4.isMovingRight = true;
+            this.Controls.Add(enemy4);
+            enemy4.CreateHitBox();
+
+            enemy5 = new MeleeEnemy();
+            enemy5.Location = new Point(1100, 173);
+            enemy5.InitPos = new Point(1100, 173);
+            enemy5.SizeMode = PictureBoxSizeMode.CenterImage;
+            enemy5.isMovingRight = false;
+            this.Controls.Add(enemy5);
+            enemy5.CreateHitBox();
+
+            enemy6 = new MeleeEnemy();
+            enemy6.Location = new Point(1375, 173);
+            enemy6.InitPos = new Point(1375, 173);
+            enemy6.SizeMode = PictureBoxSizeMode.CenterImage;
+            enemy6.isMovingRight = true;
+            this.Controls.Add(enemy6);
+            enemy6.CreateHitBox();
+
+            enemies = new List<Enemy> { enemy2, enemy3, enemy4, enemy5, enemy6 };
+
+            
             enemy.BringToFront();
             enemy2.BringToFront();
-            
+            enemy3.BringToFront();
+            enemy4.BringToFront();
+            enemy5.BringToFront();
+            enemy6.BringToFront();
+
             foreach (Control x in this.Controls)
             {
                 if (x is PictureBox && (string)x.Tag == "Ground")
@@ -87,7 +138,6 @@ namespace GameProject
             SetupTimers();
             SkillBar.BringToFront();
         }
-        private Panel darkOverlay;
         private void SetupTimers()
         {
             gameTimer = new Timer();
@@ -103,6 +153,11 @@ namespace GameProject
             bulletMoveTimer.Interval = 20;
             bulletMoveTimer.Tick += MoveBullets;
             bulletMoveTimer.Start();
+
+            lavaTimer = new Timer();
+            lavaTimer.Interval = 100;
+            lavaTimer.Tick += lavaTimer_Tick;
+            lavaTimer.Start();
         }
         private void ResetTimers()
         {
@@ -130,13 +185,19 @@ namespace GameProject
                 heartAnimationTimer.Tick -= HeartAnimationTick;
             }
 
+            if (lavaTimer != null)
+            {
+                lavaTimer.Stop();
+                lavaTimer.Tick -= lavaTimer_Tick;
+            }
+
             SetupTimers();
             gameTimer.Start();
             enemyShootTimer.Start();
             bulletMoveTimer.Start();
             heartAnimationTimer.Start();
         }
-        
+
         private bool checkSound = true;
         private void GameLoop(object sender, EventArgs e)
         {
@@ -148,25 +209,30 @@ namespace GameProject
                 {
                     retryFormCheck = false;
                     player.Respawn();
-                    foreach(Control x in Controls)
+                    foreach (Control x in Controls)
                     {
                         if (x is Enemy gameEnemy)
                         {
+                            
+                            
                             gameEnemy.isActivate = false;
                             gameEnemy.slowDownFactor = 1;
                         }
-                        else if(x is Player p)
+                        else if (x is Player p)
                         {
                             p.slowDownFactor = 1;
                         }
-                        else if(x is Bullet bullet)
+                        else if (x is Bullet bullet)
                         {
                             bullet.slowDownFactor = 1;
                         }
                     }
-                    HeartState.Hearts = 5;
+                    Main.HeartState.Hearts = 5;
                     ResetTimers();
                     enemyShootTimer.Stop();
+                    lavaTimer.Start();
+                    LavaBox.Size = new Size(1817, 51);
+                    LavaBox.Location = new Point(-2, 841);
                     CreateHeartBoxes();
                     if (this.Controls.Contains(player))
                     {
@@ -175,11 +241,36 @@ namespace GameProject
                     }
                     player = new Player();
                     player.SizeMode = PictureBoxSizeMode.CenterImage;
-                    player.Location = new Point(100, 490);
+                    player.Location = new Point(0, 649);
                     player.IsOnGround = true;
                     player.BackColor = Color.Transparent;
                     player.CreateHitBox();
                     this.Controls.Add(player);
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        var enemy = enemies[i];
+
+                        if (enemy.IsDead)
+                        {
+                            if (this.Controls.Contains(enemy))
+                            {
+                                this.Controls.Remove(enemy);
+                                this.Controls.Remove(enemy.hitBox);
+                            }
+
+                            MeleeEnemy newEnemy = new MeleeEnemy();
+                            newEnemy.Location = enemy.InitPos;
+                            newEnemy.SizeMode = PictureBoxSizeMode.CenterImage;
+                            newEnemy.CreateHitBox();
+                            this.Controls.Add(newEnemy);
+                            newEnemy.BringToFront();
+                            enemies[i] = newEnemy;
+                        }
+                        else
+                        {
+                            enemy.Location = enemy.InitPos;
+                        }
+                    }
 
                     if (enemy.IsDead)
                     {
@@ -188,34 +279,14 @@ namespace GameProject
                             this.Controls.Remove(enemy);
                         }
                         enemy = new RangedEnemy();
-                        enemy.Location = new Point(1200, 490);
+                        enemy.Location = new Point(989, 637);
                         enemy.SizeMode = PictureBoxSizeMode.CenterImage;
                         this.Controls.Add(enemy);
                         enemy.BringToFront();
                     }
                     else
                     {
-                        enemy.Location = new Point(1200, 490);
-                    }
-
-                    if (enemy2.IsDead)
-                    {
-                        if (this.Controls.Contains(enemy2))
-                        {
-                            this.Controls.Remove(enemy2);
-                            this.Controls.Remove(enemy2.hitBox);
-                        }
-
-                        enemy2 = new MeleeEnemy();
-                        enemy2.Location = new Point(900, 490);
-                        enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
-                        enemy2.CreateHitBox();
-                        this.Controls.Add(enemy2);
-                        enemy2.BringToFront();
-                    }
-                    else
-                    {
-                        enemy2.Location = new Point(900, 490);
+                        enemy.Location = new Point(989, 637);
                     }
                     foreach (Control x in this.Controls)
                     {
@@ -226,8 +297,27 @@ namespace GameProject
                     }
                 }
             }
+
+            foreach (Control x in this.Controls)
+            {
+                if (x is PictureBox && (string)x.Tag == "LavaTag")
+                {
+                    if (player.HitBox.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        player.IsOnGround = true;
+                        player.Die();
+                        foreach (var heartBox in heartBoxes)
+                        {
+                            this.Controls.Remove(heartBox);
+                            heartBox.Dispose();
+                        }
+                    }
+                    heartBoxes.Clear();
+                }
+            }
             if (checkSound && SkillBar.Value <= 0)
             {
+                increaseRate = 4;
                 checkSound = false;
                 soundsfx[3].Play();
             }
@@ -237,15 +327,15 @@ namespace GameProject
                 SkillBar.Value = Math.Max(0, SkillBar.Value - 2);
                 foreach (Control x in Controls)
                 {
-                    if(x is RangedEnemy rangedEnemy)
+                    if (x is RangedEnemy rangedEnemy)
                     {
                         rangedEnemy.slowDownFactor = 0.5;
                     }
-                    else if(x is MeleeEnemy meleeEnemy)
+                    else if (x is MeleeEnemy meleeEnemy)
                     {
                         meleeEnemy.slowDownFactor = 0.5;
                     }
-                    else if(x is Bullet bullet)
+                    else if (x is Bullet bullet)
                     {
                         bullet.slowDownFactor = 0.5;
                     }
@@ -263,13 +353,13 @@ namespace GameProject
             player.ApplyGravity();
             player.UpdateAnimation();
 
-            foreach(Control x in Controls)
+            foreach (Control x in Controls)
             {
-                if(x is Enemy gameEnemy)
+                if (x is Enemy gameEnemy)
                 {
                     gameEnemy.ApplyGravity();
                 }
-                if(x is MeleeEnemy meleeEnemy)
+                if (x is MeleeEnemy meleeEnemy)
                 {
                     meleeEnemy.UpdateHitboxPosition();
                 }
@@ -279,14 +369,12 @@ namespace GameProject
             CheckTakeDeflectedBullet();
             UpdatePlayerHealthWithMeleeEnemyAttack();
 
-            if (player.Location.X > this.Width && !Scene2OP)
+            if (player.Location.X > this.Width && !winFormOP)
             {
-                this.Hide();
-                Scene2OP = true;
-                currentHealth = player.Health;
-                Scene2 scene2 = new Scene2(currentHealth, HeartState.Hearts);
-                scene2.Show();
-                scene2.Focus();
+                winFormOP = true;
+                soundsfx[8].Play();
+                VictoryForm winForm = new VictoryForm(this);
+                winForm.Show();
             }
         }
         protected override void OnPaint(PaintEventArgs e)
@@ -301,13 +389,13 @@ namespace GameProject
         private bool flag;
         private void UpdatePlayerHealthWithMeleeEnemyAttack()
         {
-            foreach(Control x in Controls)
+            foreach (Control x in Controls)
             {
-                if(x is MeleeEnemy meleeEnemy)
+                if (x is MeleeEnemy meleeEnemy)
                 {
                     if (player.HitBox.Bounds.IntersectsWith(meleeEnemy.hitBox.Bounds))
                     {
-                        if(meleeEnemy.attackFrame == meleeEnemy.attackFrameSize-1 && flag)
+                        if (meleeEnemy.attackFrame == meleeEnemy.attackFrameSize - 1 && flag)
                         {
                             player.TakeDamage(20);
                             RemoveHeart();
@@ -356,9 +444,9 @@ namespace GameProject
         {
             if (player.isDead)
             {
-                foreach(Control x in this.Controls)
+                foreach (Control x in this.Controls)
                 {
-                    if(x is Enemy gameEnemy)
+                    if (x is Enemy gameEnemy)
                     {
                         gameEnemy.isActivate = false;
                         enemyShootTimer.Stop();
@@ -367,11 +455,12 @@ namespace GameProject
                 }
                 return;
             }
-            foreach(Control x in this.Controls)
+
+            foreach (Control x in this.Controls)
             {
-                if(x is Enemy gameEnemy)
+                if (x is Enemy gameEnemy)
                 {
-                    if(x is RangedEnemy rangedEnemey)
+                    if (x is RangedEnemy rangedEnemey)
                     {
                         if (!rangedEnemey.isActivate)
                         {
@@ -406,7 +495,7 @@ namespace GameProject
                             }
                         }
                     }
-                    else if(x is MeleeEnemy meleeEnemy)
+                    else if (x is MeleeEnemy meleeEnemy)
                     {
                         if (!meleeEnemy.isActivate && !meleeEnemy.isAttacking && !player.isDead)
                         {
@@ -427,6 +516,8 @@ namespace GameProject
                                     meleeEnemy.Attack(player.Location);
                                     meleeEnemy.isAttacking = true;
                                     flag = true;
+                                    //player.TakeDamage(20);
+                                    //RemoveHeart();
                                 }
                             }
                             else
@@ -470,7 +561,6 @@ namespace GameProject
                             player.IsJumping = false;
                             player.IsOnGround = true;
                             player.Top = y.Top - player.Height + 7;
-                            label1.Text = "Touched Ground";
                             break;
                         }
                     }
@@ -491,14 +581,21 @@ namespace GameProject
                     {
                         enemy.IsOnGround = false;
                     }
-                    if (enemy2.Bounds.IntersectsWith(x.Bounds))
+                    
+                    foreach (Control z in Controls)
                     {
-                        enemy2.IsOnGround = true;
-                        enemy2.Top = x.Top - enemy2.Height + 12;
-                    }
-                    else
-                    {
-                        enemy2.IsOnGround = false;
+                        if (z is MeleeEnemy meleeEnemy)
+                        {
+                            if (meleeEnemy.Bounds.IntersectsWith(x.Bounds))
+                            {
+                                meleeEnemy.IsOnGround = true;
+                                meleeEnemy.Top = x.Top - meleeEnemy.Height + 12;
+                            }
+                            else
+                            {
+                                meleeEnemy.IsOnGround = false;
+                            }
+                        }
                     }
                 }
             }
@@ -590,14 +687,15 @@ namespace GameProject
             {
                 player.Jump();
             }
-            if(e.KeyCode == Keys.E && SkillBar.Value > 0 && !isSlowActive)
+            if (e.KeyCode == Keys.E && SkillBar.Value > 0 && !isSlowActive)
             {
                 checkSound = true;
                 slowTime = true;
                 isSlowActive = true;
+                increaseRate = 1;
                 soundsfx[2].Play();
             }
-            if(e.KeyCode == Keys.Q)
+            if (e.KeyCode == Keys.Q)
             {
                 player.Dash();
             }
@@ -613,25 +711,27 @@ namespace GameProject
             {
                 player.IsRight = false;
             }
-            if(e.KeyCode == Keys.E)
+            if (e.KeyCode == Keys.E)
             {
+
+                increaseRate = 4;
                 if (checkSound)
                 {
                     soundsfx[3].Play();
                 }
                 slowTime = false;
                 isSlowActive = false;
-                foreach(Control x in Controls)
+                foreach (Control x in Controls)
                 {
-                    if(x is Player p)
+                    if (x is Player p)
                     {
                         p.slowDownFactor = 1;
                     }
-                    else if(x is Enemy gameEnemy)
+                    else if (x is Enemy gameEnemy)
                     {
                         gameEnemy.slowDownFactor = 1;
                     }
-                    else if(x is Bullet bullet)
+                    else if (x is Bullet bullet)
                     {
                         bullet.slowDownFactor = 1;
                     }
@@ -651,7 +751,7 @@ namespace GameProject
             heartImages = Directory.GetFiles("HearTile", "*.png").Select(img => Image.FromFile(img)).ToArray();
             heartBoxes = new List<PictureBox>();
 
-            for (int i = 0; i < HeartState.Hearts; i++)
+            for (int i = 0; i < Main.HeartState.Hearts; i++)
             {
                 PictureBox heartBox = new PictureBox();
                 heartBox.Image = heartImages[0];
@@ -659,7 +759,7 @@ namespace GameProject
                 heartBox.Location = new Point(i * 35, 0);
                 heartBox.SizeMode = PictureBoxSizeMode.CenterImage;
                 heartBox.BackColor = Color.FromArgb(255, 24, 36, 52);
-               
+
                 heartBoxes.Add(heartBox);
                 this.Controls.Add(heartBox);
                 heartBox.BringToFront();
@@ -684,9 +784,13 @@ namespace GameProject
                 heartBox.Image = heartImages[currentImageIndex];
             }
         }
-        public static class HeartState
+        
+        private void lavaTimer_Tick(object sender, EventArgs e)
         {
-            public static int Hearts { get; set; } = 5;
+            lavaHeight += increaseRate;
+            LavaBox.Size = new Size(1810, lavaHeight);
+            LavaBox.Top -= increaseRate;
+            LavaBox.BringToFront();
         }
         public void RemoveHeart()
         {
@@ -695,10 +799,25 @@ namespace GameProject
                 var heartToRemove = heartBoxes[heartBoxes.Count - 1];
                 heartBoxes.RemoveAt(heartBoxes.Count - 1);
                 this.Controls.Remove(heartToRemove);
-                HeartState.Hearts--;
+                Main.HeartState.Hearts--;
             }
         }
-        
+        private void LoadBg()
+        {
+            bgsound = new List<WaveStream>();
+            string[] soundFiles = Directory.GetFiles("SkillsSounds", "*.wav");
+            volumeStream?.Dispose();
+            foreach (string soundFile in soundFiles)
+            {
+                if (File.Exists(soundFile))
+                {
+                    WaveStream waveStream = new WaveFileReader(soundFile);
+                    bgsound.Add(waveStream);
+                }
+            }
+            volumeStream = new WaveChannel32(bgsound[0]);
+
+        }
         private void LoadSoundEffect()
         {
             soundsfx = new List<SoundPlayer>();
@@ -711,6 +830,17 @@ namespace GameProject
                     playerSound.Load();
                     soundsfx.Add(playerSound);
                 }
+            }
+        }
+
+        public void PlaySoundEffect(int index)
+        {
+            if (index >= 0 && index < bgsound.Count)
+            {
+                WaveOutEvent waveOut = new WaveOutEvent();
+                volumeStream = new WaveChannel32(bgsound[index]);
+                waveOut.Init(volumeStream);
+                waveOut.Play();
             }
         }
     }

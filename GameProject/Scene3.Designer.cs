@@ -64,6 +64,7 @@
             this.pictureBox33 = new System.Windows.Forms.PictureBox();
             this.pictureBox34 = new System.Windows.Forms.PictureBox();
             this.pictureBox35 = new System.Windows.Forms.PictureBox();
+            this.trapspikeBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -99,6 +100,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox33)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox34)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trapspikeBox)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -375,7 +377,7 @@
             // 
             // SkillBar
             // 
-            this.SkillBar.Location = new System.Drawing.Point(5, 45);
+            this.SkillBar.Location = new System.Drawing.Point(5, 37);
             this.SkillBar.Name = "SkillBar";
             this.SkillBar.Size = new System.Drawing.Size(205, 25);
             this.SkillBar.TabIndex = 28;
@@ -465,10 +467,22 @@
             this.pictureBox35.TabStop = false;
             this.pictureBox35.Tag = "Ground";
             // 
+            // trapspikeBox
+            // 
+            this.trapspikeBox.BackColor = System.Drawing.Color.Transparent;
+            this.trapspikeBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.trapspikeBox.Location = new System.Drawing.Point(535, 771);
+            this.trapspikeBox.Name = "trapspikeBox";
+            this.trapspikeBox.Size = new System.Drawing.Size(343, 10);
+            this.trapspikeBox.TabIndex = 37;
+            this.trapspikeBox.TabStop = false;
+            this.trapspikeBox.Tag = "TrapSpikeBox";
+            // 
             // Scene3
             // 
             this.BackgroundImage = global::GameProject.Properties.Resources.tile031;
             this.ClientSize = new System.Drawing.Size(1807, 778);
+            this.Controls.Add(this.trapspikeBox);
             this.Controls.Add(this.pictureBox35);
             this.Controls.Add(this.pictureBox34);
             this.Controls.Add(this.pictureBox33);
@@ -505,6 +519,7 @@
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Scene3";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -547,6 +562,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox33)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox34)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trapspikeBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -589,5 +605,6 @@
         private System.Windows.Forms.PictureBox pictureBox33;
         private System.Windows.Forms.PictureBox pictureBox34;
         private System.Windows.Forms.PictureBox pictureBox35;
+        private System.Windows.Forms.PictureBox trapspikeBox;
     }
 }

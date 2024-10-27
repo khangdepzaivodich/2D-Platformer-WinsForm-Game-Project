@@ -213,6 +213,16 @@ namespace GameProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap lava {
+            get {
+                object obj = ResourceManager.GetObject("lava", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Locker4 {
             get {
                 object obj = ResourceManager.GetObject("Locker4", resourceCulture);
@@ -286,6 +296,16 @@ namespace GameProject.Properties {
         internal static System.Drawing.Bitmap Pointer1 {
             get {
                 object obj = ResourceManager.GetObject("Pointer1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Screenshot_39 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot_39", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -483,6 +503,16 @@ namespace GameProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap tile0331 {
+            get {
+                object obj = ResourceManager.GetObject("tile0331", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap tile038 {
             get {
                 object obj = ResourceManager.GetObject("tile038", resourceCulture);
@@ -586,6 +616,16 @@ namespace GameProject.Properties {
         internal static System.Drawing.Bitmap tile051 {
             get {
                 object obj = ResourceManager.GetObject("tile051", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tile054 {
+            get {
+                object obj = ResourceManager.GetObject("tile054", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

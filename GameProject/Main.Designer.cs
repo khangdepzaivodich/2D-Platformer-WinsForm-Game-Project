@@ -241,7 +241,7 @@
             // 
             // SkillBar
             // 
-            this.SkillBar.Location = new System.Drawing.Point(5, 45);
+            this.SkillBar.Location = new System.Drawing.Point(5, 37);
             this.SkillBar.Margin = new System.Windows.Forms.Padding(2);
             this.SkillBar.Name = "SkillBar";
             this.SkillBar.Size = new System.Drawing.Size(205, 25);

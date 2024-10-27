@@ -63,7 +63,6 @@ namespace GameProject
             player.BackColor = Color.Transparent;
             this.Controls.Add(player);
             player.CreateHitBox();
-            //player.HitBox.BorderStyle = BorderStyle.FixedSingle;
 
             enemy = new RangedEnemy();
             bullets = new List<Bullet>();
@@ -76,8 +75,6 @@ namespace GameProject
             enemy2.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy2);
             enemy2.CreateHitBox();
-            //enemy2.hitBox.BorderStyle = BorderStyle.FixedSingle;
-
 
             player.BringToFront();
             enemy.BringToFront();
@@ -198,14 +195,14 @@ namespace GameProject
                             this.Controls.Remove(enemy);
                         }
                         enemy = new RangedEnemy();
-                        enemy.Location = new Point(1316, 325);
+                        enemy.Location = new Point(1500, 325);
                         enemy.SizeMode = PictureBoxSizeMode.CenterImage;
                         this.Controls.Add(enemy);
                         enemy.BringToFront();
                     }
                     else
                     {
-                        enemy.Location = new Point(1316, 325);
+                        enemy.Location = new Point(1500, 325);
                     }
 
                     if (enemy2.IsDead)
@@ -368,11 +365,6 @@ namespace GameProject
                         gameEnemy.Patrol();
                     }
                 }
-                //enemy.isActivate = false;
-                //enemyShootTimer.Stop();
-                //enemy2.isActivate = false;
-                //enemy.Patrol();
-                //enemy2.Patrol();
                 return;
             }
 
@@ -436,8 +428,6 @@ namespace GameProject
                                     meleeEnemy.Attack(player.Location);
                                     meleeEnemy.isAttacking = true;
                                     flag = true;
-                                    //player.TakeDamage(20);
-                                    //RemoveHeart();
                                 }
                             }
                             else
@@ -452,77 +442,6 @@ namespace GameProject
                     gameEnemy.UpdateEnemyAnimation(player.HitBox.Location);
                 }
             }
-
-            // ----------------------------------------------------------------------------- //
-
-
-            //if (!enemy.isActivate)
-            //{
-            //    enemy.Patrol();
-            //    if (enemy.IsPlayerInSight(player.HitBox.Location))
-            //    {
-            //        enemyShootTimer.Start();
-            //        enemy.isActivate = true;
-            //    }
-            //}
-
-            //if (enemy.isActivate && !enemy.IsDead)
-            //{
-            //    bool isRight = enemy.Left > player.Left;
-            //    if (enemy.IsPlayerInSight(player.HitBox.Location))
-            //    {
-            //        if (enemy.isFirst)
-            //        {
-            //            enemy.isFirst = false;
-            //            enemy.Image = Image.FromFile(isRight ? shootLeft[0] : shootRight[0]);
-            //        }
-            //        enemyShootTimer.Start();
-            //        enemy.isActivate = true;
-            //        enemy.isRunning = false;
-            //    }
-            //    else
-            //    {
-            //        enemy.isFirst = true;
-            //        enemyShootTimer.Stop();
-            //        enemy.isRunning = true;
-            //        enemy.ChasePlayer(player.HitBox.Location);
-            //    }
-            //}
-
-            //if (!enemy2.isActivate && !enemy2.isAttacking && !player.isDead)
-            //{
-            //    enemy2.Patrol();
-            //    if (enemy2.IsPlayerInSight(player.HitBox.Location))
-            //    {
-            //        enemy2.isActivate = true;
-            //    }
-            //}
-
-            //if (enemy2.isActivate && !enemy2.IsDead)
-            //{
-            //    if (enemy2.Bounds.IntersectsWith(player.HitBox.Bounds))
-            //    {
-            //        if (!player.isDead && !enemy2.isAttacking)
-            //        {
-            //            enemy2.isRunning = false;
-            //            enemy2.Attack(player.Location);
-            //            enemy2.isAttacking = true;
-            //            player.TakeDamage(20);
-            //            RemoveHeart();
-            //        }
-            //    }
-            //    else
-            //    {
-            //        enemy2.isActivate = true;
-            //        enemy2.isRunning = true;
-            //        enemy2.ChasePlayer(player.HitBox.Location);
-            //        enemy2.isAttacking = false;
-            //    }
-            //}
-
-
-            //enemy2.UpdateEnemyAnimation(player.HitBox.Location);
-            //enemy.UpdateEnemyAnimation(player.HitBox.Location);
         }
         private void CheckCollisions()
         {

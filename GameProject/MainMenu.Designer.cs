@@ -52,11 +52,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(92)))));
-            this.label1.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Unispace", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(1191, 258);
+            this.label1.Location = new System.Drawing.Point(1197, 260);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(244, 37);
+            this.label1.Size = new System.Drawing.Size(231, 35);
             this.label1.TabIndex = 1;
             this.label1.Text = "WardenOfTime";
             // 
@@ -95,6 +95,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.MainTitle);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainMenu";

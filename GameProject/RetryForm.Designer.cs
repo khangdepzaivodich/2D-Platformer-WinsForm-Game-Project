@@ -30,6 +30,7 @@
         {
             this.RetryBox1 = new System.Windows.Forms.PictureBox();
             this.QuitBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.RetryBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.QuitBox1)).BeginInit();
             this.SuspendLayout();
@@ -39,7 +40,7 @@
             this.RetryBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(38)))), ((int)(((byte)(93)))));
             this.RetryBox1.BackgroundImage = global::GameProject.Properties.Resources.Icon_28;
             this.RetryBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RetryBox1.Location = new System.Drawing.Point(95, 55);
+            this.RetryBox1.Location = new System.Drawing.Point(95, 82);
             this.RetryBox1.Margin = new System.Windows.Forms.Padding(2);
             this.RetryBox1.Name = "RetryBox1";
             this.RetryBox1.Size = new System.Drawing.Size(49, 37);
@@ -52,18 +53,31 @@
             this.QuitBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(38)))), ((int)(((byte)(93)))));
             this.QuitBox1.BackgroundImage = global::GameProject.Properties.Resources.Icon_35;
             this.QuitBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.QuitBox1.Location = new System.Drawing.Point(95, 122);
+            this.QuitBox1.Location = new System.Drawing.Point(95, 149);
             this.QuitBox1.Name = "QuitBox1";
             this.QuitBox1.Size = new System.Drawing.Size(49, 37);
             this.QuitBox1.TabIndex = 1;
             this.QuitBox1.TabStop = false;
             this.QuitBox1.Click += new System.EventHandler(this.ClickMainMenu);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(38)))), ((int)(((byte)(93)))));
+            this.label1.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Control;
+            this.label1.Location = new System.Drawing.Point(33, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(175, 33);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Game Over!";
+            // 
             // RetryForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackgroundImage = global::GameProject.Properties.Resources.Interface_windows88;
             this.ClientSize = new System.Drawing.Size(241, 227);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.QuitBox1);
             this.Controls.Add(this.RetryBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -74,6 +88,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.RetryBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.QuitBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -81,5 +96,6 @@
 
         private System.Windows.Forms.PictureBox RetryBox1;
         private System.Windows.Forms.PictureBox QuitBox1;
+        private System.Windows.Forms.Label label1;
     }
 }

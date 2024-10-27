@@ -317,7 +317,7 @@
             // 
             // SkillBar
             // 
-            this.SkillBar.Location = new System.Drawing.Point(5, 45);
+            this.SkillBar.Location = new System.Drawing.Point(5, 37);
             this.SkillBar.Name = "SkillBar";
             this.SkillBar.Size = new System.Drawing.Size(205, 25);
             this.SkillBar.TabIndex = 23;
@@ -374,6 +374,7 @@
             this.Controls.Add(this.pictureBox15);
             this.Controls.Add(this.pictureBox14);
             this.Controls.Add(this.pictureBox13);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Scene2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

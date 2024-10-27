@@ -29,11 +29,12 @@ namespace GameProject
         protected List<string> walkingRangedRight;
         protected List<string> walkingRangedLeft;
         protected List<SoundPlayer> soundsfx;
-        private List<string> bloodEffect;
         protected int idleFrame;
         protected int runningFrame;
         protected int walkingFrame;
         protected Timer deathAnimationTimer;
+        public Point InitPos;
+        private List<string> bloodEffect;
         private Timer bloodEffectTimer;
         private PictureBox bloodEffectBox;
         private int bloodEffectFrame = 0;
@@ -57,7 +58,6 @@ namespace GameProject
         public bool isRunning { get; set; } = false;
         public double slowDownFactor = 1;
         public bool isAttacking { get; set; } = false;
-
         public bool isColliding { get; set; } = false;
 
         public bool isFirst = true;
@@ -75,7 +75,7 @@ namespace GameProject
             deathAnimationTimer.Tick += UpdateDeathAnimation;
 
             bloodEffectTimer = new Timer();
-            bloodEffectTimer.Interval = 1; //(ms)
+            bloodEffectTimer.Interval = 1;
             bloodEffectTimer.Tick += UpdateBloodEffect;
 
             bloodEffectBox = new PictureBox
@@ -141,8 +141,6 @@ namespace GameProject
             hitBox = new PictureBox();
             hitBox.BackColor = Color.Transparent;
             hitBox.Size = new Size(50, 70);
-            //hitBox.Visible = true;
-            //hitBox.BorderStyle = BorderStyle.FixedSingle;
             if (this.Parent != null)
             {
                 this.Parent.Controls.Add(hitBox);
@@ -255,8 +253,6 @@ namespace GameProject
         {
             this.Size = new Size(50, 70);
             this.BackColor = Color.Transparent;
-            //this.BorderStyle = BorderStyle.FixedSingle;
-
             LoadAnimations();
             InitializeProperties();
         }
@@ -528,7 +524,6 @@ namespace GameProject
         private int meleeWalkingDelayCounter = 0;
         public override void Patrol()
         {
-            //if (isActivate) return;
             if (isColliding) return;
             if (isIdling)
             {
@@ -587,7 +582,6 @@ namespace GameProject
                     runningFrame = 0;
                 }
             }
-            
         }
         private int meleeAttackDelayCounter = 0;
         private bool checkPunch = true;
@@ -618,7 +612,6 @@ namespace GameProject
                     }
                 }
             }
-            
         }
         public override void UpdateEnemyAnimation(Point playerPosition)
         {
@@ -683,7 +676,6 @@ namespace GameProject
                 }
             }
         }
-        
         public override void UpdateDeathAnimation(object sender, EventArgs e)
         {
             if (deathAnimationFrame < (currentDirection == Direction.Right ? deathMeleeRight.Count : deathMeleeLeft.Count))

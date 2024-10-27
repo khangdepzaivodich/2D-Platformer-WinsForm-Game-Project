@@ -66,9 +66,7 @@ namespace GameProject
         private int idleFrame;
         private int runningFrame;
         private int attackFrame;
-        private int deathFrame;
         private int takeHitFrame;
-        private Main mainForm;
         private int bloodEffectFrame = 0;
 
         public double slowDownFactor = 1;
@@ -77,7 +75,6 @@ namespace GameProject
         private int deathFrameIndex = 0;
         private Timer deathAnimationTimer;
         private Timer bloodEffectTimer;
-        private Timer runAnimationTimer;
 
         public PictureBox HitBox;
         private PictureBox bloodEffectBox;
@@ -107,7 +104,7 @@ namespace GameProject
             
 
             bloodEffectTimer = new Timer();
-            bloodEffectTimer.Interval = 1; //(ms)
+            bloodEffectTimer.Interval = 1;
             bloodEffectTimer.Tick += UpdateBloodEffect;
 
             bloodEffectBox = new PictureBox
@@ -118,8 +115,6 @@ namespace GameProject
             };
             this.Controls.Add(bloodEffectBox);
         }
-
-
         public void CreateHitBox()
         {
             HitBox = new PictureBox();
@@ -132,13 +127,11 @@ namespace GameProject
                 this.Parent.Controls.Add(HitBox);
             }
         }
-
         public void UpdateHitboxPosition()
         {
             HitBox.Left = this.Left + (this.Width / 2) - (HitBox.Width / 2);
             HitBox.Top = this.Top + (this.Height / 2) - (HitBox.Height / 2);
         }
-
         private void LoadAnimation()
         {
             
@@ -245,7 +238,8 @@ namespace GameProject
             if (isDead || isDashing || !canDash) return;
             isDashing = true;
             canDash = false;
-            dashDir = IsFlipped ? -1 : 1;  
+            dashDir = IsFlipped ? -1 : 1;
+            soundsfx[7].Play();
             dashTimer.Start();
         }
         private void PerformDash(object sender, EventArgs e)
@@ -293,15 +287,6 @@ namespace GameProject
             if (IsFalling || !IsOnGround)
             {
                 this.Top += (int)(Gravity * slowDownFactor);
-                //if (this.Parent != null)
-                //{
-                //    if (this.Top + this.Height >= this.Parent.ClientSize.Height)
-                //    {
-                //        IsOnGround = true;
-                //        IsJumping = false;
-                //        this.Top = this.Parent.ClientSize.Height - this.Height;
-                //    }
-                //}
             }
             UpdateHitboxPosition();
         }
@@ -410,7 +395,6 @@ namespace GameProject
                 }
             }
             
-
             if (IsLeft && this.Left > 0 && !IsAttacking && flag)
             {
                 this.Left -= (int)(Speed * slowDownFactor);

@@ -91,7 +91,7 @@
             // 
             // SkillBar
             // 
-            this.SkillBar.Location = new System.Drawing.Point(5, 45);
+            this.SkillBar.Location = new System.Drawing.Point(5, 37);
             this.SkillBar.Name = "SkillBar";
             this.SkillBar.Size = new System.Drawing.Size(205, 25);
             this.SkillBar.TabIndex = 2;
@@ -102,7 +102,7 @@
             this.pictureBox3.BackgroundImage = global::GameProject.Properties.Resources.tile061;
             this.pictureBox3.Location = new System.Drawing.Point(-1, 501);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(1809, 148);
+            this.pictureBox3.Size = new System.Drawing.Size(1809, 277);
             this.pictureBox3.TabIndex = 3;
             this.pictureBox3.TabStop = false;
             this.pictureBox3.Tag = "BlockedWall";
@@ -122,7 +122,7 @@
             this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox5.Image = global::GameProject.Properties.Resources.up;
             this.pictureBox5.Location = new System.Drawing.Point(246, 459);
-            this.pictureBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox5.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(16, 16);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -135,7 +135,7 @@
             this.pictureBox6.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox6.Image = global::GameProject.Properties.Resources.down;
             this.pictureBox6.Location = new System.Drawing.Point(246, 318);
-            this.pictureBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox6.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(16, 16);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -147,7 +147,7 @@
             // 
             this.Laser1.BackColor = System.Drawing.Color.Red;
             this.Laser1.Location = new System.Drawing.Point(252, 332);
-            this.Laser1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Laser1.Margin = new System.Windows.Forms.Padding(2);
             this.Laser1.Name = "Laser1";
             this.Laser1.Size = new System.Drawing.Size(4, 129);
             this.Laser1.TabIndex = 7;
@@ -158,7 +158,7 @@
             // 
             this.Laser2.BackColor = System.Drawing.Color.Red;
             this.Laser2.Location = new System.Drawing.Point(278, 332);
-            this.Laser2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Laser2.Margin = new System.Windows.Forms.Padding(2);
             this.Laser2.Name = "Laser2";
             this.Laser2.Size = new System.Drawing.Size(4, 129);
             this.Laser2.TabIndex = 10;
@@ -170,7 +170,7 @@
             this.pictureBox8.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox8.Image = global::GameProject.Properties.Resources.down;
             this.pictureBox8.Location = new System.Drawing.Point(272, 318);
-            this.pictureBox8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox8.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(16, 16);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -183,7 +183,7 @@
             this.pictureBox9.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox9.Image = global::GameProject.Properties.Resources.up;
             this.pictureBox9.Location = new System.Drawing.Point(272, 459);
-            this.pictureBox9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox9.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(16, 16);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -195,7 +195,7 @@
             // 
             this.Laser3.BackColor = System.Drawing.Color.Red;
             this.Laser3.Location = new System.Drawing.Point(408, 332);
-            this.Laser3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Laser3.Margin = new System.Windows.Forms.Padding(2);
             this.Laser3.Name = "Laser3";
             this.Laser3.Size = new System.Drawing.Size(4, 129);
             this.Laser3.TabIndex = 13;
@@ -207,7 +207,7 @@
             this.pictureBox11.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox11.Image = global::GameProject.Properties.Resources.down;
             this.pictureBox11.Location = new System.Drawing.Point(402, 318);
-            this.pictureBox11.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox11.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(16, 16);
             this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -220,7 +220,7 @@
             this.pictureBox12.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox12.Image = global::GameProject.Properties.Resources.up;
             this.pictureBox12.Location = new System.Drawing.Point(402, 459);
-            this.pictureBox12.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox12.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox12.Name = "pictureBox12";
             this.pictureBox12.Size = new System.Drawing.Size(16, 16);
             this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -232,7 +232,7 @@
             // 
             this.Laser4.BackColor = System.Drawing.Color.Red;
             this.Laser4.Location = new System.Drawing.Point(504, 332);
-            this.Laser4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Laser4.Margin = new System.Windows.Forms.Padding(2);
             this.Laser4.Name = "Laser4";
             this.Laser4.Size = new System.Drawing.Size(4, 129);
             this.Laser4.TabIndex = 16;
@@ -244,7 +244,7 @@
             this.pictureBox14.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox14.Image = global::GameProject.Properties.Resources.down;
             this.pictureBox14.Location = new System.Drawing.Point(498, 318);
-            this.pictureBox14.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox14.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox14.Name = "pictureBox14";
             this.pictureBox14.Size = new System.Drawing.Size(16, 16);
             this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -257,7 +257,7 @@
             this.pictureBox15.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox15.Image = global::GameProject.Properties.Resources.up;
             this.pictureBox15.Location = new System.Drawing.Point(498, 459);
-            this.pictureBox15.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox15.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox15.Name = "pictureBox15";
             this.pictureBox15.Size = new System.Drawing.Size(16, 16);
             this.pictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -269,7 +269,7 @@
             // 
             this.Laser5.BackColor = System.Drawing.Color.Red;
             this.Laser5.Location = new System.Drawing.Point(600, 332);
-            this.Laser5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Laser5.Margin = new System.Windows.Forms.Padding(2);
             this.Laser5.Name = "Laser5";
             this.Laser5.Size = new System.Drawing.Size(4, 129);
             this.Laser5.TabIndex = 19;
@@ -281,7 +281,7 @@
             this.pictureBox17.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox17.Image = global::GameProject.Properties.Resources.down;
             this.pictureBox17.Location = new System.Drawing.Point(594, 318);
-            this.pictureBox17.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox17.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox17.Name = "pictureBox17";
             this.pictureBox17.Size = new System.Drawing.Size(16, 16);
             this.pictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -294,7 +294,7 @@
             this.pictureBox18.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox18.Image = global::GameProject.Properties.Resources.up;
             this.pictureBox18.Location = new System.Drawing.Point(594, 459);
-            this.pictureBox18.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox18.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox18.Name = "pictureBox18";
             this.pictureBox18.Size = new System.Drawing.Size(16, 16);
             this.pictureBox18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -327,6 +327,7 @@
             this.Controls.Add(this.SkillBar);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Scene4";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
