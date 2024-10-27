@@ -75,7 +75,7 @@ namespace GameProject
 
             enemy = new RangedEnemy();
             bullets = new List<Bullet>();
-            enemy.Location = new Point(1200, 415);
+            enemy.Location = new Point(900, 415);
             enemy.SizeMode = PictureBoxSizeMode.CenterImage;
             this.Controls.Add(enemy);
 
@@ -274,14 +274,14 @@ namespace GameProject
                             this.Controls.Remove(enemy);
                         }
                         enemy = new RangedEnemy();
-                        enemy.Location = new Point(1200, 415);
+                        enemy.Location = new Point(900, 415);
                         enemy.SizeMode = PictureBoxSizeMode.CenterImage;
                         this.Controls.Add(enemy);
                         enemy.BringToFront();
                     }
                     else
                     {
-                        enemy.Location = new Point(1200, 415);
+                        enemy.Location = new Point(900, 415);
                     }
 
                     if (enemy2.IsDead)
@@ -686,11 +686,11 @@ namespace GameProject
             {
                 player.Jump();
             }
-            if (e.KeyCode == Keys.Q)
+            if (e.KeyCode == Keys.L)
             {
                 player.Dash();
             }
-            if (e.KeyCode == Keys.E && SkillBar.Value > 0 && !isSlowActive)
+            if (e.KeyCode == Keys.K && SkillBar.Value > 0 && !isSlowActive)
             {
                 checkSound = true;
                 slowTime = true;
@@ -699,6 +699,14 @@ namespace GameProject
                 firstAndSecondLaserTimer.Interval = 1000;
                 thirdAndFifthLaserTimer.Interval = 2000;
                 fourthLaserTimer.Interval = 1000;
+            }
+            if (e.KeyCode == Keys.J)
+            {
+                if ((DateTime.Now - lastAttackTime).TotalMilliseconds >= attackCooldown)
+                {
+                    player.IsAttacking = true;
+                    lastAttackTime = DateTime.Now;
+                }
             }
         }
         private void KeyIsUp(object sender, KeyEventArgs e)
@@ -711,7 +719,7 @@ namespace GameProject
             {
                 player.IsRight = false;
             }
-            if (e.KeyCode == Keys.E)
+            if (e.KeyCode == Keys.K)
             {
                 if (checkSound)
                 {
@@ -739,14 +747,7 @@ namespace GameProject
                 }
             }
         }
-        private void MouseIsDown(object sender, MouseEventArgs e)
-        {
-            if ((DateTime.Now - lastAttackTime).TotalMilliseconds >= attackCooldown)
-            {
-                player.IsAttacking = true;
-                lastAttackTime = DateTime.Now;
-            }
-        }
+        
         private void CreateHeartBoxes()
         {
             heartImages = Directory.GetFiles("HearTile", "*.png").Select(img => Image.FromFile(img)).ToArray();
