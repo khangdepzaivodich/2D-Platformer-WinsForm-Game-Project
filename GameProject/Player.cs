@@ -120,8 +120,6 @@ namespace GameProject
             HitBox = new PictureBox();
             HitBox.BackColor = Color.Transparent;
             HitBox.Size = new Size(50, 70);
-            HitBox.Visible = true;
-            HitBox.BorderStyle = BorderStyle.FixedSingle;
             if (this.Parent != null)
             {
                 this.Parent.Controls.Add(HitBox);

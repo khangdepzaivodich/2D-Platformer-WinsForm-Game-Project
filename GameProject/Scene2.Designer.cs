@@ -347,7 +347,7 @@
             // Scene2
             // 
             this.BackgroundImage = global::GameProject.Properties.Resources.tile031;
-            this.ClientSize = new System.Drawing.Size(1807, 778);
+            this.ClientSize = new System.Drawing.Size(1507, 778);
             this.Controls.Add(this.pictureBox36);
             this.Controls.Add(this.pictureBox35);
             this.Controls.Add(this.SkillBar);

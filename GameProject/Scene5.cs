@@ -33,7 +33,8 @@ namespace GameProject
         private List<string> shootRight;
         private List<SoundPlayer> soundsfx;
         private List<WaveStream> bgsound;
-        List<Enemy> enemies;
+        private List<Enemy> enemies;
+        private List<Point> initPos;
 
         private DateTime lastAttackTime;
         private const int attackCooldown = 700;
@@ -45,13 +46,11 @@ namespace GameProject
         private int lavaHeight = 49;
         private int increaseRate = 4;
 
-        private WaveChannel32 volumeStream;
 
         public Scene5(int health, int heartRemoveCounter)
         {
             InitializeComponent();
             InitializeGame();
-            LoadBg();
             player.Health = health;
             LoadSoundEffect();
         }
@@ -118,8 +117,15 @@ namespace GameProject
             enemy6.CreateHitBox();
 
             enemies = new List<Enemy> { enemy2, enemy3, enemy4, enemy5, enemy6 };
+            initPos = initPos = new List<Point>
+            {
+                enemy2.InitPos,
+                enemy3.InitPos,
+                enemy4.InitPos,
+                enemy5.InitPos,
+                enemy6.InitPos
+            };
 
-            
             enemy.BringToFront();
             enemy2.BringToFront();
             enemy3.BringToFront();
@@ -213,9 +219,8 @@ namespace GameProject
                     {
                         if (x is Enemy gameEnemy)
                         {
-                            
-                            
                             gameEnemy.isActivate = false;
+                            gameEnemy.isRunning = false;
                             gameEnemy.slowDownFactor = 1;
                         }
                         else if (x is Player p)
@@ -232,7 +237,7 @@ namespace GameProject
                     enemyShootTimer.Stop();
                     lavaTimer.Start();
                     LavaBox.Size = new Size(1817, 51);
-                    LavaBox.Location = new Point(-2, 841);
+                    LavaBox.Location = new Point(-2, 825);
                     CreateHeartBoxes();
                     if (this.Controls.Contains(player))
                     {
@@ -249,7 +254,8 @@ namespace GameProject
                     for (int i = 0; i < enemies.Count; i++)
                     {
                         var enemy = enemies[i];
-
+                        enemy.isActivate = false;
+                        enemy.isRunning = false;
                         if (enemy.IsDead)
                         {
                             if (this.Controls.Contains(enemy))
@@ -259,7 +265,7 @@ namespace GameProject
                             }
 
                             MeleeEnemy newEnemy = new MeleeEnemy();
-                            newEnemy.Location = enemy.InitPos;
+                            newEnemy.Location = initPos[i];
                             newEnemy.SizeMode = PictureBoxSizeMode.CenterImage;
                             newEnemy.CreateHitBox();
                             this.Controls.Add(newEnemy);
@@ -268,7 +274,7 @@ namespace GameProject
                         }
                         else
                         {
-                            enemy.Location = enemy.InitPos;
+                            enemy.Location = initPos[i];
                         }
                     }
 
@@ -785,7 +791,7 @@ namespace GameProject
                 heartBox.Image = heartImages[currentImageIndex];
             }
         }
-        
+
         private void lavaTimer_Tick(object sender, EventArgs e)
         {
             lavaHeight += increaseRate;
@@ -803,22 +809,7 @@ namespace GameProject
                 Main.HeartState.Hearts--;
             }
         }
-        private void LoadBg()
-        {
-            bgsound = new List<WaveStream>();
-            string[] soundFiles = Directory.GetFiles("SkillsSounds", "*.wav");
-            volumeStream?.Dispose();
-            foreach (string soundFile in soundFiles)
-            {
-                if (File.Exists(soundFile))
-                {
-                    WaveStream waveStream = new WaveFileReader(soundFile);
-                    bgsound.Add(waveStream);
-                }
-            }
-            volumeStream = new WaveChannel32(bgsound[0]);
 
-        }
         private void LoadSoundEffect()
         {
             soundsfx = new List<SoundPlayer>();
@@ -831,17 +822,6 @@ namespace GameProject
                     playerSound.Load();
                     soundsfx.Add(playerSound);
                 }
-            }
-        }
-
-        public void PlaySoundEffect(int index)
-        {
-            if (index >= 0 && index < bgsound.Count)
-            {
-                WaveOutEvent waveOut = new WaveOutEvent();
-                volumeStream = new WaveChannel32(bgsound[index]);
-                waveOut.Init(volumeStream);
-                waveOut.Play();
             }
         }
     }

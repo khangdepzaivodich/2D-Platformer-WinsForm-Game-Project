@@ -699,7 +699,7 @@ namespace GameProject
                 HeartState.Hearts--;
             }
         }
-        
+
         private void LoadSoundEffect()
         {
             soundsfx = new List<SoundPlayer>();

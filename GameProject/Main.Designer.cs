@@ -71,7 +71,7 @@
             this.label1.Location = new System.Drawing.Point(284, 111);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(44, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "label1";
             // 
@@ -81,7 +81,7 @@
             this.label2.Location = new System.Drawing.Point(195, 111);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.Size = new System.Drawing.Size(44, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "label2";
             // 
@@ -91,7 +91,7 @@
             this.label3.Location = new System.Drawing.Point(410, 110);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.Size = new System.Drawing.Size(44, 16);
             this.label3.TabIndex = 3;
             this.label3.Text = "label3";
             // 
@@ -188,7 +188,7 @@
             // 
             this.pictureBox9.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox9.BackgroundImage = global::GameProject.Properties.Resources.tile007;
-            this.pictureBox9.Location = new System.Drawing.Point(1121, 287);
+            this.pictureBox9.Location = new System.Drawing.Point(992, 287);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(33, 37);
             this.pictureBox9.TabIndex = 17;
@@ -209,7 +209,7 @@
             this.pictureBox11.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox11.BackgroundImage = global::GameProject.Properties.Resources.pixel_art_set_four_black_260nw_2465293165__4__removebg_preview;
             this.pictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox11.Location = new System.Drawing.Point(1630, 319);
+            this.pictureBox11.Location = new System.Drawing.Point(1217, 317);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(67, 37);
             this.pictureBox11.TabIndex = 19;
@@ -252,7 +252,7 @@
             // 
             this.pictureBox13.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox13.BackgroundImage = global::GameProject.Properties.Resources.Pointer1;
-            this.pictureBox13.Location = new System.Drawing.Point(1375, 287);
+            this.pictureBox13.Location = new System.Drawing.Point(1120, 254);
             this.pictureBox13.Name = "pictureBox13";
             this.pictureBox13.Size = new System.Drawing.Size(33, 37);
             this.pictureBox13.TabIndex = 22;
@@ -263,7 +263,7 @@
             this.pictureBox14.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox14.BackgroundImage = global::GameProject.Properties.Resources.pixel_art_set_four_black_260nw_2465293165__4__removebg_preview;
             this.pictureBox14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox14.Location = new System.Drawing.Point(1581, 319);
+            this.pictureBox14.Location = new System.Drawing.Point(1168, 317);
             this.pictureBox14.Name = "pictureBox14";
             this.pictureBox14.Size = new System.Drawing.Size(67, 37);
             this.pictureBox14.TabIndex = 23;
@@ -274,7 +274,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.DimGray;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(1807, 778);
+            this.ClientSize = new System.Drawing.Size(1507, 778);
             this.Controls.Add(this.pictureBox14);
             this.Controls.Add(this.pictureBox13);
             this.Controls.Add(this.SkillBar);

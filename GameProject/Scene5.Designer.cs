@@ -36,7 +36,6 @@
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.pictureBox12 = new System.Windows.Forms.PictureBox();
@@ -63,7 +62,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
@@ -88,7 +86,7 @@
             this.pictureBox1.BackgroundImage = global::GameProject.Properties.Resources.tile061;
             this.pictureBox1.Location = new System.Drawing.Point(-2, 731);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1810, 50);
+            this.pictureBox1.Size = new System.Drawing.Size(1810, 98);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -107,7 +105,7 @@
             this.pictureBox3.BackgroundImage = global::GameProject.Properties.Resources.tile061;
             this.pictureBox3.Location = new System.Drawing.Point(-2, 506);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(1538, 50);
+            this.pictureBox3.Size = new System.Drawing.Size(1234, 50);
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
             // 
@@ -116,7 +114,7 @@
             this.pictureBox4.BackgroundImage = global::GameProject.Properties.Resources.tile042;
             this.pictureBox4.Location = new System.Drawing.Point(-2, 480);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(1538, 33);
+            this.pictureBox4.Size = new System.Drawing.Size(1234, 33);
             this.pictureBox4.TabIndex = 3;
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Tag = "Ground";
@@ -126,7 +124,7 @@
             this.pictureBox5.BackgroundImage = global::GameProject.Properties.Resources.tile069;
             this.pictureBox5.Location = new System.Drawing.Point(-2, 549);
             this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(1538, 34);
+            this.pictureBox5.Size = new System.Drawing.Size(1234, 34);
             this.pictureBox5.TabIndex = 4;
             this.pictureBox5.TabStop = false;
             this.pictureBox5.Tag = "BlockedWall";
@@ -134,7 +132,7 @@
             // pictureBox6
             // 
             this.pictureBox6.BackgroundImage = global::GameProject.Properties.Resources.tile0431;
-            this.pictureBox6.Location = new System.Drawing.Point(1535, 480);
+            this.pictureBox6.Location = new System.Drawing.Point(1229, 480);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(34, 33);
             this.pictureBox6.TabIndex = 5;
@@ -144,7 +142,7 @@
             // pictureBox7
             // 
             this.pictureBox7.BackgroundImage = global::GameProject.Properties.Resources.tile055;
-            this.pictureBox7.Location = new System.Drawing.Point(1535, 506);
+            this.pictureBox7.Location = new System.Drawing.Point(1229, 506);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(34, 50);
             this.pictureBox7.TabIndex = 6;
@@ -154,26 +152,17 @@
             // pictureBox8
             // 
             this.pictureBox8.BackgroundImage = global::GameProject.Properties.Resources.tile071;
-            this.pictureBox8.Location = new System.Drawing.Point(1535, 549);
+            this.pictureBox8.Location = new System.Drawing.Point(1229, 549);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(34, 33);
             this.pictureBox8.TabIndex = 7;
             this.pictureBox8.TabStop = false;
             this.pictureBox8.Tag = "BlockedWall";
             // 
-            // pictureBox9
-            // 
-            this.pictureBox9.BackgroundImage = global::GameProject.Properties.Resources.tile0331;
-            this.pictureBox9.Location = new System.Drawing.Point(1776, 608);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(34, 33);
-            this.pictureBox9.TabIndex = 8;
-            this.pictureBox9.TabStop = false;
-            // 
             // pictureBox10
             // 
             this.pictureBox10.BackgroundImage = global::GameProject.Properties.Resources.tile0331;
-            this.pictureBox10.Location = new System.Drawing.Point(1746, 588);
+            this.pictureBox10.Location = new System.Drawing.Point(1445, 589);
             this.pictureBox10.Name = "pictureBox10";
             this.pictureBox10.Size = new System.Drawing.Size(34, 33);
             this.pictureBox10.TabIndex = 9;
@@ -183,7 +172,7 @@
             // pictureBox11
             // 
             this.pictureBox11.BackgroundImage = global::GameProject.Properties.Resources.tile0331;
-            this.pictureBox11.Location = new System.Drawing.Point(1715, 588);
+            this.pictureBox11.Location = new System.Drawing.Point(1414, 589);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(34, 33);
             this.pictureBox11.TabIndex = 10;
@@ -193,7 +182,7 @@
             // pictureBox12
             // 
             this.pictureBox12.BackgroundImage = global::GameProject.Properties.Resources.tile032;
-            this.pictureBox12.Location = new System.Drawing.Point(1688, 588);
+            this.pictureBox12.Location = new System.Drawing.Point(1387, 589);
             this.pictureBox12.Name = "pictureBox12";
             this.pictureBox12.Size = new System.Drawing.Size(34, 33);
             this.pictureBox12.TabIndex = 11;
@@ -203,9 +192,9 @@
             // pictureBox13
             // 
             this.pictureBox13.BackgroundImage = global::GameProject.Properties.Resources.tile054;
-            this.pictureBox13.Location = new System.Drawing.Point(1776, 329);
+            this.pictureBox13.Location = new System.Drawing.Point(1475, 336);
             this.pictureBox13.Name = "pictureBox13";
-            this.pictureBox13.Size = new System.Drawing.Size(34, 381);
+            this.pictureBox13.Size = new System.Drawing.Size(34, 399);
             this.pictureBox13.TabIndex = 12;
             this.pictureBox13.TabStop = false;
             this.pictureBox13.Tag = "BlockedWall";
@@ -248,7 +237,7 @@
             this.pictureBox17.Size = new System.Drawing.Size(1810, 34);
             this.pictureBox17.TabIndex = 18;
             this.pictureBox17.TabStop = false;
-            this.pictureBox17.Tag = "Ground";
+            this.pictureBox17.Tag = "BlockedWall";
             // 
             // pictureBox19
             // 
@@ -341,9 +330,9 @@
             // LavaBox
             // 
             this.LavaBox.BackgroundImage = global::GameProject.Properties.Resources.Screenshot_39;
-            this.LavaBox.Location = new System.Drawing.Point(-2, 841);
+            this.LavaBox.Location = new System.Drawing.Point(-2, 825);
             this.LavaBox.Name = "LavaBox";
-            this.LavaBox.Size = new System.Drawing.Size(1817, 48);
+            this.LavaBox.Size = new System.Drawing.Size(1817, 83);
             this.LavaBox.TabIndex = 69;
             this.LavaBox.TabStop = false;
             this.LavaBox.Tag = "LavaTag";
@@ -352,7 +341,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackgroundImage = global::GameProject.Properties.Resources.tile031;
-            this.ClientSize = new System.Drawing.Size(1807, 886);
+            this.ClientSize = new System.Drawing.Size(1507, 886);
             this.Controls.Add(this.LavaBox);
             this.Controls.Add(this.SkillBar);
             this.Controls.Add(this.pictureBox27);
@@ -371,7 +360,6 @@
             this.Controls.Add(this.pictureBox12);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.pictureBox10);
-            this.Controls.Add(this.pictureBox9);
             this.Controls.Add(this.pictureBox8);
             this.Controls.Add(this.pictureBox7);
             this.Controls.Add(this.pictureBox6);
@@ -395,7 +383,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
@@ -427,7 +414,6 @@
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.PictureBox pictureBox9;
         private System.Windows.Forms.PictureBox pictureBox10;
         private System.Windows.Forms.PictureBox pictureBox11;
         private System.Windows.Forms.PictureBox pictureBox12;

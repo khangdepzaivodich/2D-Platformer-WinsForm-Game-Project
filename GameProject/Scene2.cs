@@ -694,6 +694,7 @@ namespace GameProject
                 Main.HeartState.Hearts--;
             }
         }
+
         private void LoadSoundEffect()
         {
             skillsounds = new List<SoundPlayer>();

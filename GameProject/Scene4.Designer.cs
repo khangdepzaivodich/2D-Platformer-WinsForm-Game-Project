@@ -306,7 +306,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackgroundImage = global::GameProject.Properties.Resources.tile031;
-            this.ClientSize = new System.Drawing.Size(1807, 778);
+            this.ClientSize = new System.Drawing.Size(1507, 778);
             this.Controls.Add(this.Laser5);
             this.Controls.Add(this.pictureBox17);
             this.Controls.Add(this.pictureBox18);
